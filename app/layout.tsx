@@ -22,14 +22,15 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Le Thia Cares",
-  description: "Le Thia Cares landing page replica",
+  title: "Next Door Nutritionist | Hormone Nutrition Clinic",
+  description:
+    "Personalized nutrition care for hormonal health, PCOS, fertility, and sustainable wellness with Next Door Nutritionist.",
   icons: {
     icon: [
-      { url: 'https://res.cloudinary.com/djzexkvyv/image/upload/v1779346399/lefav_pijz4a.png', type: 'image/png' },
+      { url: 'favh.png', type: 'image/png' },
     ],
-    apple: 'https://res.cloudinary.com/djzexkvyv/image/upload/v1779346399/lefav_pijz4a.png',
-    shortcut: 'https://res.cloudinary.com/djzexkvyv/image/upload/v1779346399/lefav_pijz4a.png',
+    apple: 'favh.png',
+    shortcut: 'favh.png',
   },
 };
 
