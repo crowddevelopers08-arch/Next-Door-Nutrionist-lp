@@ -188,7 +188,7 @@ export function HeroFormSection() {
 
                     {/* Full Name */}
                     <div>
-                      <label className="mb-1.5 block font-outfit text-[9px] font-bold uppercase tracking-[0.16em] text-white/45">
+                      <label className="mb-1.5 block font-outfit text-[9px] font-bold uppercase tracking-[0.16em] text-white">
                         Full Name
                       </label>
                       <input
@@ -204,7 +204,7 @@ export function HeroFormSection() {
 
                     {/* Phone */}
                     <div>
-                      <label className="mb-1.5 block font-outfit text-[9px] font-bold uppercase tracking-[0.16em] text-white/45">
+                      <label className="mb-1.5 block font-outfit text-[9px] font-bold uppercase tracking-[0.16em] text-white">
                         Phone Number
                       </label>
                       <div className="flex items-center gap-1.5 rounded-full bg-white/[0.1] px-4 py-2.5 transition focus-within:bg-white/[0.16]">
@@ -225,7 +225,7 @@ export function HeroFormSection() {
 
                     {/* Health Goal */}
                     <div>
-                      <label className="mb-1.5 block font-outfit text-[9px] font-bold uppercase tracking-[0.16em] text-white/45">
+                      <label className="mb-1.5 block font-outfit text-[9px] font-bold uppercase tracking-[0.16em] text-white">
                         Health Goal
                       </label>
                       <div className="relative">
@@ -248,7 +248,7 @@ export function HeroFormSection() {
 
                     {/* Location */}
                     <div>
-                      <label className="mb-1.5 block font-outfit text-[9px] font-bold uppercase tracking-[0.16em] text-white/45">
+                      <label className="mb-1.5 block font-outfit text-[9px] font-bold uppercase tracking-[0.16em] text-white">
                         Your Location / Area
                       </label>
                       <input
