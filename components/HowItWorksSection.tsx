@@ -73,7 +73,7 @@ function StepText({ step, above }: { step: typeof steps[number]; above: boolean 
 
 export function HowItWorksSection() {
   return (
-    <section className="px-4 py-8 sm:px-6 md:px-[60px] md:py-10 lg:py-12" style={{ backgroundColor: '#ffffff' }}>
+    <section id="process" className="px-4 py-8 sm:px-6 md:px-[60px] md:py-10 lg:py-12" style={{ backgroundColor: '#ffffff' }}>
       <div className="mx-auto max-w-[1280px]">
 
         <AnimateOnScroll animation="fade-down" className="mb-8 text-center md:mb-10">

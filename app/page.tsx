@@ -5,8 +5,10 @@ import { FAQSection } from '@/components/FAQSection';
 import { Footer } from '@/components/Footer';
 import { FounderSection } from '@/components/FounderSection';
 import { WhyChooseSection } from '@/components/WhyChooseSection';
+import { WhatYoullUnderstandSection } from '@/components/WhatYoullUnderstandSection';
 import { Header } from '@/components/Header';
-import { HeroSection } from '@/components/HeroSection';
+// import { HeroSection } from '@/components/HeroSection';
+import { HeroFormSection } from '@/components/HeroFormSection';
 import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { LeadCaptureSection } from '@/components/LeadCaptureSection';
 import { ProgramsSection } from '@/components/ProgramsSection';
@@ -18,10 +20,12 @@ export default function Home() {
     <>
       <Header />
       <main className="mt-[70px] md:mt-20">
-        <HeroSection />
+        {/* <HeroSection /> */}
+        <HeroFormSection />
         <LeadCaptureSection />
         <TreatmentsSection />
         <ProgramsSection />
+        <WhatYoullUnderstandSection />
         <HowItWorksSection />
            <WhyChooseSection />
         <AboutSection />

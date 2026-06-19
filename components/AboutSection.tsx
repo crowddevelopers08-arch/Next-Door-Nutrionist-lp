@@ -102,7 +102,7 @@ export function AboutSection() {
             <div className="mt-5">
               <a
                 href="#consultation"
-                className="font-outfit inline-flex items-center gap-2 rounded-2xl bg-[#0B4A35] px-6 py-3 text-[13px] font-semibold text-white shadow-md transition-colors hover:bg-[#093c2a] sm:text-[14px] lg:text-[15px]"
+                className="font-outfit inline-flex items-center gap-2 rounded-3xl bg-[#0B4A35] px-6 py-3 text-[13px] font-semibold text-white shadow-md transition-colors hover:bg-[#093c2a] sm:text-[14px] lg:text-[15px]"
               >
                 Get Expert Nutrition Guidance
                 <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -131,7 +131,7 @@ export function AboutSection() {
                     <p className="font-outfit text-[11px] leading-[1.5] text-[#2B2B2B] sm:text-[12px] lg:text-[13px]">
                       Helping women move closer to
                     </p>
-                    <p className="font-outfit text-[15px] font-bold italic leading-[1.3] text-[#FF92A5] sm:text-[16px] lg:text-[18px]">
+                    <p className="font-outfit text-[15px] font-bold italic leading-[1.3] text-[#0b4a35] sm:text-[16px] lg:text-[18px]">
                       periods without pills
                     </p>
                   </div>

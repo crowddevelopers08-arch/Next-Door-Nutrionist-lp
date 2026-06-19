@@ -27,7 +27,7 @@ const helpsWith = [
 
 export function FounderSection() {
   return (
-    <section className="bg-white px-4 py-8 sm:px-6 md:px-[60px] md:py-10 lg:py-12">
+    <section id="doctor" className="bg-white px-4 py-8 sm:px-6 md:px-[60px] md:py-10 lg:py-12">
       <div className="mx-auto max-w-[1280px]">
         <div className="grid grid-cols-1 gap-7 md:grid-cols-[40%_60%] md:gap-10 lg:gap-12">
 

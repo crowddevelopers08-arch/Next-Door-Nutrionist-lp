@@ -102,7 +102,7 @@ export function ProgramsSection() {
   const lastCard = programs[4] as Program;
 
   return (
-    <section className="bg-white px-4 py-8 sm:px-6 md:px-[60px] md:py-10 lg:py-12">
+    <section id="programs" className="bg-white px-4 py-8 sm:px-6 md:px-[60px] md:py-10 lg:py-12">
       <AnimateOnScroll animation="fade-down" className="mx-auto mb-6 max-w-[1280px] text-center md:mb-8">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-[#0B4A35]/30 bg-[#F4E0CD]/60 px-3 py-1">
           <span className="material-symbols-outlined text-[12px] text-[#0B4A35]" style={{ fontVariationSettings: '"FILL" 1' }}>eco</span>

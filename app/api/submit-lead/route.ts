@@ -7,7 +7,7 @@ interface LeadInput {
   name: string;
   phone: string;
   location?: string;
-  treatment?: string;
+  healthGoal?: string;
   source?: string;
   pageUrl?: string;
 }
@@ -31,8 +31,8 @@ async function appendToGoogleSheet(data: LeadInput) {
     name: data.name.trim(),
     phone: data.phone.replace(/[\s\-\(\)]/g, '').replace(/^\+91/, ''),
     location: data.location?.trim() || 'Not specified',
-    treatment: data.treatment?.trim() || 'Not specified',
-    source: data.pageUrl || data.source || 'Le Thia Cares – Website Form',
+    healthGoal: data.healthGoal?.trim() || 'Not specified',
+    source: data.pageUrl || data.source || 'Next Door Nutritionist – Website Form',
   };
 
   const res = await fetch(endpoint, {
@@ -67,25 +67,25 @@ async function sendToTeleCRM(data: LeadInput) {
       name: data.name.trim(),
       email: '',
       phone: data.phone.replace(/\D/g, ''),
-      city_1: data.location?.trim() || 'Anna Nagar, Chennai',
+      city_1: data.location?.trim() || '',
       preferredtime: '',
       preferreddate: '',
-      message: `Consultation enquiry – ${data.treatment || 'Skin Treatment'} at Le Thia Cares`,
-      select_the_procedure: data.treatment || '',
+      message: `Nutrition consultation enquiry – ${data.healthGoal || 'General Wellness'} at Next Door Nutritionist`,
+      select_the_procedure: data.healthGoal || '',
       Country: 'India',
       LeadID: '',
       CreatedOn: createdOn,
       'Lead Stage': '',
       'Lead Status': 'new',
       'Lead Request Type': 'consultation',
-      PageName: data.source || 'le-thia-cares-website',
-      State: 'Tamil Nadu',
+      PageName: data.source || 'next-door-nutritionist-website',
+      State: '',
       Age: '',
     },
     actions: [
-      { type: 'SYSTEM_NOTE', text: `Lead Source: ${data.pageUrl || data.source || 'le-thia-cares-website'}` },
-      { type: 'SYSTEM_NOTE', text: `Treatment: ${data.treatment || 'Not specified'}` },
-      { type: 'SYSTEM_NOTE', text: `Location: ${data.location || 'Anna Nagar, Chennai'}` },
+      { type: 'SYSTEM_NOTE', text: `Lead Source: ${data.pageUrl || data.source || 'next-door-nutritionist-website'}` },
+      { type: 'SYSTEM_NOTE', text: `Health Goal: ${data.healthGoal || 'Not specified'}` },
+      { type: 'SYSTEM_NOTE', text: `Location: ${data.location || 'Not specified'}` },
       { type: 'SYSTEM_NOTE', text: 'Consent Given: Yes' },
     ],
   };
@@ -96,7 +96,7 @@ async function sendToTeleCRM(data: LeadInput) {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${process.env.TELECRM_API_KEY}`,
-        'X-Client-ID': 'le-thia-cares-website',
+        'X-Client-ID': 'next-door-nutritionist-website',
         Accept: 'application/json',
       },
       body: JSON.stringify(payload),
@@ -131,9 +131,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
   }
 
-  const { name = '', phone = '', location = '', treatment = '', pageUrl = '' } = body;
+  const { name = '', phone = '', location = '', healthGoal = '', pageUrl = '' } = body;
 
-  // Validation
   if (!name.trim())
     return NextResponse.json({ error: 'Please enter your name.' }, { status: 400 });
   if (!isValidName(name))
@@ -147,12 +146,14 @@ export async function POST(req: NextRequest) {
     );
 
   const leadData: LeadInput = {
-    name, phone, location, treatment,
-    source: 'le-thia-cares-website',
+    name,
+    phone,
+    location,
+    healthGoal,
+    source: 'next-door-nutritionist-website',
     pageUrl: pageUrl || undefined,
   };
 
-  // Fire both in parallel — one failing never blocks the other
   const [sheetResult, crmResult] = await Promise.allSettled([
     appendToGoogleSheet(leadData),
     sendToTeleCRM(leadData),

@@ -10,7 +10,7 @@ export function ConsultationCtaSection() {
 
             <div className="relative w-full flex-shrink-0 md:w-[46%]">
               <Image
-                src="/ctanextdoor.png"
+                src="/ctanextdoorcp.png"
                 alt="Nutritionist consulting a patient with a personalized nutrition plan"
                 width={720}
                 height={500}
@@ -32,9 +32,9 @@ export function ConsultationCtaSection() {
                 <div className="mt-5 md:mt-6">
                   <a
                     href="#consultation"
-                    className="font-outfit inline-flex items-center gap-2 rounded-2xl bg-[#0B4A35] px-6 py-3 text-[13px] font-semibold text-white shadow-md transition-colors hover:bg-[#093c2a] sm:text-[14px] md:px-7 lg:text-[15px]"
-                  >
-                    Book Your Nutrition Consultation Now
+                    className="font-outfit inline-flex items-center gap-2 rounded-3xl bg-[#0B4A35] px-6 py-3 text-[13px] font-semibold text-white shadow-md transition-colors hover:bg-[#093c2a] sm:text-[14px] md:px-7 lg:text-[15px]"
+                  >Book Your Nutrition Consultation Now
+                    
                     <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
                   </a>
                 </div>

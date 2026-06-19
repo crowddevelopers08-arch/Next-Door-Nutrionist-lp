@@ -12,7 +12,7 @@ const PAIN_POINTS = [
 export function LeadCaptureSection() {
   return (
     <section
-      id="consultation"
+      id="lead-capture"
       className="relative overflow-hidden bg-[#F4E0CD] px-4 py-6 sm:px-6 md:px-[60px] md:py-8 lg:py-10"
     >
       <AnimateOnScroll
@@ -77,7 +77,7 @@ export function LeadCaptureSection() {
 
           {/* CTA */}
           <a
-            href="#contact"
+            href="#consultation"
             className="flex w-full items-center justify-center gap-2 rounded-full bg-[#0B4A35] py-3 text-[13px] font-semibold text-white transition hover:bg-[#093c2a] sm:text-[14px] lg:text-[15px]"
           >
             <span className="material-symbols-outlined text-[16px]">chat</span>

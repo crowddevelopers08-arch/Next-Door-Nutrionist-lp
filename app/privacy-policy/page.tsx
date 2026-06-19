@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Privacy Policy | Hormone Nutrition Clinic',
-  description: 'Learn how Hormone Nutrition Clinic collects, uses, and protects your personal information.',
+  title: 'Privacy Policy | Next Door Nutritionist',
+  description: 'Learn how Next Door Nutritionist collects, uses, and protects your personal information.',
 };
 
 export default function PrivacyPolicyPage() {
@@ -10,14 +10,21 @@ export default function PrivacyPolicyPage() {
     <main className="min-h-screen bg-[#faf9f7] flex flex-col">
       {/* Header */}
       <header className="w-full border-b border-[#0B4A35]/10 bg-[#faf9f7f2] backdrop-blur-sm">
-        <div className="mx-auto flex max-w-[1280px] items-center px-4 py-4 sm:px-6 md:px-[80px] md:py-5">
+        <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-4 sm:px-6 md:px-[80px] md:py-5">
           <Link href="/">
             <img
-              alt="Hormone Nutrition Clinic Logo"
+              alt="Next Door Nutritionist Logo"
               className="h-12 w-auto object-contain md:h-14"
               src="/HNC-LOGO-1.png"
             />
           </Link>
+          <a
+            href="tel:+919959027830"
+            className="inline-flex items-center gap-2 rounded-full bg-[#0B4A35] px-4 py-2 font-outfit text-[12px] font-semibold text-white transition-colors hover:bg-[#093c2a] sm:px-5 sm:py-2.5 sm:text-[13px]"
+          >
+            <span className="material-symbols-outlined text-[15px]" style={{ fontVariationSettings: '"FILL" 1' }}>call</span>
+            Call Now
+          </a>
         </div>
       </header>
 
@@ -39,7 +46,7 @@ export default function PrivacyPolicyPage() {
           {/* Intro */}
           <div className="mb-8 rounded-[0.75rem] border border-[#0B4A35]/10 bg-white p-6 md:p-8">
             <p className="text-[15px] leading-[1.8] text-[#2B2B2B]/70">
-              At <span className="font-semibold text-[#2B2B2B]">Hormone Nutrition Clinic</span>, your privacy is of paramount importance to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services. Please read this policy carefully.
+              At <span className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</span>, your privacy is of paramount importance to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services. Please read this policy carefully.
             </p>
           </div>
 
@@ -108,7 +115,7 @@ export default function PrivacyPolicyPage() {
                 <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications at any time using the link in our emails or by contacting us directly.</li>
                 <li><strong>Data Portability:</strong> Request your data in a structured, machine-readable format.</li>
               </ul>
-              <p>To exercise any of these rights, please contact us at <a href="mailto:info@hormonenutritionclinic.com" className="font-semibold text-[#0B4A35] hover:underline">info@hormonenutritionclinic.com</a>.</p>
+              <p>To exercise any of these rights, please contact us at <a href="mailto:hormonenutritionclinic@gmail.com" className="font-semibold text-[#0B4A35] hover:underline">hormonenutritionclinic@gmail.com</a>.</p>
             </PolicySection>
 
             <PolicySection title="7. Retention of Data">
@@ -129,22 +136,31 @@ export default function PrivacyPolicyPage() {
               </p>
             </PolicySection>
 
-            <PolicySection title="10. Changes to This Policy">
+            <PolicySection title="10. Refund Policy">
+              <p>
+                All programs and services offered by <span className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</span> are <strong>non-refundable</strong>. Once a program has been purchased or a consultation fee has been paid, no refunds will be issued under any circumstances.
+              </p>
+              <p>
+                We encourage all clients to carefully review the program details and speak with our nutritionist before making a payment. If you have any questions about a program prior to enrolling, please contact us at <a href="mailto:hormonenutritionclinic@gmail.com" className="font-semibold text-[#0B4A35] hover:underline">hormonenutritionclinic@gmail.com</a> or call us at <a href="tel:+919959027830" className="font-semibold text-[#0B4A35] hover:underline">+91 99590 27830</a>.
+              </p>
+            </PolicySection>
+
+            <PolicySection title="12. Changes to This Policy">
               <p>
                 We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically. Continued use of our website or services after changes are posted constitutes your acceptance of the updated policy.
               </p>
             </PolicySection>
 
-            <PolicySection title="11. Contact Us">
+            <PolicySection title="13. Contact Us">
               <p>If you have any questions, concerns, or requests regarding this Privacy Policy, please reach out to us:</p>
               <div className="mt-4 space-y-2 rounded-[0.5rem] bg-[#0B4A35]/5 p-5 text-[14px]">
-                <p className="font-semibold text-[#2B2B2B]">Hormone Nutrition Clinic</p>
-                <p className="text-[#2B2B2B]/70">India · Serving clients across 45+ countries</p>
+                <p className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</p>
+                <p className="text-[#2B2B2B]/70">3rd Floor, Westend Mall, 301-A, Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033</p>
                 <p>
-                  <a href="tel:+919000000000" className="text-[#0B4A35] hover:underline">+91 90000 00000</a>
+                  <a href="tel:+919959027830" className="text-[#0B4A35] hover:underline">+91 99590 27830</a>
                 </p>
                 <p>
-                  <a href="mailto:info@hormonenutritionclinic.com" className="text-[#0B4A35] hover:underline">info@hormonenutritionclinic.com</a>
+                  <a href="mailto:hormonenutritionclinic@gmail.com" className="text-[#0B4A35] hover:underline">hormonenutritionclinic@gmail.com</a>
                 </p>
               </div>
             </PolicySection>
@@ -167,7 +183,7 @@ export default function PrivacyPolicyPage() {
       {/* Footer strip */}
       <footer className="border-t border-[#0B4A35]/10 px-4 py-6 text-center sm:px-6 md:px-[80px]">
         <p className="text-[12px] italic text-[#2B2B2B]/40">
-          © 2026 Hormone Nutrition Clinic. All rights reserved.
+          © 2026 Next Door Nutritionist. All rights reserved.
         </p>
       </footer>
     </main>

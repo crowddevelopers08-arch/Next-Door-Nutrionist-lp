@@ -12,7 +12,7 @@ const programs = [
 const quickLinks = [
   { label: 'About Us',       href: '#about' },
   { label: 'How It Works',   href: '#process' },
-  { label: 'Testimonials',   href: '#testimonials' },
+  { label: 'Our Doctor',     href: '#doctor' },
   { label: 'FAQ',            href: '#faq' },
   { label: 'Book Consultation', href: '#consultation' },
 ];
@@ -122,24 +122,24 @@ export function Footer() {
           </h4>
           <div className="space-y-4">
             <a
-              href="mailto:info@nextdoornutritionist.com"
+              href="mailto:hormonenutritionclinic@gmail.com"
               className="group flex items-start gap-3"
             >
               <span className="material-symbols-outlined mt-0.5 text-[18px] text-[#FF92A5]">mail</span>
               <span className="font-outfit text-[13.5px] leading-[1.6] text-[#B7D29B] transition-colors group-hover:text-white">
-                info@nextdoornutritionist.com
+                hormonenutritionclinic@gmail.com
               </span>
             </a>
-            <a href="tel:+919000000000" className="group flex items-center gap-3">
+            <a href="tel:+919959027830" className="group flex items-center gap-3">
               <span className="material-symbols-outlined text-[18px] text-[#FF92A5]">call</span>
               <span className="font-outfit text-[14px] font-semibold text-white transition-colors group-hover:text-[#B7D29B]">
-                +91 90000 00000
+                +91 99590 27830
               </span>
             </a>
             <div className="flex items-start gap-3">
               <span className="material-symbols-outlined mt-0.5 text-[18px] text-[#FF92A5]">location_on</span>
               <span className="font-outfit text-[13.5px] leading-[1.6] text-[#B7D29B]">
-                India · Serving clients<br />across 45+ countries
+                3rd Floor, Westend Mall,<br />301-A, Road No. 36, Jubilee Hills,<br />Hyderabad, Telangana 500033
               </span>
             </div>
           </div>
@@ -165,9 +165,6 @@ export function Footer() {
           <div className="flex gap-6">
             <a className="font-outfit text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B7D29B60] transition-colors hover:text-[#B7D29B]" href="/privacy-policy">
               Privacy Policy
-            </a>
-            <a className="font-outfit text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B7D29B60] transition-colors hover:text-[#B7D29B]" href="/terms">
-              Terms of Use
             </a>
           </div>
         </div>
