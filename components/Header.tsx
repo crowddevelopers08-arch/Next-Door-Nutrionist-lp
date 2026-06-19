@@ -20,7 +20,7 @@ export function Header() {
         {/* Logo */}
         <a href="#" className="flex-shrink-0">
           <Image
-            src="/HNC-LOGO-1.png"
+            src="https://res.cloudinary.com/du6mjguvb/image/upload/HNC-LOGO-1_vbvcmy"
             alt="Hormone Nutrition Clinic"
             width={200}
             height={60}

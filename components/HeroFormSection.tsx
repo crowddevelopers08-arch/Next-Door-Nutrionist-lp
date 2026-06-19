@@ -64,7 +64,7 @@ export function HeroFormSection() {
   }
 
   return (
-    <section id="consultation" className="overflow-hidden bg-gradient-to-br from-[#FFF0EB] via-[#FFFCFA] to-[#F4FBF5] px-4 py-8 sm:px-6 sm:py-10 md:px-[60px] md:py-14 lg:py-20">
+    <section className="overflow-hidden bg-gradient-to-br from-[#FFF0EB] via-[#FFFCFA] to-[#F4FBF5] px-4 py-8 sm:px-6 sm:py-10 md:px-[60px] md:py-14 lg:py-20">
       <div className="mx-auto max-w-[1280px]">
         <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-[1fr_280px_320px] lg:items-stretch lg:gap-8 xl:grid-cols-[1fr_310px_360px] xl:gap-10">
 
@@ -97,7 +97,7 @@ export function HeroFormSection() {
                 />
                 <div className="relative h-[300px] w-full overflow-hidden rounded-t-[9999px] border-[3px] border-[#E8C5AE] bg-[#F4E0CD] sm:h-[360px]">
                   <Image
-                    src="/bandoc.png"
+                    src="https://res.cloudinary.com/du6mjguvb/image/upload/bandoc_sry7r5"
                     alt="Next Door Nutritionist"
                     fill
                     className="object-cover object-center"
@@ -161,7 +161,7 @@ export function HeroFormSection() {
               />
               <div className="relative h-[400px] w-full overflow-hidden rounded-t-[9999px] border-[3px] border-[#E8C5AE] bg-[#F4E0CD] xl:h-[440px]">
                 <Image
-                  src="/bandoc.png"
+                  src="https://res.cloudinary.com/du6mjguvb/image/upload/bandoc_sry7r5"
                   alt="Next Door Nutritionist"
                   fill
                   className="object-cover object-center"
@@ -176,7 +176,7 @@ export function HeroFormSection() {
 
           {/* ── RIGHT: form card ── */}
           <AnimateOnScroll animation="fade-left" delay={140} className="flex flex-col justify-center">
-            <div className="mx-auto w-full max-w-[480px] lg:mx-0 lg:max-w-none">
+            <div id="consultation" className="mx-auto w-full max-w-[480px] lg:mx-0 lg:max-w-none">
               <form onSubmit={handleSubmit} noValidate>
                 <div className="rounded-[1.5rem] bg-[#0B4A35] p-5 sm:p-6 xl:p-7">
 

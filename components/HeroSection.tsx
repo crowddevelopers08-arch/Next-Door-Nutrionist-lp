@@ -1,8 +1,8 @@
-﻿const MOBILE_BANNER =
-  '/fanmob.png';
+const MOBILE_BANNER =
+  'https://res.cloudinary.com/du6mjguvb/image/upload/fanmob_yogywg';
 
 const DESKTOP_BANNER =
-  '/fan.png';
+  'https://res.cloudinary.com/du6mjguvb/image/upload/fan_qauxuh';
 
 export function HeroSection() {
   return (

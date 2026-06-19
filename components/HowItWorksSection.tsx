@@ -10,11 +10,11 @@ const C = {
 };
 
 const steps = [
-  { num: '01', title: ['Health & Lifestyle', 'Assessment'],    desc: 'We understand your health condition, routine, food habits, reports, symptoms, and goals.', img: '/one1.png',  bg: C.graphite  },
-  { num: '02', title: ['Personalized Plan', 'Creation'],       desc: "Your nutrition plan is created based on your body's needs — not a fixed template.",           img: '/two2.png', bg: C.pineTeal  },
-  { num: '03', title: ['Daily Food', 'Tracking'],              desc: 'You share meal photos so your nutritionist can guide you better.',                             img: '/pro3.png', bg: C.celadon   },
-  { num: '04', title: ['Regular', 'Updates'],                  desc: 'Your plan is reviewed and updated regularly based on your progress.',                          img: '/four4.png',bg: C.salmon    },
-  { num: '05', title: ['Continuous', 'Support'],               desc: 'You receive follow-ups, accountability, and guidance to stay consistent.',                     img: '/five5.png',bg: C.pineTeal  },
+  { num: '01', title: ['Health & Lifestyle', 'Assessment'],    desc: 'We understand your health condition, routine, food habits, reports, symptoms, and goals.', img: 'https://res.cloudinary.com/du6mjguvb/image/upload/one1_duzowp',  bg: C.graphite  },
+  { num: '02', title: ['Personalized Plan', 'Creation'],       desc: "Your nutrition plan is created based on your body's needs — not a fixed template.",           img: 'https://res.cloudinary.com/du6mjguvb/image/upload/two2_awg0z0', bg: C.pineTeal  },
+  { num: '03', title: ['Daily Food', 'Tracking'],              desc: 'You share meal photos so your nutritionist can guide you better.',                             img: 'https://res.cloudinary.com/du6mjguvb/image/upload/pro3_zpynin', bg: C.celadon   },
+  { num: '04', title: ['Regular', 'Updates'],                  desc: 'Your plan is reviewed and updated regularly based on your progress.',                          img: 'https://res.cloudinary.com/du6mjguvb/image/upload/four4_rx4pyk',bg: C.salmon    },
+  { num: '05', title: ['Continuous', 'Support'],               desc: 'You receive follow-ups, accountability, and guidance to stay consistent.',                     img: 'https://res.cloudinary.com/du6mjguvb/image/upload/five5_pmgayg',bg: C.pineTeal  },
 ] as const;
 
 function ConnectorArrows() {

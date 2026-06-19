@@ -10,7 +10,7 @@ export function ConsultationCtaSection() {
 
             <div className="relative w-full flex-shrink-0 md:w-[46%]">
               <Image
-                src="/ctanextdoorcp.png"
+                src="https://res.cloudinary.com/du6mjguvb/image/upload/ctanextdoorcp_jmgklt"
                 alt="Nutritionist consulting a patient with a personalized nutrition plan"
                 width={720}
                 height={500}

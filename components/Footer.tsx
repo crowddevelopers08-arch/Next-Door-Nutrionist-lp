@@ -30,7 +30,7 @@ export function Footer() {
         {/* Brand column */}
         <div className="space-y-5 sm:col-span-2 md:col-span-1">
           <Image
-            src="/HNC-LOGO-1.png"
+            src="https://res.cloudinary.com/du6mjguvb/image/upload/HNC-LOGO-1_vbvcmy"
             alt="Hormone Nutrition Clinic"
             width={180}
             height={60}

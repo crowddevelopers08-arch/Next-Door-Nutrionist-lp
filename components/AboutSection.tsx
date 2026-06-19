@@ -85,7 +85,7 @@ export function AboutSection() {
             {/* Mobile-only image — between heading and bullets */}
             <div className="mb-5 overflow-hidden rounded-3xl md:hidden">
               <Image
-                src="/about.png"
+                src="https://res.cloudinary.com/du6mjguvb/image/upload/about_yle5vx"
                 alt="Anusha Rodrigues – Next Door Nutritionist"
                 width={400}
                 height={400}
@@ -114,7 +114,7 @@ export function AboutSection() {
             <div className="relative">
               <div className="overflow-hidden rounded-3xl">
                 <Image
-                  src="/about.png"
+                  src="https://res.cloudinary.com/du6mjguvb/image/upload/about_yle5vx"
                   alt="Anusha Rodrigues – Next Door Nutritionist"
                   width={400}
                   height={640}
@@ -125,7 +125,7 @@ export function AboutSection() {
               <div className="flex justify-center">
                 <div className="flex w-fit items-center gap-3 rounded-2xl bg-[#B7D29B] px-4 py-3 md:px-5 md:py-4">
                   <div className="flex h-[48px] w-[48px] flex-shrink-0 overflow-hidden rounded-full bg-[#0B4A35]">
-                    <Image src="/women.png" alt="Next Door Nutritionist" width={48} height={48} className="h-full w-full object-cover" />
+                    <Image src="https://res.cloudinary.com/du6mjguvb/image/upload/women_d794r2" alt="Next Door Nutritionist" width={48} height={48} className="h-full w-full object-cover" />
                   </div>
                   <div>
                     <p className="font-outfit text-[11px] leading-[1.5] text-[#2B2B2B] sm:text-[12px] lg:text-[13px]">

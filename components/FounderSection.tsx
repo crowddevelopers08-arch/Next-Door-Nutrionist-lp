@@ -36,7 +36,7 @@ export function FounderSection() {
             <div className="flex flex-col gap-4">
               <div className="overflow-hidden rounded-3xl">
                 <Image
-                  src="/doc.png"
+                  src="https://res.cloudinary.com/du6mjguvb/image/upload/doc_rebspb"
                   alt="Anusha Rodrigues – Founder & Clinical Nutritionist, Hormone Nutrition Clinic"
                   width={500}
                   height={560}
@@ -82,7 +82,7 @@ export function FounderSection() {
               {/* Mobile-only photo — between name/title and stats */}
               <div className="mb-4 overflow-hidden rounded-3xl md:hidden">
                 <Image
-                  src="/doc.png"
+                  src="https://res.cloudinary.com/du6mjguvb/image/upload/doc_rebspb"
                   alt="Anusha Rodrigues – Founder & Clinical Nutritionist"
                   width={500}
                   height={560}

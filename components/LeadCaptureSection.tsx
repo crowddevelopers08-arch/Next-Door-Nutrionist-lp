@@ -42,7 +42,7 @@ export function LeadCaptureSection() {
           {/* Mobile image — between heading and cards */}
           <div className="block md:hidden">
             <img
-              src="/5860e808-f33b-43b5-937e-9246b4faa57a.png"
+              src="https://res.cloudinary.com/du6mjguvb/image/upload/5860e808-f33b-43b5-937e-9246b4faa57a_dgpolg"
               alt="Nutritionist"
               className="mx-auto h-[260px] w-auto object-contain"
             />
@@ -88,7 +88,7 @@ export function LeadCaptureSection() {
         {/* ── Right column ── */}
         <div className="hidden md:flex md:items-center md:justify-center">
           <img
-            src="/5860e808-f33b-43b5-937e-9246b4faa57a.png"
+            src="https://res.cloudinary.com/du6mjguvb/image/upload/5860e808-f33b-43b5-937e-9246b4faa57a_dgpolg"
             alt="Nutritionist"
             className="h-[520px] w-auto object-contain"
           />

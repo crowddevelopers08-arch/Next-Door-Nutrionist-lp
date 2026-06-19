@@ -10,7 +10,7 @@ const programs = [
     iconBg: '#B7D29B',
     badgeBg: '#0B4A35',
     titleColor: '#0B4A35',
-    image: '/icon1.png',
+    image: 'https://res.cloudinary.com/du6mjguvb/image/upload/icon1_z7b0rg',
     imageAlt: 'Fertility nutrition icon',
   },
   {
@@ -21,7 +21,7 @@ const programs = [
     iconBg: '#0B4A35',
     badgeBg: '#FF92A5',
     titleColor: '#0B4A35',
-    image: '/icon2.png',
+    image: 'https://res.cloudinary.com/du6mjguvb/image/upload/icon2_lgyvqm',
     imageAlt: 'PCOS nutrition icon',
   },
   {
@@ -32,7 +32,7 @@ const programs = [
     iconBg: '#B7D29B',
     badgeBg: '#0B4A35',
     titleColor: '#0B4A35',
-    image: '/icon3.png',
+    image: 'https://res.cloudinary.com/du6mjguvb/image/upload/icon3_iawzqr',
     imageAlt: 'IVF preparation icon',
   },
   {
@@ -43,7 +43,7 @@ const programs = [
     iconBg: '#0B4A35',
     badgeBg: '#FF92A5',
     titleColor: '#0B4A35',
-    image: '/icon4.png',
+    image: 'https://res.cloudinary.com/du6mjguvb/image/upload/icon4_urkyls',
     imageAlt: 'Diabetes management icon',
   },
   {
@@ -54,7 +54,7 @@ const programs = [
     iconBg: '#B7D29B',
     badgeBg: '#0B4A35',
     titleColor: '#0B4A35',
-    image: '/icon5.png',
+    image: 'https://res.cloudinary.com/du6mjguvb/image/upload/icon5_olc1wo',
     imageAlt: 'Weight management icon',
   },
 ] as const;

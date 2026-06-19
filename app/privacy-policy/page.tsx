@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
             <img
               alt="Next Door Nutritionist Logo"
               className="h-12 w-auto object-contain md:h-14"
-              src="/HNC-LOGO-1.png"
+              src="https://res.cloudinary.com/du6mjguvb/image/upload/HNC-LOGO-1_vbvcmy"
             />
           </Link>
           <a

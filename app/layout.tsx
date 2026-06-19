@@ -27,10 +27,10 @@ export const metadata: Metadata = {
     "Personalized nutrition care for hormonal health, PCOS, fertility, and sustainable wellness with Next Door Nutritionist.",
   icons: {
     icon: [
-      { url: 'favh.png', type: 'image/png' },
+      { url: 'https://res.cloudinary.com/du6mjguvb/image/upload/favh_yq5qyc', type: 'image/png' },
     ],
-    apple: 'favh.png',
-    shortcut: 'favh.png',
+    apple: 'https://res.cloudinary.com/du6mjguvb/image/upload/favh_yq5qyc',
+    shortcut: 'https://res.cloudinary.com/du6mjguvb/image/upload/favh_yq5qyc',
   },
 };
 
