@@ -78,10 +78,10 @@ export default function PrivacyPolicyPage() {
 
             <PolicySection title="3. How We Protect Your Information">
               <p>
-                We implement industry-standard security measures to protect your personal and health data, including SSL encryption, secure servers, and restricted staff access. Health information is stored separately and accessible only to licensed clinical nutritionists involved in your care.
+                We implement reasonable administrative, technical, and organisational safeguards designed to protect your personal information.
               </p>
               <p>
-                Despite our best efforts, no method of electronic transmission or storage is 100% secure. We encourage you to contact us immediately if you suspect any unauthorised access to your information.
+                Health information is accessible only to authorised healthcare professionals and team members directly involved in providing your care and support.
               </p>
             </PolicySection>
 
@@ -132,26 +132,23 @@ export default function PrivacyPolicyPage() {
 
             <PolicySection title="9. Children's Privacy">
               <p>
-                Our services are intended for individuals aged 18 and above. We do not knowingly collect personal information from minors. If you believe a minor has submitted information to us, please contact us immediately so we can remove it.
+                Our website and services are primarily intended for adults. If nutrition services are provided to minors, consent from a parent or legal guardian will be required.
               </p>
             </PolicySection>
 
             <PolicySection title="10. Refund Policy">
               <p>
-                All programs and services offered by <span className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</span> are <strong>non-refundable</strong>. Once a program has been purchased or a consultation fee has been paid, no refunds will be issued under any circumstances.
-              </p>
-              <p>
-                We encourage all clients to carefully review the program details and speak with our nutritionist before making a payment. If you have any questions about a program prior to enrolling, please contact us at <a href="mailto:hormonenutritionclinic@gmail.com" className="font-semibold text-[#0B4A35] hover:underline">hormonenutritionclinic@gmail.com</a> or call us at <a href="tel:+919959027830" className="font-semibold text-[#0B4A35] hover:underline">+91 99590 27830</a>.
+                All consultation fees and program payments are generally non-refundable once services have been booked or commenced, except where required under applicable law.
               </p>
             </PolicySection>
 
-            <PolicySection title="12. Changes to This Policy">
+            <PolicySection title="11. Changes to This Policy">
               <p>
                 We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically. Continued use of our website or services after changes are posted constitutes your acceptance of the updated policy.
               </p>
             </PolicySection>
 
-            <PolicySection title="13. Contact Us">
+            <PolicySection title="12. Contact Us">
               <p>If you have any questions, concerns, or requests regarding this Privacy Policy, please reach out to us:</p>
               <div className="mt-4 space-y-2 rounded-[0.5rem] bg-[#0B4A35]/5 p-5 text-[14px]">
                 <p className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</p>
