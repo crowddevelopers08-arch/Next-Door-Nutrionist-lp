@@ -22,7 +22,7 @@ async function appendFeedbackToSheet(data: FeedbackInput) {
     email: data.email.trim(),
     phone: data.phone.replace(/[\s\-\(\)]/g, '').replace(/^\+91/, ''),
     suggestions: data.suggestions.trim(),
-    source: 'Le Thia Cares – Client Feedback',
+    source: 'Next door nutrition – Client Feedback',
   };
 
   const res = await fetch(endpoint, {

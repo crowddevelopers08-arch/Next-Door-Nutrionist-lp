@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 
-const LE_THIA_LOGO = "https://lh3.googleusercontent.com/aida-public/AB6AXuDULIs-D-ozw3cg59e8NKcZgP0C881paksA5k47FsOo62Tk72Ypf-eio4E5T74wI_YC8dzsLzv-Y1aWbCFh3g9iyEDYkZn8_Ww13KuqSH7lh1Hk7vLV-N5V5M0dqMu5kq8LoOReSG7LdVN8YjETzcY6dIK_KcxI0sFMRUBPrlvdSq5rpnlQ0sSt-IMWysouG-pMsUyXi5kr3vzLc1Xmke-OS-mqw3BEzj-MBZBYtHmtag2yqU8P1U-scdpDtndb4nyImNF9Yo2NGKfo";
+const HNC_LOGO = "https://res.cloudinary.com/du6mjguvb/image/upload/HNC-LOGO-1_vbvcmy";
 
 export default function ClientFeedbackPage() {
   const [formData, setFormData] = useState({
@@ -45,8 +45,8 @@ export default function ClientFeedbackPage() {
     }
   };
 
-  const BRAND = '#492e3b';
-  const BRAND_HOVER = '#3a2330';
+  const BRAND = '#0B4A35';
+  const BRAND_HOVER = '#093c2a';
 
   return (
     <>
@@ -55,7 +55,7 @@ export default function ClientFeedbackPage() {
       `}</style>
       <div
         className="min-h-screen flex items-center justify-center p-3 sm:p-4 md:p-6"
-        style={{ fontFamily: "'Outfit', sans-serif", backgroundColor: '#492e3b' }}
+        style={{ fontFamily: "'Outfit', sans-serif", backgroundColor: '#0B4A35' }}
       >
         {/* Card Container */}
         <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 w-full max-w-[95vw] sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto my-4">
@@ -63,8 +63,8 @@ export default function ClientFeedbackPage() {
           <div className="mb-4 sm:mb-6 md:mb-8 flex justify-center">
             <div className="w-32 h-16 sm:w-36 sm:h-18 md:w-40 md:h-20 lg:w-44 lg:h-22 bg-[#faf9f7] flex items-center justify-center overflow-hidden rounded-lg">
               <img
-                src={LE_THIA_LOGO}
-                alt="Le Thia Cares Logo"
+                src={HNC_LOGO}
+                alt="Next Door Nutritionist Logo"
                 className="w-full h-full object-contain p-1 sm:p-2"
               />
             </div>
