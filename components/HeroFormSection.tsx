@@ -97,7 +97,7 @@ export function HeroFormSection() {
                 />
                 <div className="relative h-[300px] w-full overflow-hidden rounded-t-[9999px] border-[3px] border-[#E8C5AE] bg-[#F4E0CD] sm:h-[360px]">
                   <Image
-                    src="https://res.cloudinary.com/du6mjguvb/image/upload/bandoc_sry7r5"
+                    src="/dr.png"
                     alt="Next Door Nutritionist"
                     fill
                     className="object-cover object-center"
@@ -161,7 +161,7 @@ export function HeroFormSection() {
               />
               <div className="relative h-[400px] w-full overflow-hidden rounded-t-[9999px] border-[3px] border-[#E8C5AE] bg-[#F4E0CD] xl:h-[440px]">
                 <Image
-                  src="https://res.cloudinary.com/du6mjguvb/image/upload/bandoc_sry7r5"
+                  src="/dr.png"
                   alt="Next Door Nutritionist"
                   fill
                   className="object-cover object-center"
