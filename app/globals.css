@@ -282,6 +282,94 @@ body {
 }
 
 /* =============================================
+   PREMIUM FERTILITY ENHANCEMENTS
+   ============================================= */
+
+/* Floating aurora blobs used as decorative backdrops */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(18px, -24px) scale(1.06); }
+}
+@keyframes float-slower {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-22px, 18px) scale(1.08); }
+}
+.blob-float  { animation: float-slow 11s ease-in-out infinite; }
+.blob-float-2 { animation: float-slower 14s ease-in-out infinite; }
+
+/* Soft pulsing glow ring */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.9;  transform: scale(1.04); }
+}
+.glow-pulse { animation: glow-pulse 4.5s ease-in-out infinite; }
+
+/* Emphasis words in headings — solid, inherits heading colour (no gradient) */
+.premium-shine {
+  color: inherit;
+}
+
+/* Champagne-gold hairline used for premium dividers / badges */
+.gold-hairline {
+  background: linear-gradient(90deg, transparent, #C9A24B, transparent);
+}
+
+/* Shimmering gold badge sweep */
+@keyframes badge-sweep {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(220%); }
+}
+.badge-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(110deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: translateX(-120%);
+  animation: badge-sweep 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Gentle rising sparkle used on stat cards */
+@keyframes count-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Pop-in (play button + modals) */
+@keyframes pop-in {
+  0%   { opacity: 0; transform: scale(0.5); }
+  60%  { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.pop-in { animation: pop-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Backdrop fade */
+@keyframes fade-in-backdrop {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.fade-in-backdrop { animation: fade-in-backdrop 0.25s ease both; }
+
+/* Ripple ring around the play button */
+@keyframes play-ring {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.play-ring { animation: play-ring 1.8s ease-out infinite; }
+
+/* Premium card hover lift with gold ring */
+.premium-card {
+  position: relative;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.45s ease;
+}
+.premium-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 26px 60px rgba(11, 74, 53, 0.16);
+}
+
+/* =============================================
    ACCESSIBILITY: respect reduced-motion
    ============================================= */
 
@@ -311,6 +399,19 @@ body {
   .marquee-track {
     animation: none;
   }
+
+  .blob-float,
+  .blob-float-2,
+  .glow-pulse,
+  .premium-shine,
+  .premium-card,
+  .pop-in,
+  .fade-in-backdrop,
+  .play-ring {
+    animation: none;
+    transition: none;
+  }
+  .badge-sweep::after { display: none; }
 
   .btn-primary,
   .btn-outline,
