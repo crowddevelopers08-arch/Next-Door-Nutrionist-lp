@@ -2,6 +2,7 @@
 
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
 import { FertilityHeroVideo } from '@/components/fertility/FertilityHeroVideo';
+import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 
 export function FertilityHeroSection() {
   return (
@@ -64,12 +65,9 @@ export function FertilityHeroSection() {
             >
               Watch the Video Below Before You Start Your Next Fertility Plan
             </a> */}
-            <a
-              href="tel:+919959027830"
-              className="btn-outline font-outfit inline-flex items-center justify-center rounded-full border border-[#0B4A35]/25 bg-white/80 px-6 py-4 text-[13px] font-semibold text-[#0B4A35] shadow-sm backdrop-blur-sm hover:bg-white sm:text-[14px]"
-            >
+            <FertilityCtaButton className="btn-outline font-outfit inline-flex items-center justify-center rounded-full border border-[#0B4A35]/25 bg-white/80 px-6 py-4 text-[13px] font-semibold text-[#0B4A35] shadow-sm backdrop-blur-sm hover:bg-white sm:text-[14px]">
               Book Your Initial Discovery Call
-            </a>
+            </FertilityCtaButton>
           </div>
         </AnimateOnScroll>
       </div>

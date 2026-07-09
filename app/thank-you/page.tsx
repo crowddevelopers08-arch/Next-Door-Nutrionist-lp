@@ -20,7 +20,7 @@ export default function ThankYouPage() {
             />
           </Link>
           <a
-            href="tel:+919959027830"
+            href="tel:+919867642689"
             className="inline-flex items-center gap-2 rounded-full bg-[#0B4A35] px-4 py-2 font-outfit text-[12px] font-semibold text-white transition-colors hover:bg-[#093c2a] sm:px-5 sm:py-2.5 sm:text-[13px]"
           >
             <span className="material-symbols-outlined text-[15px]" style={{ fontVariationSettings: '"FILL" 1' }}>call</span>
@@ -110,7 +110,7 @@ export default function ThankYouPage() {
           {/* CTAs */}
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center md:mt-10">
             <a
-              href="https://wa.me/919959027830"
+              href="https://wa.me/919867642689"
               target="_blank"
               rel="noopener noreferrer"
               className="flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-8 py-3.5 font-outfit text-[13px] font-semibold text-white transition-opacity hover:opacity-90 sm:w-auto"
@@ -132,7 +132,7 @@ export default function ThankYouPage() {
           {/* Contact nudge */}
           <p className="mt-10 font-outfit text-[13px] text-[#2B2B2B]/50">
             Need immediate assistance?{' '}
-            <a href="tel:+919959027830" className="font-semibold text-[#0B4A35] hover:underline">
+            <a href="tel:+919867642689" className="font-semibold text-[#0B4A35] hover:underline">
               Call us now
             </a>
           </p>

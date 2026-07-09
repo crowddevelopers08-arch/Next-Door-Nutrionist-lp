@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
+import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 
 const quickLinks = [
   { label: 'Who Is This For', href: '#who-is-this-for' },
   { label: 'Process', href: '#process' },
   { label: 'About Clinic', href: '#about-clinic' },
   { label: 'FAQ', href: '#faq' },
-  { label: 'Book Your Initial Discovery Call', href: 'tel:+919959027830' },
+  { label: 'Book Your Initial Discovery Call', href: '' },
 ];
 
 export function FertilityFooter() {
@@ -34,17 +35,26 @@ export function FertilityFooter() {
             Quick Links
           </h4>
           <ul className="space-y-3">
-            {quickLinks.map((item) => (
-              <li key={item.label}>
-                <a
-                  href={item.href}
-                  className="font-outfit flex items-center gap-2 text-[13.5px] leading-[1.5] text-[#B7D29B] transition-colors hover:text-white"
-                >
-                  <span className="h-1 w-1 flex-shrink-0 rounded-full bg-[#FF92A5]" />
-                  {item.label}
-                </a>
-              </li>
-            ))}
+            {quickLinks.map((item) =>
+              item.href ? (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    className="font-outfit flex items-center gap-2 text-[13.5px] leading-[1.5] text-[#B7D29B] transition-colors hover:text-white"
+                  >
+                    <span className="h-1 w-1 flex-shrink-0 rounded-full bg-[#FF92A5]" />
+                    {item.label}
+                  </a>
+                </li>
+              ) : (
+                <li key={item.label}>
+                  <FertilityCtaButton className="font-outfit flex items-center gap-2 text-left text-[13.5px] leading-[1.5] text-[#B7D29B] transition-colors hover:text-white">
+                    <span className="h-1 w-1 flex-shrink-0 rounded-full bg-[#FF92A5]" />
+                    {item.label}
+                  </FertilityCtaButton>
+                </li>
+              )
+            )}
           </ul>
         </div>
 
@@ -62,10 +72,10 @@ export function FertilityFooter() {
                 hormonenutritionclinic@gmail.com
               </span>
             </a>
-            <a href="tel:+919959027830" className="group flex items-center gap-3">
+            <a href="tel:+919867642689" className="group flex items-center gap-3">
               <span className="material-symbols-outlined text-[18px] text-[#FF92A5]">call</span>
               <span className="font-outfit text-[14px] font-semibold text-white transition-colors group-hover:text-[#B7D29B]">
-                +91 99590 27830
+                +91 98676 42689
               </span>
             </a>
             <div className="flex items-start gap-3">

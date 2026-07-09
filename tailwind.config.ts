@@ -8,9 +8,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        display: ["var(--font-playfair)"],
-        body: ["var(--font-manrope)"],
-        outfit: ["var(--font-outfit)"],
+        display: ["var(--font-playfair)", "Georgia", "serif"],
+        body: ["var(--font-manrope)", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif"],
+        outfit: ["var(--font-outfit)", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif"],
       },
     },
   },

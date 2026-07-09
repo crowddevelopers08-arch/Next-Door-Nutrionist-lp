@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
+import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 import { fertilityFaqItems } from '@/components/fertility/fertilityContent';
 
 export function FertilityFaqSection() {
@@ -15,13 +16,10 @@ export function FertilityFaqSection() {
       <p className="mt-1.5 font-outfit text-[12px] leading-[1.7] text-[#B7D29B] sm:text-[13px]">
         Talk to our team on a quick discovery call and get clarity on your fertility journey.
       </p>
-      <a
-        href="tel:+919959027830"
-        className="btn-primary font-outfit mt-4 inline-flex items-center gap-2 rounded-full bg-[#FF92A5] px-5 py-2.5 text-[12px] font-semibold text-[#1A1A1A] shadow-md sm:text-[13px]"
-      >
+      <FertilityCtaButton className="btn-primary font-outfit mt-4 inline-flex items-center gap-2 rounded-full bg-[#FF92A5] px-5 py-2.5 text-[12px] font-semibold text-[#1A1A1A] shadow-md sm:text-[13px]">
         Book Your Initial Discovery Call
         <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
-      </a>
+      </FertilityCtaButton>
     </div>
   );
 

@@ -1,4 +1,5 @@
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
+import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 
 export function FertilityFinalCtaSection() {
   return (
@@ -40,12 +41,9 @@ export function FertilityFinalCtaSection() {
               <span className="premium-shine">Next Step in Your Fertility Journey?</span>
             </h2>
 
-            <a
-              href="tel:+919959027830"
-              className="btn-primary font-outfit mt-8 inline-flex rounded-full bg-[#FF92A5] px-9 py-4 text-[13px] font-semibold text-[#1A1A1A] shadow-lg sm:text-[14px]"
-            >
+            <FertilityCtaButton className="btn-primary font-outfit mt-8 inline-flex rounded-full bg-[#FF92A5] px-9 py-4 text-[13px] font-semibold text-[#1A1A1A] shadow-lg sm:text-[14px]">
               Book Your Initial Discovery Call
-            </a>
+            </FertilityCtaButton>
           </div>
         </AnimateOnScroll>
       </div>

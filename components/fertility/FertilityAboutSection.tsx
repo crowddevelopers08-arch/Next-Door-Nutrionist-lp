@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
+import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 import { fertilityTrustItems } from '@/components/fertility/fertilityContent';
 
 export function FertilityAboutSection() {
@@ -93,13 +94,10 @@ export function FertilityAboutSection() {
                 ))}
               </div>
 
-              <a
-                href="tel:+919959027830"
-                className="btn-primary font-outfit mt-6 inline-flex items-center gap-2 rounded-full bg-[#0B4A35] px-6 py-3.5 text-[13px] font-semibold text-white shadow-md sm:text-[14px] md:px-8"
-              >
+              <FertilityCtaButton className="btn-primary font-outfit mt-6 inline-flex items-center gap-2 rounded-full bg-[#0B4A35] px-6 py-3.5 text-[13px] font-semibold text-white shadow-md sm:text-[14px] md:px-8">
                 Get Expert Nutrition Guidance
                 <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-              </a>
+              </FertilityCtaButton>
             </div>
           </AnimateOnScroll>
 

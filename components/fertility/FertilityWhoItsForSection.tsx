@@ -2,6 +2,7 @@
 
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
 import { fertilityWhoItsForItems } from '@/components/fertility/fertilityContent';
+import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
@@ -208,12 +209,9 @@ export function FertilityWhoItsForSection() {
         </div>
 
         <AnimateOnScroll animation="fade-up" delay={240} className="mt-12 flex justify-center">
-          <a
-            href="tel:+919959027830"
-            className="btn-primary font-outfit rounded-full bg-[#0B4A35] px-10 py-4 text-[14px] font-semibold text-white shadow-lg sm:text-[15px]"
-          >
+          <FertilityCtaButton className="btn-primary font-outfit rounded-full bg-[#0B4A35] px-10 py-4 text-[14px] font-semibold text-white shadow-lg sm:text-[15px]">
             Book Your Initial Discovery Call
-          </a>
+          </FertilityCtaButton>
         </AnimateOnScroll>
       </div>
     </section>

@@ -9,6 +9,7 @@ import {
   FaChartLine,
 } from 'react-icons/fa';
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
+import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 import { fertilityProcessSteps } from '@/components/fertility/fertilityContent';
 
 // Soft pastel background + matching accent for the icon, one per step
@@ -76,12 +77,9 @@ export function FertilityProcessSection() {
         </div>
 
         <AnimateOnScroll animation="fade-up" className="mt-10 flex justify-center">
-          <a
-            href="tel:+919959027830"
-            className="btn-primary font-outfit rounded-full bg-[#0B4A35] px-9 py-4 text-[13px] font-semibold text-white shadow-lg sm:text-[14px]"
-          >
+          <FertilityCtaButton className="btn-primary font-outfit rounded-full bg-[#0B4A35] px-9 py-4 text-[13px] font-semibold text-white shadow-lg sm:text-[14px]">
             Book Your Initial Discovery Call
-          </a>
+          </FertilityCtaButton>
         </AnimateOnScroll>
       </div>
     </section>

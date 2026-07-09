@@ -29,8 +29,23 @@ function loadYouTubeApi(): Promise<void> {
 
 export function FertilityHeroVideo() {
   const holderRef = useRef<HTMLDivElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
   const [showPlay, setShowPlay] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [floating, setFloating] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
+  // Show a floating mini-player once the hero video scrolls out of view.
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setFloating(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     let player: { pauseVideo: () => void; mute: () => void; playVideo: () => void; destroy: () => void } | null = null;
@@ -87,9 +102,11 @@ export function FertilityHeroVideo() {
     };
   }, []);
 
+  const showFloating = floating && !dismissed && !modalOpen;
+
   return (
     <>
-      <div id="video" className="relative mt-9 w-full max-w-[760px] scroll-mt-28">
+      <div id="video" ref={boxRef} className="relative mt-9 w-full max-w-[760px] scroll-mt-28">
         {/* Glow frame */}
         <div className="pointer-events-none absolute -inset-4 rounded-[28px] bg-gradient-to-r from-[#FF92A5]/30 via-[#C9A24B]/25 to-[#0B4A35]/25 blur-2xl glow-pulse" />
 
@@ -120,6 +137,54 @@ export function FertilityHeroVideo() {
           </div>
         </div>
       </div>
+
+      {/* Floating mini-player — appears when the hero video scrolls out of view */}
+      {showFloating && (
+        <div className="pop-in fixed bottom-4 right-4 z-40 w-[220px] overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_18px_45px_rgba(0,0,0,0.28)] sm:bottom-6 sm:right-6 sm:w-[280px]">
+          <button
+            type="button"
+            onClick={() => setDismissed(true)}
+            aria-label="Close video"
+            className="absolute right-1.5 top-1.5 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-black/55 text-white transition-colors hover:bg-black/75"
+          >
+            <span className="material-symbols-outlined text-[16px]">close</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setModalOpen(true)}
+            aria-label="Watch the full video"
+            className="group relative block aspect-video w-full bg-black"
+          >
+            <iframe
+              className="pointer-events-none absolute inset-0 h-full w-full"
+              src={`https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${YT_VIDEO_ID}&playsinline=1&modestbranding=1&rel=0&showinfo=0`}
+              title="Fertility nutrition video preview"
+              allow="autoplay; encrypted-media"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+            <span className="absolute inset-0 flex items-center justify-center bg-[#0B1F17]/35 transition-colors group-hover:bg-[#0B1F17]/45">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/95 shadow-md">
+                <span
+                  className="material-symbols-outlined text-[24px] text-[#0B4A35]"
+                  style={{ fontVariationSettings: '"FILL" 1' }}
+                >
+                  play_arrow
+                </span>
+              </span>
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setModalOpen(true)}
+            className="flex w-full items-center justify-center gap-1.5 bg-[#0B4A35] py-2 font-outfit text-[11.5px] font-semibold text-white sm:text-[12px]"
+          >
+            Watch the Full Video
+            <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
+          </button>
+        </div>
+      )}
 
       <FertilityLeadModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>

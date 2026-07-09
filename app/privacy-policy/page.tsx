@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
             />
           </Link>
           <a
-            href="tel:+919959027830"
+            href="tel:+919867642689"
             className="inline-flex items-center gap-2 rounded-full bg-[#0B4A35] px-4 py-2 font-outfit text-[12px] font-semibold text-white transition-colors hover:bg-[#093c2a] sm:px-5 sm:py-2.5 sm:text-[13px]"
           >
             <span className="material-symbols-outlined text-[15px]" style={{ fontVariationSettings: '"FILL" 1' }}>call</span>
@@ -154,7 +154,7 @@ export default function PrivacyPolicyPage() {
                 <p className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</p>
                 <p className="text-[#2B2B2B]/70">3rd Floor, Westend Mall, 301-A, Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033</p>
                 <p>
-                  <a href="tel:+919959027830" className="text-[#0B4A35] hover:underline">+91 99590 27830</a>
+                  <a href="tel:+919867642689" className="text-[#0B4A35] hover:underline">+91 98676 42689</a>
                 </p>
                 <p>
                   <a href="mailto:hormonenutritionclinic@gmail.com" className="text-[#0B4A35] hover:underline">hormonenutritionclinic@gmail.com</a>

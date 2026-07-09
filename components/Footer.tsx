@@ -131,10 +131,10 @@ export function Footer() {
                 hormonenutritionclinic@gmail.com
               </span>
             </a>
-            <a href="tel:+919959027830" className="group flex items-center gap-3">
+            <a href="tel:+919867642689" className="group flex items-center gap-3">
               <span className="material-symbols-outlined text-[18px] text-[#FF92A5]">call</span>
               <span className="font-outfit text-[14px] font-semibold text-white transition-colors group-hover:text-[#B7D29B]">
-                +91 99590 27830
+                +91 98676 42689
               </span>
             </a>
             <div className="flex items-start gap-3">

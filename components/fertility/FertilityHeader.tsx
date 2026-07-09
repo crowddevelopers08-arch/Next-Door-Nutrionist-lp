@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 
 const navLinks = [
   { label: 'Who Is This For', href: '#who-is-this-for' },
@@ -41,12 +42,9 @@ export function FertilityHeader() {
         </div>
 
         <div className="flex items-center gap-3">
-          <a
-            href="tel:+919959027830"
-            className="btn-primary font-outfit hidden rounded-full bg-[#0B4A35] px-5 py-2.5 text-[13px] font-semibold text-white shadow-sm sm:inline-flex md:px-7 md:py-3 md:text-[14px]"
-          >
+          <FertilityCtaButton className="btn-primary font-outfit hidden rounded-full bg-[#0B4A35] px-5 py-2.5 text-[13px] font-semibold text-white shadow-sm sm:inline-flex md:px-7 md:py-3 md:text-[14px]">
             Book Your Initial Discovery Call
-          </a>
+          </FertilityCtaButton>
 
           <button
             className="flex h-9 w-9 items-center justify-center rounded-md text-[#0B4A35] transition-colors hover:bg-[#0B4A3510] lg:hidden"
@@ -73,13 +71,12 @@ export function FertilityHeader() {
                 {link.label}
               </a>
             ))}
-            <a
-              href="tel:+919959027830"
+            <FertilityCtaButton
               className="font-outfit mt-3 inline-flex justify-center rounded-full bg-[#0B4A35] px-5 py-2.5 text-[14px] font-semibold text-white"
               onClick={() => setMenuOpen(false)}
             >
               Book Your Initial Discovery Call
-            </a>
+            </FertilityCtaButton>
           </div>
         </div>
       )}

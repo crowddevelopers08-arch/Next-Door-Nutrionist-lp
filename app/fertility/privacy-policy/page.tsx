@@ -35,7 +35,7 @@ const sections = [
   },
   {
     heading: '7. Contact Us',
-    body: 'For any questions about this Privacy Policy or how your information is handled, reach us at hormonenutritionclinic@gmail.com or +91 99590 27830.',
+    body: 'For any questions about this Privacy Policy or how your information is handled, reach us at hormonenutritionclinic@gmail.com or +91 98676 42689.',
   },
 ];
 
