@@ -14,7 +14,7 @@ export function FertilityAboutSection() {
             <div className="flex flex-col gap-4">
               <div className="overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(11,74,53,0.14)]">
                 <Image
-                  src="/dr.png"
+                  src="/anushanew.png"
                   alt="Anusha Rodrigues – Founder & Clinical Nutritionist, Hormone Nutrition Clinic"
                   width={500}
                   height={560}
@@ -61,7 +61,7 @@ export function FertilityAboutSection() {
               {/* Mobile-only photo — between name/title and content */}
               <div className="mb-4 overflow-hidden rounded-3xl md:hidden">
                 <Image
-                  src="/dr.png"
+                  src="/anushanew.png"
                   alt="Anusha Rodrigues – Founder & Clinical Nutritionist"
                   width={500}
                   height={560}
