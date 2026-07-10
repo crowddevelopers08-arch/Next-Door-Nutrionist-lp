@@ -11,6 +11,7 @@ interface FertilityLeadInput {
   name: string;
   phone: string;
   concern?: string;
+  location?: string;
   date?: string;
   time?: string;
   pageUrl?: string;
@@ -42,6 +43,7 @@ async function appendToGoogleSheet(data: FertilityLeadInput) {
     name: data.name.trim(),
     phone: data.phone.replace(/[\s\-\(\)]/g, '').replace(/^\+91/, ''),
     concern: data.concern?.trim() || 'Not specified',
+    location: data.location?.trim() || '',
     date: data.date?.trim() || '',
     time: data.time?.trim() || '',
     source: data.pageUrl || data.formName,
@@ -81,7 +83,7 @@ async function sendToTeleCRM(data: FertilityLeadInput) {
       name: data.name.trim(),
       email: '',
       phone: data.phone.replace(/\D/g, ''),
-      city_1: '',
+      city_1: data.location?.trim() || '',
       preferredtime: data.time || '',
       preferreddate: data.date || '',
       message: isConsultation
@@ -102,7 +104,10 @@ async function sendToTeleCRM(data: FertilityLeadInput) {
       { type: 'SYSTEM_NOTE', text: `Form: ${data.formName}` },
       { type: 'SYSTEM_NOTE', text: `Concern: ${data.concern || 'Not specified'}` },
       ...(isConsultation
-        ? [{ type: 'SYSTEM_NOTE', text: `Preferred Slot: ${data.date || '-'} ${data.time || ''}` }]
+        ? [
+            { type: 'SYSTEM_NOTE', text: `Location: ${data.location || 'Not specified'}` },
+            { type: 'SYSTEM_NOTE', text: `Preferred Slot: ${data.date || '-'} ${data.time || ''}` },
+          ]
         : []),
       { type: 'SYSTEM_NOTE', text: `Lead Source: ${data.pageUrl || data.formName}` },
     ],
@@ -149,7 +154,15 @@ export async function POST(req: NextRequest) {
   }
 
   const stage = (body.stage === 'stage2' ? 'stage2' : 'stage1') as Stage;
-  const { name = '', phone = '', concern = '', date = '', time = '', pageUrl = '' } = body;
+  const {
+    name = '',
+    phone = '',
+    concern = '',
+    location = '',
+    date = '',
+    time = '',
+    pageUrl = '',
+  } = body;
 
   if (!name.trim())
     return NextResponse.json({ error: 'Please enter your name.' }, { status: 400 });
@@ -165,6 +178,8 @@ export async function POST(req: NextRequest) {
       { error: 'Please pick a preferred date and time.' },
       { status: 400 }
     );
+  if (stage === 'stage2' && !location.trim())
+    return NextResponse.json({ error: 'Please enter your location.' }, { status: 400 });
 
   const leadData: FertilityLeadInput = {
     stage,
@@ -172,6 +187,7 @@ export async function POST(req: NextRequest) {
     name,
     phone,
     concern,
+    location,
     date,
     time,
     pageUrl: pageUrl || undefined,

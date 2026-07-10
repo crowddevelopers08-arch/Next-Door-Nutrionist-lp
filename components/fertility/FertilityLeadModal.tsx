@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
-import { fertilityHealthGoals } from '@/components/fertility/fertilityContent';
 
 interface Props {
   open: boolean;
@@ -13,11 +13,22 @@ export function FertilityLeadModal({ open, onClose }: Props) {
   const router = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [concern, setConcern] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [mounted, setMounted] = useState(false);
 
-  if (!open) return null;
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  if (!open || !mounted) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +38,6 @@ export function FertilityLeadModal({ open, onClose }: Props) {
     const cleanPhone = phone.replace(/\D/g, '').replace(/^91/, '');
     if (!/^[6-9]\d{9}$/.test(cleanPhone))
       return setError('Please enter a valid 10-digit mobile number.');
-    if (!concern) return setError('Please select your concern.');
 
     setSubmitting(true);
     try {
@@ -38,7 +48,6 @@ export function FertilityLeadModal({ open, onClose }: Props) {
           stage: 'stage1',
           name: name.trim(),
           phone: cleanPhone,
-          concern,
           pageUrl: typeof window !== 'undefined' ? window.location.href : '',
         }),
       });
@@ -51,7 +60,7 @@ export function FertilityLeadModal({ open, onClose }: Props) {
       // Persist for Stage 2 prefill on the watch page
       sessionStorage.setItem(
         'fertilityLead',
-        JSON.stringify({ name: name.trim(), phone: cleanPhone, concern })
+        JSON.stringify({ name: name.trim(), phone: cleanPhone })
       );
 
       router.push('/fertility/watch');
@@ -61,16 +70,16 @@ export function FertilityLeadModal({ open, onClose }: Props) {
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4">
       {/* Backdrop */}
       <div
-        className="fade-in-backdrop absolute inset-0 bg-[#0B1F17]/60 backdrop-blur-sm"
+        className="fade-in-backdrop fixed inset-0 bg-[#0B1F17]/60 backdrop-blur-sm"
         onClick={submitting ? undefined : onClose}
       />
 
       {/* Card */}
-      <div className="pop-in relative w-full max-w-[440px] overflow-hidden rounded-[26px] bg-white shadow-[0_30px_90px_rgba(11,74,53,0.35)]">
+      <div className="pop-in relative my-auto w-full max-w-[440px] overflow-hidden rounded-[26px] bg-white shadow-[0_30px_90px_rgba(11,74,53,0.35)]">
         <div className="relative bg-[#0B4A35] px-6 py-6 text-center">
           <div
             className="pointer-events-none absolute inset-0 opacity-40"
@@ -122,23 +131,6 @@ export function FertilityLeadModal({ open, onClose }: Props) {
             </div>
           </label>
 
-          <label className="mt-4 block">
-            <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">Your Concern</span>
-            <select
-              value={concern}
-              onChange={(e) => setConcern(e.target.value)}
-              className="mt-1.5 w-full rounded-xl border border-[#0B4A35]/15 bg-[#fffaf7] px-4 py-3 font-outfit text-[14px] text-[#1A1A1A] outline-none transition-colors focus:border-[#0B4A35]"
-            >
-              <option value="">Select your concern</option>
-              {fertilityHealthGoals.map((goal) => (
-                <option key={goal} value={goal}>
-                  {goal}
-                </option>
-              ))}
-              <option value="Other">Other</option>
-            </select>
-          </label>
-
           {error && (
             <p className="mt-3 font-outfit text-[12.5px] font-medium text-[#D6497E]">{error}</p>
           )}
@@ -156,6 +148,7 @@ export function FertilityLeadModal({ open, onClose }: Props) {
           </p>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

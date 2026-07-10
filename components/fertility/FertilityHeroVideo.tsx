@@ -27,13 +27,63 @@ function loadYouTubeApi(): Promise<void> {
   return apiPromise;
 }
 
+const EDGE_GAP = 8;
+
 export function FertilityHeroVideo() {
   const holderRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const [showPlay, setShowPlay] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [floating, setFloating] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+
+  // Free position of the floating mini-player. `null` = default bottom-right anchor.
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const dragRef = useRef<{ dx: number; dy: number } | null>(null);
+
+  const clamp = (x: number, y: number) => {
+    const card = cardRef.current;
+    const w = card?.offsetWidth ?? 0;
+    const h = card?.offsetHeight ?? 0;
+    return {
+      x: Math.min(Math.max(x, EDGE_GAP), window.innerWidth - w - EDGE_GAP),
+      y: Math.min(Math.max(y, EDGE_GAP), window.innerHeight - h - EDGE_GAP),
+    };
+  };
+
+  const startDrag = (e: React.PointerEvent<HTMLElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    dragRef.current = { dx: e.clientX - rect.left, dy: e.clientY - rect.top };
+    setPos({ x: rect.left, y: rect.top });
+    setDragging(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const onDragMove = (e: React.PointerEvent<HTMLElement>) => {
+    const d = dragRef.current;
+    if (!d) return;
+    setPos(clamp(e.clientX - d.dx, e.clientY - d.dy));
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLElement>) => {
+    if (!dragRef.current) return;
+    dragRef.current = null;
+    setDragging(false);
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  };
+
+  // Keep the player on screen when the viewport changes.
+  const positioned = pos !== null;
+  useEffect(() => {
+    if (!positioned) return;
+    const onResize = () => setPos((p) => (p ? clamp(p.x, p.y) : p));
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [positioned]);
 
   // Show a floating mini-player once the hero video scrolls out of view.
   useEffect(() => {
@@ -140,7 +190,28 @@ export function FertilityHeroVideo() {
 
       {/* Floating mini-player — appears when the hero video scrolls out of view */}
       {showFloating && (
-        <div className="pop-in fixed bottom-4 right-4 z-40 w-[220px] overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_18px_45px_rgba(0,0,0,0.28)] sm:bottom-6 sm:right-6 sm:w-[280px]">
+        <div
+          ref={cardRef}
+          className={`pop-in fixed z-40 w-[220px] overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_18px_45px_rgba(0,0,0,0.28)] sm:w-[280px] ${
+            pos ? '' : 'bottom-4 right-4 sm:bottom-6 sm:right-6'
+          } ${dragging ? 'select-none' : ''}`}
+          style={pos ? { left: pos.x, top: pos.y } : undefined}
+        >
+          {/* Drag handle */}
+          <button
+            type="button"
+            onPointerDown={startDrag}
+            onPointerMove={onDragMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            aria-label="Drag video player"
+            className={`absolute left-1.5 top-1.5 z-20 flex h-7 w-7 touch-none items-center justify-center rounded-full bg-black/55 text-white transition-colors hover:bg-black/75 ${
+              dragging ? 'cursor-grabbing' : 'cursor-grab'
+            }`}
+          >
+            <span className="material-symbols-outlined text-[16px]">drag_indicator</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setDismissed(true)}

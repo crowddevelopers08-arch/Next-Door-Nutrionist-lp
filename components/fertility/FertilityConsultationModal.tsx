@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
+import { fertilityHealthGoals } from '@/components/fertility/fertilityContent';
 
 interface Props {
   open: boolean;
@@ -31,11 +33,15 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [concern, setConcern] = useState('');
+  const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [slotOpen, setSlotOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   // Prefill name / phone captured in Stage 1
   useEffect(() => {
@@ -46,14 +52,22 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
         const saved = JSON.parse(raw);
         setName(saved.name || '');
         setPhone(saved.phone || '');
-        setConcern(saved.concern || '');
       }
     } catch {
       /* ignore */
     }
   }, [open]);
 
-  if (!open) return null;
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  if (!open || !mounted) return null;
 
   const today = new Date().toISOString().split('T')[0];
 
@@ -65,6 +79,8 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
     const cleanPhone = phone.replace(/\D/g, '').replace(/^91/, '');
     if (!/^[6-9]\d{9}$/.test(cleanPhone))
       return setError('Please enter a valid 10-digit mobile number.');
+    if (!concern) return setError('Please select your concern.');
+    if (location.trim().length < 2) return setError('Please enter your location.');
     if (!date) return setError('Please select a preferred date.');
     if (!time) return setError('Please select a preferred time.');
 
@@ -78,6 +94,7 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
           name: name.trim(),
           phone: cleanPhone,
           concern,
+          location: location.trim(),
           date,
           time,
           pageUrl: typeof window !== 'undefined' ? window.location.href : '',
@@ -95,14 +112,14 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4">
       <div
-        className="fade-in-backdrop absolute inset-0 bg-[#0B1F17]/60 backdrop-blur-sm"
+        className="fade-in-backdrop fixed inset-0 bg-[#0B1F17]/60 backdrop-blur-sm"
         onClick={submitting ? undefined : onClose}
       />
 
-      <div className="pop-in relative w-full max-w-[460px] overflow-hidden rounded-[26px] bg-white shadow-[0_30px_90px_rgba(11,74,53,0.35)]">
+      <div className="pop-in relative my-auto w-full max-w-[560px] overflow-hidden rounded-[26px] bg-white shadow-[0_30px_90px_rgba(11,74,53,0.35)]">
         <div className="relative bg-[#0B4A35] px-6 py-6 text-center">
           <div
             className="pointer-events-none absolute inset-0 opacity-40"
@@ -129,7 +146,7 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-6">
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <label className="block">
               <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">Your Name</span>
               <input
@@ -153,6 +170,34 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
                   className="w-full bg-transparent py-3 pr-4 font-outfit text-[14px] text-[#1A1A1A] outline-none"
                 />
               </div>
+            </label>
+
+            <label className="block">
+              <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">Your Concern</span>
+              <select
+                value={concern}
+                onChange={(e) => setConcern(e.target.value)}
+                className="mt-1.5 w-full rounded-xl border border-[#0B4A35]/15 bg-[#fffaf7] px-4 py-3 font-outfit text-[14px] text-[#1A1A1A] outline-none transition-colors focus:border-[#0B4A35]"
+              >
+                <option value="">Select your concern</option>
+                {fertilityHealthGoals.map((goal) => (
+                  <option key={goal} value={goal}>
+                    {goal}
+                  </option>
+                ))}
+                <option value="Other">Other</option>
+              </select>
+            </label>
+
+            <label className="block">
+              <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">Location</span>
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Enter your city"
+                className="mt-1.5 w-full rounded-xl border border-[#0B4A35]/15 bg-[#fffaf7] px-4 py-3 font-outfit text-[14px] text-[#1A1A1A] outline-none transition-colors focus:border-[#0B4A35]"
+              />
             </label>
 
             <label className="block">
@@ -197,9 +242,9 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
 
       {/* Time slot picker popup */}
       {slotOpen && (
-        <div className="absolute inset-0 z-[110] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
           <div
-            className="fade-in-backdrop absolute inset-0 bg-[#0B1F17]/60 backdrop-blur-sm"
+            className="fade-in-backdrop fixed inset-0 bg-[#0B1F17]/60 backdrop-blur-sm"
             onClick={() => setSlotOpen(false)}
           />
           <div className="pop-in relative flex max-h-[80vh] w-full max-w-[440px] flex-col overflow-hidden rounded-[24px] bg-white shadow-[0_30px_90px_rgba(11,74,53,0.35)]">
@@ -239,6 +284,7 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
           </div>
         </div>
       )}
-    </div>
+    </div>,
+    document.body
   );
 }
