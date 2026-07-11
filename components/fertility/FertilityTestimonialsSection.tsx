@@ -3,19 +3,19 @@ import { AnimateOnScroll } from '@/components/AnimateOnScroll';
 import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 
 const testimonialImages = [
-  '/IMG_4391.PNG',
-  '/IMG_4392.PNG',
-  '/IMG_4394.PNG',
-  '/IMG_4395.PNG',
-  '/IMG_4396.PNG',
-  '/IMG_6113.PNG',
-  '/IMG_6114.PNG',
-  '/IMG_6116.PNG',
-  '/IMG_6117.PNG',
-  '/IMG_7174.PNG',
-  '/IMG_7176.PNG',
-  '/IMG_7177.PNG',
-  '/IMG_7179.PNG',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678539/IMG_4391_bstek3.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678539/IMG_4392_ymmo41.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678539/IMG_4394_of7gjl.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678539/IMG_4395_yjfhtj.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678540/IMG_4396_pfe4c0.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678541/IMG_6113_cplc9u.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678540/IMG_6114_cejmyp.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678540/IMG_6116_a5lkal.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678541/IMG_6117_wmhftp.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678541/IMG_7174_oilxmy.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678542/IMG_7176_rii8rm.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678542/IMG_7177_hyjuab.jpg',
+  'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678542/IMG_7179_l4h79b.jpg',
 ];
 
 export function FertilityTestimonialsSection() {

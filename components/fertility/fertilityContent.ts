@@ -9,31 +9,31 @@ export const fertilityWhoItsForItems: FertilityWhoItsForItem[] = [
     title: 'Irregular Ovulation',
     description:
       'Irregular periods, PCOS/PMOS, or unpredictable ovulation who need a focused cycle, nutrition, and lifestyle approach.',
-    image: '/irregulares.jpg',
+    image: 'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678542/irregulares_tws6ss.jpg',
   },
   {
     title: 'Low AMH / Egg Health Concerns',
     description:
       'For women with Low AMH or egg health concerns who want targeted nutrition and lifestyle planning before conception.',
-    image: '/awh.jpg',
+    image: 'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678537/awh_ziy0jg.jpg',
   },
   {
     title: 'Hormonal Imbalance',
     description:
       'Thyroid issues, insulin resistance, cravings, weight gain, fatigue, or cycle-related hormone concerns.',
-    image: '/hormone.webp',
+    image: 'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678537/hormone_kmqjih.webp',
   },
   {
     title: 'IVF / IUI Preparation',
     description:
       'Preparing for fertility treatments who want to ensure their body is nutritionally and hormonally ready before starting IVF or IUI.',
-    image: '/neui.png',
+    image: 'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678545/neui_chho3h.png',
   },
   {
     title: 'Pregnancy Loss / Repeated Miscarriage Support',
     description:
       "Experienced pregnancy loss and need focused nutrition and lifestyle planning alongside their doctor's guidance.",
-    image: '/preg.jpg',
+    image: 'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678543/preg_gydfl8.jpg',
   },
 ];
 
