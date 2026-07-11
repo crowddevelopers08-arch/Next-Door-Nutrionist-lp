@@ -27,16 +27,30 @@ export function FertilityWatchClient() {
         <div className="relative mx-auto mt-9 w-full max-w-[820px]">
           <div className="pointer-events-none absolute -inset-4 rounded-[28px] bg-gradient-to-r from-[#FF92A5]/25 via-[#C9A24B]/20 to-[#0B4A35]/20 blur-2xl" />
           <div className="relative w-full overflow-hidden rounded-[24px] border border-white/70 bg-white p-1.5 shadow-[0_30px_80px_rgba(11,74,53,0.22)]">
-            <div className="relative aspect-video w-full overflow-hidden rounded-[18px] bg-black">
-              <iframe
-                className="absolute inset-0 h-full w-full"
-                src="https://www.youtube.com/embed/UWZ_QQNKmes?autoplay=1&rel=0&modestbranding=1&playsinline=1"
-                title="Complete fertility nutrition guidance video"
-                allow="autoplay; encrypted-media; fullscreen"
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
+            <a
+              href="https://www.youtube.com/watch?v=Ap2X2yaWhUY"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Watch the full video on YouTube"
+              className="group relative block aspect-video w-full overflow-hidden rounded-[18px] bg-black"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                className="absolute inset-0 h-full w-full object-cover"
+                src="https://img.youtube.com/vi/Ap2X2yaWhUY/maxresdefault.jpg"
+                alt="Complete fertility nutrition guidance video"
               />
-            </div>
+              <span className="absolute inset-0 flex items-center justify-center bg-[#0B1F17]/35 transition-colors group-hover:bg-[#0B1F17]/45">
+                <span className="pop-in flex h-[74px] w-[74px] items-center justify-center rounded-full bg-white/95 shadow-[0_10px_30px_rgba(0,0,0,0.35)] sm:h-[88px] sm:w-[88px]">
+                  <span
+                    className="material-symbols-outlined text-[38px] text-[#0B4A35] sm:text-[46px]"
+                    style={{ fontVariationSettings: '"FILL" 1' }}
+                  >
+                    play_arrow
+                  </span>
+                </span>
+              </span>
+            </a>
           </div>
         </div>
 

@@ -3,34 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { FertilityLeadModal } from '@/components/fertility/FertilityLeadModal';
 
-const YT_VIDEO_ID = 'UWZ_QQNKmes';
+const VSL_GIF = '/vslgif.gif';
 const TEASER_SECONDS = 3;
-
-// Load the YouTube IFrame API script once, shared across instances.
-let apiPromise: Promise<void> | null = null;
-function loadYouTubeApi(): Promise<void> {
-  if (typeof window === 'undefined') return Promise.resolve();
-  const w = window as unknown as { YT?: { Player?: unknown }; onYouTubeIframeAPIReady?: () => void };
-  if (w.YT && w.YT.Player) return Promise.resolve();
-  if (apiPromise) return apiPromise;
-
-  apiPromise = new Promise<void>((resolve) => {
-    const prev = w.onYouTubeIframeAPIReady;
-    w.onYouTubeIframeAPIReady = () => {
-      prev?.();
-      resolve();
-    };
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-  });
-  return apiPromise;
-}
 
 const EDGE_GAP = 8;
 
 export function FertilityHeroVideo() {
-  const holderRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [showPlay, setShowPlay] = useState(false);
@@ -97,59 +75,10 @@ export function FertilityHeroVideo() {
     return () => observer.disconnect();
   }, []);
 
+  // Reveal the play button (which opens the lead form) after a short teaser.
   useEffect(() => {
-    let player: { pauseVideo: () => void; mute: () => void; playVideo: () => void; destroy: () => void } | null = null;
-    let teaserTimer: ReturnType<typeof setTimeout> | null = null;
-    let scheduled = false;
-    let cancelled = false;
-
-    loadYouTubeApi().then(() => {
-      if (cancelled || !holderRef.current) return;
-      const YT = (window as unknown as { YT: any }).YT;
-
-      player = new YT.Player(holderRef.current, {
-        videoId: YT_VIDEO_ID,
-        width: '100%',
-        height: '100%',
-        playerVars: {
-          autoplay: 1,
-          mute: 1,
-          controls: 0,
-          rel: 0,
-          modestbranding: 1,
-          playsinline: 1,
-          disablekb: 1,
-          fs: 0,
-          showinfo: 0,
-        },
-        events: {
-          onReady: (e: { target: { mute: () => void; playVideo: () => void } }) => {
-            e.target.mute();
-            e.target.playVideo();
-          },
-          onStateChange: (e: { data: number; target: { pauseVideo: () => void } }) => {
-            // 1 === playing
-            if (e.data === 1 && !scheduled) {
-              scheduled = true;
-              teaserTimer = setTimeout(() => {
-                e.target.pauseVideo();
-                setShowPlay(true);
-              }, TEASER_SECONDS * 1000);
-            }
-          },
-        },
-      });
-    });
-
-    return () => {
-      cancelled = true;
-      if (teaserTimer) clearTimeout(teaserTimer);
-      try {
-        player?.destroy();
-      } catch {
-        /* ignore */
-      }
-    };
+    const teaserTimer = setTimeout(() => setShowPlay(true), TEASER_SECONDS * 1000);
+    return () => clearTimeout(teaserTimer);
   }, []);
 
   const showFloating = floating && !dismissed && !modalOpen;
@@ -162,8 +91,12 @@ export function FertilityHeroVideo() {
 
         <div className="relative w-full overflow-hidden rounded-[24px] border border-white/70 bg-white p-1.5 shadow-[0_30px_80px_rgba(11,74,53,0.22)]">
           <div className="relative aspect-video w-full overflow-hidden rounded-[18px] bg-black">
-            {/* YT API replaces this div with the player iframe */}
-            <div ref={holderRef} className="absolute inset-0 h-full w-full" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={VSL_GIF}
+              alt="Fertility clinical nutrition video"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
 
             {/* Play button — pops up after the 3s teaser and opens the lead form */}
             {showPlay && (
@@ -227,12 +160,11 @@ export function FertilityHeroVideo() {
             aria-label="Watch the full video"
             className="group relative block aspect-video w-full bg-black"
           >
-            <iframe
-              className="pointer-events-none absolute inset-0 h-full w-full"
-              src={`https://www.youtube.com/embed/${YT_VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${YT_VIDEO_ID}&playsinline=1&modestbranding=1&rel=0&showinfo=0`}
-              title="Fertility nutrition video preview"
-              allow="autoplay; encrypted-media"
-              referrerPolicy="strict-origin-when-cross-origin"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+              src={VSL_GIF}
+              alt="Fertility nutrition video preview"
             />
             <span className="absolute inset-0 flex items-center justify-center bg-[#0B1F17]/35 transition-colors group-hover:bg-[#0B1F17]/45">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/95 shadow-md">
