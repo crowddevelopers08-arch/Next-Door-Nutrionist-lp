@@ -16,10 +16,6 @@ const quickLinks = [
   { label: 'Book Your Initial Discovery Call', href: '' },
 ];
 
-const instagramAccounts = [
-  { handle: '@hormonenutritionclinic', href: 'https://www.instagram.com/hormonenutritionclinic/' },
-  { handle: '@nextdoornutritionist', href: 'https://www.instagram.com/nextdoornutritionist/' },
-];
 
 function InstagramLink({ handle, href }: { handle: string; href: string }) {
   return (
@@ -60,12 +56,9 @@ export function FertilityFooter() {
           <p className="font-outfit max-w-[280px] text-[14px] leading-[1.75] text-[#B7D29B]">
             Personalized clinical nutrition and lifestyle guidance for fertility, conception, and healthier pregnancy preparation.
           </p>
-
-          <div className="flex flex-col gap-3">
-            {instagramAccounts.map((account) => (
-              <InstagramLink key={account.handle} {...account} />
-            ))}
-          </div>
+          <FertilityCtaButton className="font-outfit inline-flex rounded-full bg-[#FF92A5] px-5 py-2.5 text-[13px] font-semibold text-[#0B4A35] shadow-sm transition-colors hover:bg-white">
+            Book Your Initial Discovery Call
+          </FertilityCtaButton>
         </div>
 
         <div className="space-y-5">
