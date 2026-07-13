@@ -43,10 +43,11 @@ export function WhatsAppField({
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return COUNTRIES;
+    const digits = q.replace(/\D/g, '');
     return COUNTRIES.filter(
       (c) =>
         c.name.toLowerCase().includes(q) ||
-        c.dial.includes(q.replace(/\D/g, '')) ||
+        (digits !== '' && c.dial.includes(digits)) ||
         c.iso.toLowerCase() === q
     );
   }, [query]);
