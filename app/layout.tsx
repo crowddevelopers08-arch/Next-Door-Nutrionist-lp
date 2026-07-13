@@ -45,6 +45,32 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         />
+        {/* Meta Pixel Code */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1507435817260520');
+              fbq('track', 'PageView');
+            `
+          }}
+        />
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `
+              <img height="1" width="1" style="display:none"
+              src="https://www.facebook.com/tr?id=1507435817260520&ev=PageView&noscript=1"/>
+            `
+          }}
+        />
+        {/* End Meta Pixel Code */}
       </head>
       <body
         className={`${manrope.variable} ${playfair.variable} ${outfit.variable} font-body selection:bg-[#624452] selection:text-[#dbb3c4]`}
