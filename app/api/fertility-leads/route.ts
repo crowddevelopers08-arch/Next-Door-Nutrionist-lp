@@ -2,6 +2,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
 
 type Stage = 'stage1' | 'stage2';
 
@@ -173,6 +174,87 @@ async function sendToTeleCRM(data: FertilityLeadInput) {
   }
 }
 
+// ── Meta (Facebook) Conversions API ───────────────────────────────────────────
+// Fires a server-side conversion event for every lead. Configure via env:
+//   META_PIXEL_ID                – Pixel / Dataset ID from Events Manager
+//   META_CONVERSIONS_API_TOKEN   – System User access token
+//   META_TEST_EVENT_CODE         – (optional) TESTxxxx code while testing
+interface MetaContext {
+  ip?: string;
+  ua?: string;
+  fbp?: string;
+  fbc?: string;
+}
+
+const sha256 = (v: string) =>
+  crypto.createHash('sha256').update(v.trim().toLowerCase()).digest('hex');
+
+async function sendToMetaCAPI(data: FertilityLeadInput, ctx: MetaContext) {
+  const pixelId = process.env.META_PIXEL_ID;
+  const token = process.env.META_CONVERSIONS_API_TOKEN;
+  // Not configured yet → skip quietly (don't log as an error).
+  if (!pixelId || !token) return { skipped: true };
+
+  // Stage 1 = a Lead; Stage 2 = booking a consultation (Schedule).
+  const eventName = data.stage === 'stage2' ? 'Schedule' : 'Lead';
+
+  const phoneDigits = fullNumber(data).replace(/^\+/, ''); // e.g. 919876543210
+  const parts = data.name.trim().split(/\s+/);
+  const firstName = parts[0] || '';
+  const lastName = parts.slice(1).join(' ');
+
+  const user_data: Record<string, unknown> = { ph: [sha256(phoneDigits)] };
+  if (firstName) user_data.fn = [sha256(firstName)];
+  if (lastName) user_data.ln = [sha256(lastName)];
+  if (data.iso) user_data.country = [sha256(data.iso)];
+  if (ctx.ip) user_data.client_ip_address = ctx.ip;
+  if (ctx.ua) user_data.client_user_agent = ctx.ua;
+  if (ctx.fbp) user_data.fbp = ctx.fbp;
+  if (ctx.fbc) user_data.fbc = ctx.fbc;
+
+  const event = {
+    event_name: eventName,
+    event_time: Math.floor(Date.now() / 1000),
+    action_source: 'website',
+    event_source_url: data.pageUrl || undefined,
+    event_id: crypto.randomUUID(), // used for browser/server dedup if a Pixel also fires
+    user_data,
+    custom_data: {
+      content_name: data.formName,
+      content_category: 'fertility',
+      ...(data.concern ? { content_ids: [data.concern] } : {}),
+    },
+  };
+
+  const payload: Record<string, unknown> = { data: [event] };
+  if (process.env.META_TEST_EVENT_CODE) {
+    payload.test_event_code = process.env.META_TEST_EVENT_CODE;
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(
+      `https://graph.facebook.com/v21.0/${pixelId}/events?access_token=${token}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      }
+    );
+    clearTimeout(timeout);
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(json?.error?.message || `Meta CAPI HTTP ${res.status}`);
+    }
+    return json;
+  } catch (err) {
+    clearTimeout(timeout);
+    throw err instanceof Error ? err : new Error(String(err));
+  }
+}
+
 // ── Route handler ─────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   let body: Record<string, string>;
@@ -232,9 +314,20 @@ export async function POST(req: NextRequest) {
     pageUrl: pageUrl || undefined,
   };
 
-  const [sheetResult, crmResult] = await Promise.allSettled([
+  const metaCtx: MetaContext = {
+    ip:
+      (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() ||
+      req.headers.get('x-real-ip') ||
+      undefined,
+    ua: req.headers.get('user-agent') || undefined,
+    fbp: req.cookies.get('_fbp')?.value,
+    fbc: req.cookies.get('_fbc')?.value,
+  };
+
+  const [sheetResult, crmResult, metaResult] = await Promise.allSettled([
     appendToGoogleSheet(leadData),
     sendToTeleCRM(leadData),
+    sendToMetaCAPI(leadData, metaCtx),
   ]);
 
   if (sheetResult.status === 'rejected') {
@@ -243,6 +336,16 @@ export async function POST(req: NextRequest) {
   if (crmResult.status === 'rejected') {
     console.error('[Fertility TeleCRM] Error:', crmResult.reason?.message);
   }
+  if (metaResult.status === 'rejected') {
+    console.error('[Fertility Meta CAPI] Error:', metaResult.reason?.message);
+  }
+
+  const metaStatus =
+    metaResult.status !== 'fulfilled'
+      ? 'failed'
+      : (metaResult.value as { skipped?: boolean })?.skipped
+      ? 'skipped'
+      : 'ok';
 
   return NextResponse.json(
     {
@@ -250,6 +353,7 @@ export async function POST(req: NextRequest) {
       form: leadData.formName,
       sheet: sheetResult.status === 'fulfilled' ? 'ok' : 'failed',
       crm: crmResult.status === 'fulfilled' ? 'ok' : 'failed',
+      meta: metaStatus,
     },
     { status: 201 }
   );
