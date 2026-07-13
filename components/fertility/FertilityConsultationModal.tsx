@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useRouter } from 'next/navigation';
 import { fertilityHealthGoals } from '@/components/fertility/fertilityContent';
 import { WhatsAppField } from '@/components/fertility/WhatsAppField';
 import {
@@ -50,7 +49,6 @@ const prettyDate = (s: string) =>
     : '';
 
 export function FertilityConsultationModal({ open, onClose }: Props) {
-  const router = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [country, setCountry] = useState<Country>(DEFAULT_COUNTRY);
@@ -160,7 +158,9 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
         setSubmitting(false);
         return setError(data.error || 'Something went wrong. Please try again.');
       }
-      router.push('/fertility/thank-you');
+      // Full-page navigation (not client-side) so the thank-you page loads
+      // reliably and the Meta Pixel PageView fires fresh on it.
+      window.location.href = '/fertility/thank-you';
     } catch {
       setSubmitting(false);
       setError('Network error. Please try again.');

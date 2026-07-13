@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useRouter } from 'next/navigation';
 import { WhatsAppField } from '@/components/fertility/WhatsAppField';
 import { Country, DEFAULT_COUNTRY, detectCountry } from '@/components/fertility/countries';
 
@@ -12,7 +11,6 @@ interface Props {
 }
 
 export function FertilityLeadModal({ open, onClose }: Props) {
-  const router = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [country, setCountry] = useState<Country>(DEFAULT_COUNTRY);
@@ -76,7 +74,9 @@ export function FertilityLeadModal({ open, onClose }: Props) {
         JSON.stringify({ name: name.trim(), phone: digits, iso: country.iso })
       );
 
-      router.push('/fertility/watch');
+      // Full-page navigation (not client-side) so the watch page loads
+      // reliably and the Meta Pixel PageView fires fresh on it.
+      window.location.href = '/fertility/watch';
     } catch {
       setSubmitting(false);
       setError('Network error. Please try again.');
