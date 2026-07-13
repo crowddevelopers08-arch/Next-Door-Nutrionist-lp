@@ -138,6 +138,17 @@ function _applyWidths(sheet, widths) {
   });
 }
 
+// Write the header row WITHOUT clobbering data. If row 1 isn't already the
+// header (e.g. the sheet was created without one), insert a fresh row on top
+// so no existing data is lost.
+function _ensureHeaderRow(sheet, headers) {
+  var a1 = String(sheet.getRange(1, 1).getValue()).trim().toLowerCase();
+  if (a1 !== String(headers[0]).toLowerCase()) {
+    if (sheet.getLastRow() >= 1) sheet.insertRowBefore(1);
+  }
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+}
+
 function createLeadsSheet(ss) {
   try {
     if (!ss) ss = getSpreadsheet();
@@ -508,7 +519,7 @@ function reformatLeadsSheet() {
       if (!s) return;
     }
 
-    s.getRange(1, 1, 1, LEADS_HEADERS.length).setValues([LEADS_HEADERS]);
+    _ensureHeaderRow(s, LEADS_HEADERS);
     _styleHeader(s, LEADS_HEADERS.length, '#0B4A35');
     _applyWidths(s, LEADS_WIDTHS);
     s.setRowHeight(1, 42);
@@ -539,7 +550,7 @@ function reformatFeedbackSheet() {
       if (!s) return;
     }
 
-    s.getRange(1, 1, 1, FEEDBACK_HEADERS.length).setValues([FEEDBACK_HEADERS]);
+    _ensureHeaderRow(s, FEEDBACK_HEADERS);
     _styleHeader(s, FEEDBACK_HEADERS.length, '#0B4A35');
     _applyWidths(s, FEEDBACK_WIDTHS);
     s.setRowHeight(1, 42);
@@ -570,7 +581,7 @@ function reformatFertilityLeadsSheet() {
       if (!s) return;
     }
 
-    s.getRange(1, 1, 1, FERTILITY_LEADS_HEADERS.length).setValues([FERTILITY_LEADS_HEADERS]);
+    _ensureHeaderRow(s, FERTILITY_LEADS_HEADERS);
     _styleHeader(s, FERTILITY_LEADS_HEADERS.length, '#0B4A35');
     _applyWidths(s, FERTILITY_LEADS_WIDTHS);
     s.setRowHeight(1, 42);
@@ -601,7 +612,7 @@ function reformatFertilityConsultationsSheet() {
       if (!s) return;
     }
 
-    s.getRange(1, 1, 1, FERTILITY_CONSULT_HEADERS.length).setValues([FERTILITY_CONSULT_HEADERS]);
+    _ensureHeaderRow(s, FERTILITY_CONSULT_HEADERS);
     _styleHeader(s, FERTILITY_CONSULT_HEADERS.length, '#0B4A35');
     _applyWidths(s, FERTILITY_CONSULT_WIDTHS);
     s.setRowHeight(1, 42);
@@ -622,6 +633,126 @@ function reformatFertilityConsultationsSheet() {
   } catch (e) {
     Logger.log('Error reformatting Fertility Consultations sheet: ' + e.message);
   }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  ONE-TIME MIGRATION  — upgrade old fertility rows to the new column layout
+//  Old "Fertility Consultations": [Timestamp, Name, Phone, Concern, Location,
+//                                  Date, Time, Source]                  (8 cols)
+//  New:                            [Timestamp, Name, WhatsApp, Country, Concern,
+//                                  Location, Date, Time (Local),
+//                                  Clinic Time (IST), Timezone, Source] (11 cols)
+//
+//  Old "Fertility Leads":          [Timestamp, Name, Phone, Concern, Source] (5)
+//  New:                            [Timestamp, Name, WhatsApp, Country,
+//                                  Concern, Source]                         (6)
+//
+//  Safe to run more than once: rows already in the new layout are left as-is.
+// ─────────────────────────────────────────────────────────────────────────────
+
+function migrateFertilityConsultations() {
+  try {
+    var ss = getSpreadsheet();
+    var s = ss.getSheetByName('Fertility Consultations');
+    if (!s) {
+      Logger.log('Fertility Consultations not found — creating fresh.');
+      createFertilityConsultationsSheet(ss);
+      return;
+    }
+
+    var lastRow = s.getLastRow();
+    if (lastRow < 1) {
+      reformatFertilityConsultationsSheet();
+      return;
+    }
+
+    var firstCell = String(s.getRange(1, 1).getValue()).trim().toLowerCase();
+    var hasHeader = firstCell === 'timestamp';
+    var dataStart = hasHeader ? 2 : 1;
+    var numData = lastRow - dataStart + 1;
+
+    var out = [];
+    if (numData > 0) {
+      var width = Math.max(s.getLastColumn(), FERTILITY_CONSULT_HEADERS.length);
+      var rows = s.getRange(dataStart, 1, numData, width).getValues();
+      out = rows.map(function (r) {
+        // A row is already new-format if the Timezone column (index 9) is filled.
+        var isNew = r[9] !== '' && r[9] != null;
+        if (isNew) return r.slice(0, FERTILITY_CONSULT_HEADERS.length);
+        // Old 8-column row -> new 11-column layout.
+        var ts = r[0], name = r[1], phone = r[2], concern = r[3],
+            location = r[4], date = r[5], time = r[6], source = r[7];
+        return [ts, name, phone, 'India', concern, location, date,
+                time, time, 'Asia/Kolkata', source];
+      });
+    }
+
+    s.clearContents();
+    s.getRange(1, 1, 1, FERTILITY_CONSULT_HEADERS.length).setValues([FERTILITY_CONSULT_HEADERS]);
+    if (out.length) {
+      s.getRange(2, 1, out.length, FERTILITY_CONSULT_HEADERS.length).setValues(out);
+    }
+    reformatFertilityConsultationsSheet();
+    Logger.log('Migrated Fertility Consultations. Data rows: ' + out.length);
+  } catch (e) {
+    Logger.log('Error migrating Fertility Consultations: ' + e.message);
+  }
+}
+
+function migrateFertilityLeads() {
+  try {
+    var ss = getSpreadsheet();
+    var s = ss.getSheetByName('Fertility Leads');
+    if (!s) {
+      Logger.log('Fertility Leads not found — creating fresh.');
+      createFertilityLeadsSheet(ss);
+      return;
+    }
+
+    var lastRow = s.getLastRow();
+    if (lastRow < 1) {
+      reformatFertilityLeadsSheet();
+      return;
+    }
+
+    var firstCell = String(s.getRange(1, 1).getValue()).trim().toLowerCase();
+    var hasHeader = firstCell === 'timestamp';
+    var dataStart = hasHeader ? 2 : 1;
+    var numData = lastRow - dataStart + 1;
+
+    var out = [];
+    if (numData > 0) {
+      var width = Math.max(s.getLastColumn(), FERTILITY_LEADS_HEADERS.length);
+      var rows = s.getRange(dataStart, 1, numData, width).getValues();
+      out = rows.map(function (r) {
+        // New-format rows have Source in column 6 (index 5) filled.
+        var isNew = r[5] !== '' && r[5] != null;
+        if (isNew) return r.slice(0, FERTILITY_LEADS_HEADERS.length);
+        // Old 5-column row -> new 6-column layout (insert Country).
+        var ts = r[0], name = r[1], phone = r[2], concern = r[3], source = r[4];
+        return [ts, name, phone, 'India', concern, source];
+      });
+    }
+
+    s.clearContents();
+    s.getRange(1, 1, 1, FERTILITY_LEADS_HEADERS.length).setValues([FERTILITY_LEADS_HEADERS]);
+    if (out.length) {
+      s.getRange(2, 1, out.length, FERTILITY_LEADS_HEADERS.length).setValues(out);
+    }
+    reformatFertilityLeadsSheet();
+    Logger.log('Migrated Fertility Leads. Data rows: ' + out.length);
+  } catch (e) {
+    Logger.log('Error migrating Fertility Leads: ' + e.message);
+  }
+}
+
+// Run this ONE function to upgrade both fertility tabs at once.
+function migrateFertilityTabs() {
+  Logger.log('=== Migrating fertility tabs to the new layout ===');
+  migrateFertilityLeads();
+  migrateFertilityConsultations();
+  listSheets();
+  Logger.log('=== Migration complete ===');
 }
 
 function checkDeployment() {
