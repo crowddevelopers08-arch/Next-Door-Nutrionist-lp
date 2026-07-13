@@ -3,9 +3,10 @@ import { AnimateOnScroll } from '@/components/AnimateOnScroll';
 import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
 
 const CLINIC_MAP_EMBED =
-  'https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d3941869.53600558!2d76.66219557428757!3d15.241490019437036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e9!4m3!3m2!1d13.0749937!2d80.1635814!4m5!1s0x3bcb910011010869%3A0x6d632731880b73e5!2sHormone%20Nutrition%20Clinic%2C%203rd%20Floor%2C%20Westend%20Mall%2C%20301-A%2C%20Road%20No.%2036%2C%20Aditya%20Enclave%2C%20Venkatagiri%2C%20Jubilee%20Hills%2C%20Hyderabad%2C%20Telangana%20500033!3m2!1d17.4355492!2d78.4023337!5e0!3m2!1sen!2sin!4v1783663414263!5m2!1sen!2sin';
+  'https://www.google.com/maps?q=Hormone+Nutrition+Clinic,+3rd+Floor,+Westend+Mall,+301-A,+Road+No.+36,+Aditya+Enclave,+Venkatagiri,+Jubilee+Hills,+Hyderabad,+Telangana+500033&z=16&output=embed';
 
-const CLINIC_MAP_LINK = 'https://maps.app.goo.gl/yjUbqXFvbJDii6o2A';
+const CLINIC_MAP_LINK =
+  'https://www.google.com/maps/dir/?api=1&destination=17.4355492,78.4023337&travelmode=driving';
 
 const quickLinks = [
   { label: 'Who Is This For', href: '#who-is-this-for' },
@@ -15,10 +16,6 @@ const quickLinks = [
   { label: 'Book Your Initial Discovery Call', href: '' },
 ];
 
-const instagramAccounts = [
-  { handle: '@hormonenutritionclinic', href: 'https://www.instagram.com/hormonenutritionclinic/' },
-  { handle: '@nextdoornutritionist', href: 'https://www.instagram.com/nextdoornutritionist/' },
-];
 
 function InstagramLink({ handle, href }: { handle: string; href: string }) {
   return (
@@ -59,12 +56,9 @@ export function FertilityFooter() {
           <p className="font-outfit max-w-[280px] text-[14px] leading-[1.75] text-[#B7D29B]">
             Personalized clinical nutrition and lifestyle guidance for fertility, conception, and healthier pregnancy preparation.
           </p>
-
-          <div className="flex flex-col gap-3">
-            {instagramAccounts.map((account) => (
-              <InstagramLink key={account.handle} {...account} />
-            ))}
-          </div>
+          <FertilityCtaButton className="font-outfit inline-flex rounded-full bg-[#FF92A5] px-5 py-2.5 text-[13px] font-semibold text-[#0B4A35] shadow-sm transition-colors hover:bg-white">
+            Book Your Initial Discovery Call
+          </FertilityCtaButton>
         </div>
 
         <div className="space-y-5">
