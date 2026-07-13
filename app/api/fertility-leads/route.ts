@@ -10,10 +10,15 @@ interface FertilityLeadInput {
   formName: string;
   name: string;
   phone: string;
+  dialCode?: string;
+  country?: string;
+  iso?: string;
   concern?: string;
   location?: string;
   date?: string;
   time?: string;
+  timeIST?: string;
+  timezone?: string;
   pageUrl?: string;
 }
 
@@ -22,9 +27,19 @@ const FORM_NAMES: Record<Stage, string> = {
   stage2: 'fertility online consultation lp leads',
 };
 
-function isValidIndianPhone(raw: string) {
-  const cleaned = raw.replace(/[\s\-\(\)]/g, '').replace(/^\+91/, '');
-  return /^[6-9]\d{9}$/.test(cleaned);
+// India keeps the strict 10-digit check; every other country gets a generic
+// international length check (6–14 national digits).
+function isValidPhone(raw: string, iso?: string) {
+  const digits = raw.replace(/\D/g, '');
+  if (!iso || iso.toUpperCase() === 'IN') return /^[6-9]\d{9}$/.test(digits);
+  return digits.length >= 6 && digits.length <= 14;
+}
+
+// Full E.164-style WhatsApp number, e.g. "+919876543210".
+function fullNumber(data: FertilityLeadInput) {
+  const dial = (data.dialCode || '91').replace(/\D/g, '');
+  const digits = data.phone.replace(/\D/g, '');
+  return `+${dial}${digits}`;
 }
 
 function isValidName(raw: string) {
@@ -41,11 +56,14 @@ async function appendToGoogleSheet(data: FertilityLeadInput) {
     form: data.formName,
     stage: data.stage,
     name: data.name.trim(),
-    phone: data.phone.replace(/[\s\-\(\)]/g, '').replace(/^\+91/, ''),
+    phone: fullNumber(data),
+    country: data.country?.trim() || 'India',
     concern: data.concern?.trim() || 'Not specified',
     location: data.location?.trim() || '',
     date: data.date?.trim() || '',
     time: data.time?.trim() || '',
+    timeIST: data.timeIST?.trim() || '',
+    timezone: data.timezone?.trim() || 'Asia/Kolkata',
     source: data.pageUrl || data.formName,
   };
 
@@ -82,7 +100,7 @@ async function sendToTeleCRM(data: FertilityLeadInput) {
       Id: '',
       name: data.name.trim(),
       email: '',
-      phone: data.phone.replace(/\D/g, ''),
+      phone: fullNumber(data).replace(/^\+/, ''),
       city_1: data.location?.trim() || '',
       preferredtime: data.time || '',
       preferreddate: data.date || '',
@@ -90,7 +108,7 @@ async function sendToTeleCRM(data: FertilityLeadInput) {
         ? `Online fertility consultation booking – Concern: ${data.concern || 'Not specified'}`
         : `Fertility landing page enquiry – Concern: ${data.concern || 'Not specified'}`,
       select_the_procedure: data.concern || '',
-      Country: 'India',
+      Country: data.country?.trim() || 'India',
       LeadID: '',
       CreatedOn: createdOn,
       'Lead Stage': isConsultation ? 'Stage 2 - Online Consultation' : 'Stage 1 - Lead',
@@ -106,7 +124,18 @@ async function sendToTeleCRM(data: FertilityLeadInput) {
       ...(isConsultation
         ? [
             { type: 'SYSTEM_NOTE', text: `Location: ${data.location || 'Not specified'}` },
-            { type: 'SYSTEM_NOTE', text: `Preferred Slot: ${data.date || '-'} ${data.time || ''}` },
+            {
+              type: 'SYSTEM_NOTE',
+              text: `Preferred Slot: ${data.date || '-'} ${data.time || ''}${
+                data.timeIST ? ` (Clinic ${data.timeIST} IST)` : ''
+              }`,
+            },
+            {
+              type: 'SYSTEM_NOTE',
+              text: `Country: ${data.country || 'India'}${
+                data.timezone ? ` · ${data.timezone}` : ''
+              }`,
+            },
           ]
         : []),
       { type: 'SYSTEM_NOTE', text: `Lead Source: ${data.pageUrl || data.formName}` },
@@ -157,10 +186,15 @@ export async function POST(req: NextRequest) {
   const {
     name = '',
     phone = '',
+    dialCode = '',
+    country = '',
+    iso = '',
     concern = '',
     location = '',
     date = '',
     time = '',
+    timeIST = '',
+    timezone = '',
     pageUrl = '',
   } = body;
 
@@ -168,9 +202,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Please enter your name.' }, { status: 400 });
   if (!isValidName(name))
     return NextResponse.json({ error: 'Name should contain letters only.' }, { status: 400 });
-  if (!isValidIndianPhone(phone))
+  if (!isValidPhone(phone, iso))
     return NextResponse.json(
-      { error: 'Please enter a valid 10-digit Indian mobile number.' },
+      { error: 'Please enter a valid WhatsApp number.' },
       { status: 400 }
     );
   if (stage === 'stage2' && (!date.trim() || !time.trim()))
@@ -186,10 +220,15 @@ export async function POST(req: NextRequest) {
     formName: FORM_NAMES[stage],
     name,
     phone,
+    dialCode: dialCode || '91',
+    country: country || 'India',
+    iso: iso || 'IN',
     concern,
     location,
     date,
     time,
+    timeIST,
+    timezone,
     pageUrl: pageUrl || undefined,
   };
 

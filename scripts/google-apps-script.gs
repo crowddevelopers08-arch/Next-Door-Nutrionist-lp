@@ -5,9 +5,21 @@
    Four payload shapes arrive at this one webhook:
      /api/feedback        -> { name, email, phone, suggestions, source }
      /api/submit-lead     -> { name, phone, location, healthGoal, source }
-     /api/fertility-leads -> { stage:'stage1', form, name, phone, concern, source }
-     /api/fertility-leads -> { stage:'stage2', form, name, phone, concern,
-                               location, date, time, source }
+     /api/fertility-leads -> { stage:'stage1', form, name, phone (WhatsApp,
+                               full intl e.g. +9198...), country, concern, source }
+     /api/fertility-leads -> { stage:'stage2', form, name, phone (WhatsApp),
+                               country, concern, location, date, time (visitor
+                               local), timeIST (clinic IST), timezone, source }
+
+   NOTE: The fertility forms now collect an international WhatsApp number with a
+   country selector, and the consultation "time" is shown in the visitor's local
+   timezone. We therefore also store Country, the clinic-side IST time, and the
+   visitor timezone.
+
+   ⚠️ If the "Fertility Leads" / "Fertility Consultations" tabs already exist
+   from the old layout, run reformatFertilityLeadsSheet() and
+   reformatFertilityConsultationsSheet() (or setupSheets()) once after pasting
+   this code so the new column headers are applied.
    ============================================================ */
 
 // ── Get or create spreadsheet reference ──────────────────────────────────────
@@ -99,8 +111,32 @@ function _json(obj) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+//  COLUMN DEFINITIONS  (single source of truth per tab)
+// ─────────────────────────────────────────────────────────────────────────────
+
+var LEADS_HEADERS = ['Timestamp', 'Name', 'Phone', 'Location', 'Health Goal', 'Source'];
+var LEADS_WIDTHS  = [170, 160, 130, 160, 200, 250];
+
+var FEEDBACK_HEADERS = ['Timestamp', 'Name', 'Email', 'Phone', 'Suggestions', 'Source'];
+var FEEDBACK_WIDTHS  = [170, 160, 190, 130, 280, 220];
+
+var FERTILITY_LEADS_HEADERS = ['Timestamp', 'Name', 'WhatsApp Number', 'Country', 'Concern', 'Source'];
+var FERTILITY_LEADS_WIDTHS  = [170, 150, 160, 120, 210, 250];
+
+var FERTILITY_CONSULT_HEADERS = ['Timestamp', 'Name', 'WhatsApp Number', 'Country', 'Concern',
+                                 'Location', 'Preferred Date', 'Preferred Time (Local)',
+                                 'Clinic Time (IST)', 'Timezone', 'Source'];
+var FERTILITY_CONSULT_WIDTHS  = [170, 150, 160, 120, 190, 140, 130, 200, 170, 160, 230];
+
+// ─────────────────────────────────────────────────────────────────────────────
 //  SHEET CREATORS  (with proper spreadsheet reference)
 // ─────────────────────────────────────────────────────────────────────────────
+
+function _applyWidths(sheet, widths) {
+  widths.forEach(function (w, i) {
+    try { sheet.setColumnWidth(i + 1, w); } catch (e) {}
+  });
+}
 
 function createLeadsSheet(ss) {
   try {
@@ -113,14 +149,12 @@ function createLeadsSheet(ss) {
     }
 
     var s = ss.insertSheet('Leads');
-    s.appendRow(['Timestamp', 'Name', 'Phone', 'Location', 'Health Goal', 'Source']);
-    _styleHeader(s, 6, '#0B4A35');
-    [170, 160, 130, 160, 200, 250].forEach(function(w, i) {
-      try { s.setColumnWidth(i + 1, w); } catch(e) {}
-    });
+    s.appendRow(LEADS_HEADERS);
+    _styleHeader(s, LEADS_HEADERS.length, '#0B4A35');
+    _applyWidths(s, LEADS_WIDTHS);
     s.setRowHeight(1, 42);
     s.setFrozenRows(1);
-    s.getRange(1, 1, 1, 6).createFilter();
+    s.getRange(1, 1, 1, LEADS_HEADERS.length).createFilter();
     Logger.log('Created Leads sheet');
     return s;
   } catch (e) {
@@ -140,14 +174,12 @@ function createFeedbackSheet(ss) {
     }
 
     var s = ss.insertSheet('Feedback');
-    s.appendRow(['Timestamp', 'Name', 'Email', 'Phone', 'Suggestions', 'Source']);
-    _styleHeader(s, 6, '#0B4A35');
-    [170, 160, 190, 130, 280, 220].forEach(function(w, i) {
-      try { s.setColumnWidth(i + 1, w); } catch(e) {}
-    });
+    s.appendRow(FEEDBACK_HEADERS);
+    _styleHeader(s, FEEDBACK_HEADERS.length, '#0B4A35');
+    _applyWidths(s, FEEDBACK_WIDTHS);
     s.setRowHeight(1, 42);
     s.setFrozenRows(1);
-    s.getRange(1, 1, 1, 6).createFilter();
+    s.getRange(1, 1, 1, FEEDBACK_HEADERS.length).createFilter();
     Logger.log('Created Feedback sheet');
     return s;
   } catch (e) {
@@ -167,14 +199,12 @@ function createFertilityLeadsSheet(ss) {
     }
 
     var s = ss.insertSheet('Fertility Leads');
-    s.appendRow(['Timestamp', 'Name', 'Phone', 'Concern', 'Source']);
-    _styleHeader(s, 5, '#0B4A35');
-    [170, 170, 130, 220, 280].forEach(function(w, i) {
-      try { s.setColumnWidth(i + 1, w); } catch(e) {}
-    });
+    s.appendRow(FERTILITY_LEADS_HEADERS);
+    _styleHeader(s, FERTILITY_LEADS_HEADERS.length, '#0B4A35');
+    _applyWidths(s, FERTILITY_LEADS_WIDTHS);
     s.setRowHeight(1, 42);
     s.setFrozenRows(1);
-    s.getRange(1, 1, 1, 5).createFilter();
+    s.getRange(1, 1, 1, FERTILITY_LEADS_HEADERS.length).createFilter();
     Logger.log('Created Fertility Leads sheet');
     return s;
   } catch (e) {
@@ -194,15 +224,12 @@ function createFertilityConsultationsSheet(ss) {
     }
 
     var s = ss.insertSheet('Fertility Consultations');
-    s.appendRow(['Timestamp', 'Name', 'Phone', 'Concern', 'Location',
-                 'Preferred Date', 'Preferred Time', 'Source']);
-    _styleHeader(s, 8, '#0B4A35');
-    [170, 160, 130, 200, 160, 130, 170, 240].forEach(function(w, i) {
-      try { s.setColumnWidth(i + 1, w); } catch(e) {}
-    });
+    s.appendRow(FERTILITY_CONSULT_HEADERS);
+    _styleHeader(s, FERTILITY_CONSULT_HEADERS.length, '#0B4A35');
+    _applyWidths(s, FERTILITY_CONSULT_WIDTHS);
     s.setRowHeight(1, 42);
     s.setFrozenRows(1);
-    s.getRange(1, 1, 1, 8).createFilter();
+    s.getRange(1, 1, 1, FERTILITY_CONSULT_HEADERS.length).createFilter();
     Logger.log('Created Fertility Consultations sheet');
     return s;
   } catch (e) {
@@ -239,12 +266,23 @@ function doPost(e) {
     if (data.stage === 'stage2') {
       sheet = ss.getSheetByName('Fertility Consultations') || createFertilityConsultationsSheet(ss);
       nextRow = sheet.getLastRow() + 1;
-      sheet.appendRow([ts, data.name || '', data.phone || '',
-                       data.concern || 'Not specified', data.location || '',
-                       data.date || '', data.time || '', source]);
-      styleRow(sheet, nextRow, 8);
-      sheet.getRange(nextRow, 3).setHorizontalAlignment('center');
-      sheet.getRange(nextRow, 6).setHorizontalAlignment('center');
+      sheet.appendRow([
+        ts,
+        data.name || '',
+        data.phone || '',                 // full international WhatsApp number
+        data.country || 'India',
+        data.concern || 'Not specified',
+        data.location || '',
+        data.date || '',
+        data.time || '',                  // visitor's local time slot
+        data.timeIST || '',               // clinic-side time (IST)
+        data.timezone || '',              // visitor IANA timezone
+        source
+      ]);
+      styleRow(sheet, nextRow, FERTILITY_CONSULT_HEADERS.length);
+      sheet.getRange(nextRow, 3).setHorizontalAlignment('center');  // WhatsApp
+      sheet.getRange(nextRow, 7).setHorizontalAlignment('center');  // Preferred Date
+      sheet.getRange(nextRow, 9).setHorizontalAlignment('center');  // Clinic Time (IST)
       Logger.log('Consultation saved to row: ' + nextRow);
       return _json({ success: true, tab: 'Fertility Consultations', row: nextRow });
     }
@@ -253,10 +291,16 @@ function doPost(e) {
     if (data.stage === 'stage1') {
       sheet = ss.getSheetByName('Fertility Leads') || createFertilityLeadsSheet(ss);
       nextRow = sheet.getLastRow() + 1;
-      sheet.appendRow([ts, data.name || '', data.phone || '',
-                       data.concern || 'Not specified', source]);
-      styleRow(sheet, nextRow, 5);
-      sheet.getRange(nextRow, 3).setHorizontalAlignment('center');
+      sheet.appendRow([
+        ts,
+        data.name || '',
+        data.phone || '',                 // full international WhatsApp number
+        data.country || 'India',
+        data.concern || 'Not specified',
+        source
+      ]);
+      styleRow(sheet, nextRow, FERTILITY_LEADS_HEADERS.length);
+      sheet.getRange(nextRow, 3).setHorizontalAlignment('center');  // WhatsApp
       Logger.log('Fertility lead saved to row: ' + nextRow);
       return _json({ success: true, tab: 'Fertility Leads', row: nextRow });
     }
@@ -270,7 +314,7 @@ function doPost(e) {
       nextRow = sheet.getLastRow() + 1;
       sheet.appendRow([ts, data.name || '', data.email || '', data.phone || '',
                        data.suggestions || '', data.source || '']);
-      styleRow(sheet, nextRow, 6);
+      styleRow(sheet, nextRow, FEEDBACK_HEADERS.length);
       sheet.getRange(nextRow, 4).setHorizontalAlignment('center');
       return _json({ success: true, tab: 'Feedback', row: nextRow });
     }
@@ -288,7 +332,7 @@ function doPost(e) {
       source
     ]);
 
-    styleRow(sheet, nextRow, 6);
+    styleRow(sheet, nextRow, LEADS_HEADERS.length);
     sheet.getRange(nextRow, 3).setHorizontalAlignment('center');
 
     Logger.log('Lead saved to row: ' + nextRow);
@@ -316,7 +360,20 @@ function testFertilityStage1() {
     stage: 'stage1',
     form: 'fertility lp leads',
     name: 'Stage One Test',
-    phone: '9876543210',
+    phone: '+919876543210',
+    country: 'India',
+    concern: 'Not specified',
+    pageUrl: 'https://example.com/fertility'
+  });
+}
+
+function testFertilityStage1International() {
+  _mockPost({
+    stage: 'stage1',
+    form: 'fertility lp leads',
+    name: 'Dubai Lead Test',
+    phone: '+971501234567',
+    country: 'United Arab Emirates',
     concern: 'Not specified',
     pageUrl: 'https://example.com/fertility'
   });
@@ -327,11 +384,31 @@ function testFertilityStage2() {
     stage: 'stage2',
     form: 'fertility online consultation lp leads',
     name: 'Stage Two Test',
-    phone: '9876543210',
+    phone: '+919876543210',
+    country: 'India',
     concern: 'PCOS / Hormonal Imbalance',
     location: 'Hyderabad',
     date: '2026-07-15',
     time: '10:00 AM – 10:30 AM',
+    timeIST: '10:00 AM – 10:30 AM',
+    timezone: 'Asia/Kolkata',
+    pageUrl: 'https://example.com/fertility/watch'
+  });
+}
+
+function testFertilityStage2International() {
+  _mockPost({
+    stage: 'stage2',
+    form: 'fertility online consultation lp leads',
+    name: 'Sydney Consult Test',
+    phone: '+61412345678',
+    country: 'Australia',
+    concern: 'Trying to Conceive',
+    location: 'Sydney',
+    date: '2026-07-23',
+    time: '2:30 PM – 3:00 PM GMT+10',
+    timeIST: '10:00 AM – 10:30 AM',
+    timezone: 'Australia/Sydney',
     pageUrl: 'https://example.com/fertility/watch'
   });
 }
@@ -359,7 +436,9 @@ function testFeedback() {
 
 function testAll() {
   testFertilityStage1();
+  testFertilityStage1International();
   testFertilityStage2();
+  testFertilityStage2International();
   testLeadSubmission();
   testFeedback();
   listSheets();
@@ -407,6 +486,10 @@ function setupSheets() {
     createFertilityLeadsSheet(ss);
     createFertilityConsultationsSheet(ss);
 
+    // Make sure existing tabs pick up any new columns / headers.
+    reformatFertilityLeadsSheet();
+    reformatFertilityConsultationsSheet();
+
     listSheets();
     Logger.log('setupSheets complete.');
     Logger.log('Spreadsheet ID: ' + ss.getId());
@@ -425,23 +508,19 @@ function reformatLeadsSheet() {
       if (!s) return;
     }
 
-    s.getRange(1, 1, 1, 6)
-     .setValues([['Timestamp', 'Name', 'Phone', 'Location', 'Health Goal', 'Source']]);
-
-    _styleHeader(s, 6, '#0B4A35');
-    [170, 160, 130, 160, 200, 250].forEach(function(w, i) {
-      try { s.setColumnWidth(i + 1, w); } catch(e) {}
-    });
+    s.getRange(1, 1, 1, LEADS_HEADERS.length).setValues([LEADS_HEADERS]);
+    _styleHeader(s, LEADS_HEADERS.length, '#0B4A35');
+    _applyWidths(s, LEADS_WIDTHS);
     s.setRowHeight(1, 42);
     s.setFrozenRows(1);
 
     var filter = s.getFilter();
     if (filter) filter.remove();
-    s.getRange(1, 1, 1, 6).createFilter();
+    s.getRange(1, 1, 1, LEADS_HEADERS.length).createFilter();
 
     var last = s.getLastRow();
     for (var i = 2; i <= last; i++) {
-      styleRow(s, i, 6);
+      styleRow(s, i, LEADS_HEADERS.length);
       s.getRange(i, 3).setHorizontalAlignment('center');
     }
     Logger.log('Leads reformatted. Rows: ' + last);
@@ -460,20 +539,19 @@ function reformatFeedbackSheet() {
       if (!s) return;
     }
 
-    _styleHeader(s, 6, '#0B4A35');
-    [170, 160, 190, 130, 280, 220].forEach(function(w, i) {
-      try { s.setColumnWidth(i + 1, w); } catch(e) {}
-    });
+    s.getRange(1, 1, 1, FEEDBACK_HEADERS.length).setValues([FEEDBACK_HEADERS]);
+    _styleHeader(s, FEEDBACK_HEADERS.length, '#0B4A35');
+    _applyWidths(s, FEEDBACK_WIDTHS);
     s.setRowHeight(1, 42);
     s.setFrozenRows(1);
 
     var filter = s.getFilter();
     if (filter) filter.remove();
-    s.getRange(1, 1, 1, 6).createFilter();
+    s.getRange(1, 1, 1, FEEDBACK_HEADERS.length).createFilter();
 
     var last = s.getLastRow();
     for (var i = 2; i <= last; i++) {
-      styleRow(s, i, 6);
+      styleRow(s, i, FEEDBACK_HEADERS.length);
       s.getRange(i, 4).setHorizontalAlignment('center');
     }
     Logger.log('Feedback reformatted. Rows: ' + last);
@@ -492,23 +570,19 @@ function reformatFertilityLeadsSheet() {
       if (!s) return;
     }
 
-    s.getRange(1, 1, 1, 5)
-     .setValues([['Timestamp', 'Name', 'Phone', 'Concern', 'Source']]);
-
-    _styleHeader(s, 5, '#0B4A35');
-    [170, 170, 130, 220, 280].forEach(function(w, i) {
-      try { s.setColumnWidth(i + 1, w); } catch(e) {}
-    });
+    s.getRange(1, 1, 1, FERTILITY_LEADS_HEADERS.length).setValues([FERTILITY_LEADS_HEADERS]);
+    _styleHeader(s, FERTILITY_LEADS_HEADERS.length, '#0B4A35');
+    _applyWidths(s, FERTILITY_LEADS_WIDTHS);
     s.setRowHeight(1, 42);
     s.setFrozenRows(1);
 
     var filter = s.getFilter();
     if (filter) filter.remove();
-    s.getRange(1, 1, 1, 5).createFilter();
+    s.getRange(1, 1, 1, FERTILITY_LEADS_HEADERS.length).createFilter();
 
     var last = s.getLastRow();
     for (var i = 2; i <= last; i++) {
-      styleRow(s, i, 5);
+      styleRow(s, i, FERTILITY_LEADS_HEADERS.length);
       s.getRange(i, 3).setHorizontalAlignment('center');
     }
     Logger.log('Fertility Leads reformatted. Rows: ' + last);
@@ -527,26 +601,22 @@ function reformatFertilityConsultationsSheet() {
       if (!s) return;
     }
 
-    s.getRange(1, 1, 1, 8)
-     .setValues([['Timestamp', 'Name', 'Phone', 'Concern', 'Location',
-                  'Preferred Date', 'Preferred Time', 'Source']]);
-
-    _styleHeader(s, 8, '#0B4A35');
-    [170, 160, 130, 200, 160, 130, 170, 240].forEach(function(w, i) {
-      try { s.setColumnWidth(i + 1, w); } catch(e) {}
-    });
+    s.getRange(1, 1, 1, FERTILITY_CONSULT_HEADERS.length).setValues([FERTILITY_CONSULT_HEADERS]);
+    _styleHeader(s, FERTILITY_CONSULT_HEADERS.length, '#0B4A35');
+    _applyWidths(s, FERTILITY_CONSULT_WIDTHS);
     s.setRowHeight(1, 42);
     s.setFrozenRows(1);
 
     var filter = s.getFilter();
     if (filter) filter.remove();
-    s.getRange(1, 1, 1, 8).createFilter();
+    s.getRange(1, 1, 1, FERTILITY_CONSULT_HEADERS.length).createFilter();
 
     var last = s.getLastRow();
     for (var i = 2; i <= last; i++) {
-      styleRow(s, i, 8);
-      s.getRange(i, 3).setHorizontalAlignment('center');
-      s.getRange(i, 6).setHorizontalAlignment('center');
+      styleRow(s, i, FERTILITY_CONSULT_HEADERS.length);
+      s.getRange(i, 3).setHorizontalAlignment('center');  // WhatsApp
+      s.getRange(i, 7).setHorizontalAlignment('center');  // Preferred Date
+      s.getRange(i, 9).setHorizontalAlignment('center');  // Clinic Time (IST)
     }
     Logger.log('Fertility Consultations reformatted. Rows: ' + last);
   } catch (e) {
@@ -616,6 +686,10 @@ function fixSpreadsheetBinding() {
       createFeedbackSheet(ss);
       createFertilityLeadsSheet(ss);
       createFertilityConsultationsSheet(ss);
+
+      // Apply the latest column layout to any pre-existing fertility tabs.
+      reformatFertilityLeadsSheet();
+      reformatFertilityConsultationsSheet();
 
       listSheets();
 

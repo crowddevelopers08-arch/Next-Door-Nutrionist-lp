@@ -1,49 +1,76 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { fertilityHealthGoals } from '@/components/fertility/fertilityContent';
+import { WhatsAppField } from '@/components/fertility/WhatsAppField';
+import {
+  buildSlots,
+  COUNTRIES,
+  Country,
+  DEFAULT_COUNTRY,
+  detectCountry,
+  Slot,
+  tzShortLabel,
+} from '@/components/fertility/countries';
 
 interface Props {
   open: boolean;
   onClose: () => void;
 }
 
-// 30-minute consultation slots, 10:00 AM to 7:00 PM
-const fmt = (mins: number) => {
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
-  const ampm = h < 12 ? 'AM' : 'PM';
-  const h12 = h % 12 === 0 ? 12 : h % 12;
-  return `${h12}:${String(m).padStart(2, '0')} ${ampm}`;
+const dayOffsetLabel = (o: number) =>
+  o > 0 ? ` (+${o}d)` : o < 0 ? ` (${o}d)` : '';
+
+const WEEKDAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+const toYmd = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
+    d.getDate()
+  ).padStart(2, '0')}`;
+
+const ymdToDate = (s: string) => {
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, m - 1, d);
 };
 
-const TIME_SLOTS = (() => {
-  const slots: { value: string; label: string }[] = [];
-  for (let mins = 10 * 60; mins < 19 * 60; mins += 30) {
-    const label = `${fmt(mins)} – ${fmt(mins + 30)}`;
-    slots.push({ value: label, label });
-  }
-  return slots;
-})();
+const prettyDate = (s: string) =>
+  s
+    ? ymdToDate(s).toLocaleDateString('en-GB', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      })
+    : '';
 
 export function FertilityConsultationModal({ open, onClose }: Props) {
   const router = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [country, setCountry] = useState<Country>(DEFAULT_COUNTRY);
   const [concern, setConcern] = useState('');
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [dateOpen, setDateOpen] = useState(false);
+  const [viewMonth, setViewMonth] = useState<Date>(() => new Date());
+  const [slot, setSlot] = useState<Slot | null>(null);
   const [slotOpen, setSlotOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    setCountry(detectCountry());
+  }, []);
 
-  // Prefill name / phone captured in Stage 1
+  // Prefill name / phone / country captured in Stage 1
   useEffect(() => {
     if (!open) return;
     try {
@@ -52,6 +79,10 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
         const saved = JSON.parse(raw);
         setName(saved.name || '');
         setPhone(saved.phone || '');
+        if (saved.iso) {
+          const c = COUNTRIES.find((x) => x.iso === saved.iso);
+          if (c) setCountry(c);
+        }
       }
     } catch {
       /* ignore */
@@ -67,22 +98,41 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
     };
   }, [open]);
 
-  if (!open || !mounted) return null;
-
   const today = new Date().toISOString().split('T')[0];
+
+  // Clinic hours (10 AM – 7 PM IST) shown in the visitor's local time.
+  const slots = useMemo(
+    () => buildSlots(date || today, country.tz),
+    [date, country.tz, today]
+  );
+  const tzLabel = useMemo(
+    () => tzShortLabel(date || today, country.tz),
+    [date, country.tz, today]
+  );
+
+  // A previously chosen slot no longer matches once the date / country changes.
+  useEffect(() => {
+    setSlot(null);
+  }, [date, country.tz]);
+
+  if (!open || !mounted) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     if (name.trim().length < 2) return setError('Please enter your name.');
-    const cleanPhone = phone.replace(/\D/g, '').replace(/^91/, '');
-    if (!/^[6-9]\d{9}$/.test(cleanPhone))
-      return setError('Please enter a valid 10-digit mobile number.');
+    const digits = phone.replace(/\D/g, '');
+    if (country.iso === 'IN') {
+      if (!/^[6-9]\d{9}$/.test(digits))
+        return setError('Please enter a valid 10-digit WhatsApp number.');
+    } else if (digits.length < 6 || digits.length > 14) {
+      return setError('Please enter a valid WhatsApp number.');
+    }
     if (!concern) return setError('Please select your concern.');
     if (location.trim().length < 2) return setError('Please enter your location.');
     if (!date) return setError('Please select a preferred date.');
-    if (!time) return setError('Please select a preferred time.');
+    if (!slot) return setError('Please select a preferred time.');
 
     setSubmitting(true);
     try {
@@ -92,11 +142,16 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
         body: JSON.stringify({
           stage: 'stage2',
           name: name.trim(),
-          phone: cleanPhone,
+          phone: digits,
+          dialCode: country.dial,
+          country: country.name,
+          iso: country.iso,
           concern,
           location: location.trim(),
           date,
-          time,
+          time: `${slot.local}${tzLabel ? ` ${tzLabel}` : ''}${dayOffsetLabel(slot.dayOffset)}`,
+          timeIST: slot.ist,
+          timezone: country.tz,
           pageUrl: typeof window !== 'undefined' ? window.location.href : '',
         }),
       });
@@ -111,6 +166,8 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
       setError('Network error. Please try again.');
     }
   };
+
+  const isIndia = country.iso === 'IN';
 
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4">
@@ -158,19 +215,12 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
               />
             </label>
 
-            <label className="block">
-              <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">Phone Number</span>
-              <div className="mt-1.5 flex items-center overflow-hidden rounded-xl border border-[#0B4A35]/15 bg-[#fffaf7] focus-within:border-[#0B4A35]">
-                <span className="px-3 font-outfit text-[14px] text-[#2B2B2B]/60">+91</span>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  placeholder="10-digit mobile number"
-                  className="w-full bg-transparent py-3 pr-4 font-outfit text-[14px] text-[#1A1A1A] outline-none"
-                />
-              </div>
-            </label>
+            <WhatsAppField
+              country={country}
+              onCountry={setCountry}
+              value={phone}
+              onValue={setPhone}
+            />
 
             <label className="block">
               <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">Your Concern</span>
@@ -200,31 +250,50 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
               />
             </label>
 
-            <label className="block">
+            <div className="block">
               <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">Preferred Date</span>
-              <input
-                type="date"
-                value={date}
-                min={today}
-                onChange={(e) => setDate(e.target.value)}
-                className="mt-1.5 w-full rounded-xl border border-[#0B4A35]/15 bg-[#fffaf7] px-3 py-3 font-outfit text-[14px] text-[#1A1A1A] outline-none transition-colors focus:border-[#0B4A35]"
-              />
-            </label>
+              <button
+                type="button"
+                onClick={() => {
+                  setViewMonth(date ? ymdToDate(date) : new Date());
+                  setDateOpen(true);
+                }}
+                className="mt-1.5 flex w-full items-center justify-between rounded-xl border border-[#0B4A35]/15 bg-[#fffaf7] px-4 py-3 font-outfit text-[14px] outline-none transition-colors focus:border-[#0B4A35]"
+              >
+                <span className={date ? 'text-[#1A1A1A]' : 'text-[#2B2B2B]/50'}>
+                  {date ? prettyDate(date) : 'Select a date'}
+                </span>
+                <span className="material-symbols-outlined text-[20px] text-[#0B4A35]">
+                  calendar_month
+                </span>
+              </button>
+            </div>
 
             <div className="block">
-              <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">Preferred Time</span>
+              <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">
+                Preferred Time{tzLabel && !isIndia ? ` (${tzLabel})` : ''}
+              </span>
               <button
                 type="button"
                 onClick={() => setSlotOpen(true)}
                 className="mt-1.5 flex w-full items-center justify-between rounded-xl border border-[#0B4A35]/15 bg-[#fffaf7] px-4 py-3 font-outfit text-[14px] outline-none transition-colors focus:border-[#0B4A35]"
               >
-                <span className={time ? 'text-[#1A1A1A]' : 'text-[#2B2B2B]/50'}>
-                  {time || 'Select a time slot'}
+                <span className={slot ? 'text-[#1A1A1A]' : 'text-[#2B2B2B]/50'}>
+                  {slot
+                    ? `${slot.local}${dayOffsetLabel(slot.dayOffset)}`
+                    : 'Select a time slot'}
                 </span>
                 <span className="material-symbols-outlined text-[20px] text-[#0B4A35]">schedule</span>
               </button>
             </div>
           </div>
+
+          {!isIndia && (
+            <p className="mt-3 font-outfit text-[11.5px] leading-[1.6] text-[#2B2B2B]/55">
+              Times are shown in your local time{tzLabel ? ` (${tzLabel})` : ''}, matched to
+              our clinic hours (10:00 AM – 7:00 PM IST).
+            </p>
+          )}
 
           {error && (
             <p className="mt-3 font-outfit text-[12.5px] font-medium text-[#D6497E]">{error}</p>
@@ -249,7 +318,14 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
           />
           <div className="pop-in relative flex max-h-[80vh] w-full max-w-[440px] flex-col overflow-hidden rounded-[24px] bg-white shadow-[0_30px_90px_rgba(11,74,53,0.35)]">
             <div className="flex items-center justify-between bg-[#0B4A35] px-5 py-4">
-              <h4 className="font-outfit text-[16px] font-extrabold text-white">Choose a Time Slot</h4>
+              <div className="text-left">
+                <h4 className="font-outfit text-[16px] font-extrabold text-white">Choose a Time Slot</h4>
+                {!isIndia && (
+                  <p className="font-outfit text-[11px] text-[#B7D29B]">
+                    Your local time{tzLabel ? ` · ${tzLabel}` : ''}
+                  </p>
+                )}
+              </div>
               <button
                 type="button"
                 onClick={() => setSlotOpen(false)}
@@ -260,14 +336,14 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2 overflow-y-auto p-4">
-              {TIME_SLOTS.map((slot) => {
-                const selected = time === slot.value;
+              {slots.map((s) => {
+                const selected = slot?.ist === s.ist;
                 return (
                   <button
-                    key={slot.value}
+                    key={s.ist}
                     type="button"
                     onClick={() => {
-                      setTime(slot.value);
+                      setSlot(s);
                       setSlotOpen(false);
                     }}
                     className={`rounded-xl border px-2 py-2.5 font-outfit text-[12.5px] font-semibold transition-colors ${
@@ -276,7 +352,12 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
                         : 'border-[#0B4A35]/15 bg-[#fffaf7] text-[#2B2B2B] hover:border-[#0B4A35]/40'
                     }`}
                   >
-                    {slot.label}
+                    {s.local}
+                    {s.dayOffset !== 0 && (
+                      <span className={selected ? 'text-white/70' : 'text-[#2B2B2B]/45'}>
+                        {dayOffsetLabel(s.dayOffset)}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -284,6 +365,109 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
           </div>
         </div>
       )}
+
+      {/* Date picker popup */}
+      {dateOpen && (() => {
+        const todayDate = ymdToDate(today);
+        const y = viewMonth.getFullYear();
+        const mo = viewMonth.getMonth();
+        const startPad = new Date(y, mo, 1).getDay();
+        const daysInMonth = new Date(y, mo + 1, 0).getDate();
+        const cells: (Date | null)[] = [];
+        for (let i = 0; i < startPad; i++) cells.push(null);
+        for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(y, mo, d));
+        const prevDisabled = y === todayDate.getFullYear() && mo === todayDate.getMonth();
+
+        return (
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+            <div
+              className="fade-in-backdrop fixed inset-0 bg-[#0B1F17]/60 backdrop-blur-sm"
+              onClick={() => setDateOpen(false)}
+            />
+            <div className="pop-in relative flex max-h-[80vh] w-full max-w-[440px] flex-col overflow-hidden rounded-[24px] bg-white shadow-[0_30px_90px_rgba(11,74,53,0.35)]">
+              <div className="flex items-center justify-between bg-[#0B4A35] px-5 py-4">
+                <h4 className="font-outfit text-[16px] font-extrabold text-white">Choose a Date</h4>
+                <button
+                  type="button"
+                  onClick={() => setDateOpen(false)}
+                  aria-label="Close"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25"
+                >
+                  <span className="material-symbols-outlined text-[18px]">close</span>
+                </button>
+              </div>
+
+              <div className="p-4">
+                {/* Month navigation */}
+                <div className="mb-3 flex items-center justify-between">
+                  <button
+                    type="button"
+                    disabled={prevDisabled}
+                    onClick={() => setViewMonth(new Date(y, mo - 1, 1))}
+                    aria-label="Previous month"
+                    className="flex h-9 w-9 items-center justify-center rounded-full text-[#0B4A35] transition-colors hover:bg-[#0B4A35]/8 disabled:opacity-30"
+                  >
+                    <span className="material-symbols-outlined text-[20px]">chevron_left</span>
+                  </button>
+                  <span className="font-outfit text-[14px] font-bold text-[#1A1A1A]">
+                    {MONTHS[mo]} {y}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setViewMonth(new Date(y, mo + 1, 1))}
+                    aria-label="Next month"
+                    className="flex h-9 w-9 items-center justify-center rounded-full text-[#0B4A35] transition-colors hover:bg-[#0B4A35]/8"
+                  >
+                    <span className="material-symbols-outlined text-[20px]">chevron_right</span>
+                  </button>
+                </div>
+
+                {/* Weekday header */}
+                <div className="grid grid-cols-7 gap-1">
+                  {WEEKDAYS.map((w) => (
+                    <div
+                      key={w}
+                      className="py-1 text-center font-outfit text-[11px] font-semibold text-[#2B2B2B]/45"
+                    >
+                      {w}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Day grid */}
+                <div className="mt-1 grid grid-cols-7 gap-1">
+                  {cells.map((cell, i) => {
+                    if (!cell) return <div key={`pad-${i}`} />;
+                    const ymd = toYmd(cell);
+                    const disabled = cell < todayDate;
+                    const selected = ymd === date;
+                    return (
+                      <button
+                        key={ymd}
+                        type="button"
+                        disabled={disabled}
+                        onClick={() => {
+                          setDate(ymd);
+                          setDateOpen(false);
+                        }}
+                        className={`flex aspect-square items-center justify-center rounded-full font-outfit text-[13px] font-semibold transition-colors ${
+                          selected
+                            ? 'bg-[#0B4A35] text-white'
+                            : disabled
+                            ? 'text-[#2B2B2B]/25'
+                            : 'text-[#2B2B2B] hover:bg-[#0B4A35]/10'
+                        }`}
+                      >
+                        {cell.getDate()}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>,
     document.body
   );

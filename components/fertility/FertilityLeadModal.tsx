@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
+import { WhatsAppField } from '@/components/fertility/WhatsAppField';
+import { Country, DEFAULT_COUNTRY, detectCountry } from '@/components/fertility/countries';
 
 interface Props {
   open: boolean;
@@ -13,11 +15,15 @@ export function FertilityLeadModal({ open, onClose }: Props) {
   const router = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [country, setCountry] = useState<Country>(DEFAULT_COUNTRY);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    setCountry(detectCountry());
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -35,9 +41,13 @@ export function FertilityLeadModal({ open, onClose }: Props) {
     setError('');
 
     if (name.trim().length < 2) return setError('Please enter your name.');
-    const cleanPhone = phone.replace(/\D/g, '').replace(/^91/, '');
-    if (!/^[6-9]\d{9}$/.test(cleanPhone))
-      return setError('Please enter a valid 10-digit mobile number.');
+    const digits = phone.replace(/\D/g, '');
+    if (country.iso === 'IN') {
+      if (!/^[6-9]\d{9}$/.test(digits))
+        return setError('Please enter a valid 10-digit WhatsApp number.');
+    } else if (digits.length < 6 || digits.length > 14) {
+      return setError('Please enter a valid WhatsApp number.');
+    }
 
     setSubmitting(true);
     try {
@@ -47,7 +57,10 @@ export function FertilityLeadModal({ open, onClose }: Props) {
         body: JSON.stringify({
           stage: 'stage1',
           name: name.trim(),
-          phone: cleanPhone,
+          phone: digits,
+          dialCode: country.dial,
+          country: country.name,
+          iso: country.iso,
           pageUrl: typeof window !== 'undefined' ? window.location.href : '',
         }),
       });
@@ -60,7 +73,7 @@ export function FertilityLeadModal({ open, onClose }: Props) {
       // Persist for Stage 2 prefill on the watch page
       sessionStorage.setItem(
         'fertilityLead',
-        JSON.stringify({ name: name.trim(), phone: cleanPhone })
+        JSON.stringify({ name: name.trim(), phone: digits, iso: country.iso })
       );
 
       router.push('/fertility/watch');
@@ -117,19 +130,14 @@ export function FertilityLeadModal({ open, onClose }: Props) {
             />
           </label>
 
-          <label className="mt-4 block">
-            <span className="font-outfit text-[12px] font-semibold text-[#2B2B2B]">Phone Number</span>
-            <div className="mt-1.5 flex items-center overflow-hidden rounded-xl border border-[#0B4A35]/15 bg-[#fffaf7] focus-within:border-[#0B4A35]">
-              <span className="px-3 font-outfit text-[14px] text-[#2B2B2B]/60">+91</span>
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                placeholder="10-digit mobile number"
-                className="w-full bg-transparent py-3 pr-4 font-outfit text-[14px] text-[#1A1A1A] outline-none"
-              />
-            </div>
-          </label>
+          <div className="mt-4">
+            <WhatsAppField
+              country={country}
+              onCountry={setCountry}
+              value={phone}
+              onValue={setPhone}
+            />
+          </div>
 
           {error && (
             <p className="mt-3 font-outfit text-[12.5px] font-medium text-[#D6497E]">{error}</p>
