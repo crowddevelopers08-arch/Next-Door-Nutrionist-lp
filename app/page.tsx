@@ -27,7 +27,7 @@ export default function Home() {
         <ProgramsSection />
         <WhatYoullUnderstandSection />
         <HowItWorksSection />
-           <WhyChooseSection />
+        <WhyChooseSection />
         <AboutSection />
         <FounderSection />
         {/* <BeforeAfterSection />

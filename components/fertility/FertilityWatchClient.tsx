@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FertilityConsultationModal } from '@/components/fertility/FertilityConsultationModal';
+import { FertilityCalendlyModal } from '@/components/fertility/FertilityCalendlyModal';
 
 export function FertilityWatchClient() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -69,8 +69,9 @@ export function FertilityWatchClient() {
         {/* Book online consultation */}
         <div className="mt-10">
           <button
+            type="button"
             onClick={() => setModalOpen(true)}
-            className="btn-primary font-outfit inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4A35] px-9 py-4 text-[14px] font-semibold text-white shadow-lg sm:text-[15px]"
+            className="btn-primary font-outfit inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4A35] px-9 py-4 text-[14px] font-semibold text-white shadow-lg sm:text-[15px] hover:bg-[#0A3D2D] transition-colors"
           >
             Book an Online Consultation
             <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
@@ -78,7 +79,7 @@ export function FertilityWatchClient() {
         </div>
       </div>
 
-      <FertilityConsultationModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <FertilityCalendlyModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </section>
   );
 }
