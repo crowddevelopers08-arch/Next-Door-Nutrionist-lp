@@ -5,7 +5,7 @@ import { FertilityCalendlyModal } from '@/components/fertility/FertilityCalendly
 
 export function FertilityWatchClient() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
 
   return (
     <section className="relative overflow-hidden bg-[#FFF5F0] px-4 py-12 sm:px-6 md:px-[60px] md:py-16 lg:py-12">
@@ -32,7 +32,7 @@ export function FertilityWatchClient() {
               <div className="relative aspect-video w-full overflow-hidden rounded-[18px] bg-black">
                 <iframe
                   className="absolute inset-0 h-full w-full"
-                  src="https://www.youtube.com/embed/Ap2X2yaWhUY?autoplay=1&rel=0"
+                  src="https://www.youtube.com/embed/Ap2X2yaWhUY?autoplay=1&mute=1&playsinline=1&rel=0"
                   title="Complete fertility nutrition guidance video"
                   allow="accelerated-sensors; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen

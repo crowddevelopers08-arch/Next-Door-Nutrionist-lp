@@ -9,7 +9,7 @@ interface Props {
 }
 
 const CALENDLY_EMBED_URL =
-  'https://calendly.com/ayesha-s-nextdoornutritionist/call-discovery-fertility?hide_event_type_details=1&hide_gdpr_banner=1';
+  'https://calendly.com/ayesha-s-nextdoornutritionist/call-discovery-fertility?primary_color=106d2d&hide_event_type_details=1&hide_gdpr_banner=1';
 
 export function FertilityCalendlyModal({ open, onClose }: Props) {
   const [mounted, setMounted] = useState(false);
