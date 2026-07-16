@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
           <div className="space-y-8 md:space-y-10">
 
             <PolicySection title="1. Information We Collect">
-              <p>We may collect the following types of information:</p>
+              <p>We may collect the following types of informations:</p>
               <ul>
                 <li><strong>Personal Identification Information:</strong> Name, phone number, email address, date of birth, and gender — provided voluntarily when you book a consultation or fill out a contact form.</li>
                 <li><strong>Health Information:</strong> Hormonal health history, PCOS/fertility concerns, dietary habits, medical reports, and lifestyle details — collected to personalise your nutrition plan. This information is handled with the highest level of confidentiality.</li>
