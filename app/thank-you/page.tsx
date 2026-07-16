@@ -156,6 +156,15 @@ export default function ThankYouPage() {
           });
         `}
       </Script>
+
+      {/* Meta Pixel — Lead conversion */}
+      <Script id="meta-lead-conversion" strategy="afterInteractive">
+        {`
+          if (typeof fbq === 'function') {
+            fbq('track', 'Lead', { value: 1.0, currency: 'INR' });
+          }
+        `}
+      </Script>
     </main>
   );
 }

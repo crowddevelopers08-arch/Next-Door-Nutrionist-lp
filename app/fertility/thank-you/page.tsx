@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { FertilityHeader } from '@/components/fertility/FertilityHeader';
 import { FertilityFooter } from '@/components/fertility/FertilityFooter';
 
@@ -55,6 +56,15 @@ export default function FertilityThankYouPage() {
         </section>
       </main>
       <FertilityFooter />
+
+      {/* Meta Pixel — Lead conversion */}
+      <Script id="meta-lead-conversion-fertility" strategy="afterInteractive">
+        {`
+          if (typeof fbq === 'function') {
+            fbq('track', 'Lead', { value: 1.0, currency: 'INR' });
+          }
+        `}
+      </Script>
     </>
   );
 }
