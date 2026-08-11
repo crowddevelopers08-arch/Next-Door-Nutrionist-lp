@@ -184,7 +184,7 @@ export function FertilityWatchClient() {
               </>
             ) : (
               <>
-                Book an Online Consultation
+                Book a 1:1 Discovery Call with Our Experts for Just ₹199
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </>
             )}

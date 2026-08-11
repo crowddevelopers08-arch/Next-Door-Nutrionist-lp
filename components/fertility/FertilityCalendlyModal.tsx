@@ -13,9 +13,18 @@ interface Props {
 const CALENDLY_URL =
   'https://calendly.com/ayesha-s-nextdoornutritionist/call-discovery-fertility?hide_event_type_details=1&hide_gdpr_banner=1';
 
+// Fallback path only: Calendly also accepts name/email as query params.
+function iframeUrl(prefill?: CalendlyPrefill) {
+  const url = new URL(CALENDLY_URL);
+  if (prefill?.name) url.searchParams.set('name', prefill.name);
+  if (prefill?.email) url.searchParams.set('email', prefill.email);
+  return url.toString();
+}
+
 export function FertilityCalendlyModal({ open, onClose, prefill }: Props) {
   const [mounted, setMounted] = useState(false);
-  const [failed, setFailed] = useState(false);
+  // Start on the official widget; drop to a plain iframe if it can't init.
+  const [mode, setMode] = useState<'widget' | 'iframe'>('widget');
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -31,19 +40,23 @@ export function FertilityCalendlyModal({ open, onClose, prefill }: Props) {
     };
   }, [open]);
 
-  // Mount the inline widget once the modal is on screen. Prefill goes through
-  // Calendly's own API rather than query params, which is what it officially
-  // supports for the inline embed.
   useEffect(() => {
-    if (!open || !mounted) return;
+    if (!open || !mounted || mode !== 'widget') return;
 
     let cancelled = false;
-    setFailed(false);
 
     loadCalendlyWidget()
       .then(() => {
         const parent = containerRef.current;
-        if (cancelled || !parent || !window.Calendly) return;
+        if (cancelled || !parent) return;
+
+        // Guard the method itself, not just the namespace — a partially
+        // initialised Calendly object is exactly what the data-url crash left
+        // behind, and it is truthy.
+        if (typeof window.Calendly?.initInlineWidget !== 'function') {
+          throw new Error('Calendly widget unavailable');
+        }
+
         parent.innerHTML = '';
         window.Calendly.initInlineWidget({
           url: CALENDLY_URL,
@@ -55,15 +68,15 @@ export function FertilityCalendlyModal({ open, onClose, prefill }: Props) {
         });
       })
       .catch(() => {
-        if (!cancelled) setFailed(true);
+        // The client has already paid by this point — always show a calendar.
+        if (!cancelled) setMode('iframe');
       });
 
     return () => {
       cancelled = true;
-      // Tear the widget down so reopening builds a clean one.
       if (containerRef.current) containerRef.current.innerHTML = '';
     };
-  }, [open, mounted, prefill]);
+  }, [open, mounted, mode, prefill]);
 
   if (!open || !mounted) return null;
 
@@ -78,28 +91,17 @@ export function FertilityCalendlyModal({ open, onClose, prefill }: Props) {
         <span className="material-symbols-outlined text-[22px]">close</span>
       </button>
 
-      {failed ? (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-3 px-6 text-center">
-          <span className="material-symbols-outlined text-[34px] text-[#0B4A35]">event_busy</span>
-          <p className="font-outfit text-[15px] font-semibold text-[#1A1A1A]">
-            The booking calendar didn&rsquo;t load.
-          </p>
-          <p className="font-outfit text-[13px] text-[#2B2B2B]/60">
-            Your payment went through. Please call us and we&rsquo;ll confirm your slot.
-          </p>
-          <a
-            href="tel:+919867642689"
-            className="font-outfit mt-1 inline-flex items-center gap-2 rounded-full bg-[#0B4A35] px-6 py-3 text-[13px] font-semibold text-white"
-          >
-            <span className="material-symbols-outlined text-[16px]">call</span>
-            +91 98676 42689
-          </a>
-        </div>
+      {mode === 'widget' ? (
+        // No `calendly-inline-widget` class here on purpose. widget.js auto-scans
+        // for that class on load and reads the URL off `data-url`; with no such
+        // attribute it throws before `window.Calendly` is fully assigned, which
+        // leaves the modal blank. We init manually instead.
+        <div ref={containerRef} className="h-full w-full" style={{ minWidth: 320 }} />
       ) : (
-        <div
-          ref={containerRef}
-          className="calendly-inline-widget h-full w-full"
-          style={{ minWidth: 320 }}
+        <iframe
+          src={iframeUrl(prefill)}
+          title="Select a Date & Time - Calendly"
+          className="h-full w-full border-0"
         />
       )}
     </div>,
