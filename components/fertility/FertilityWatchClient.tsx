@@ -1,11 +1,109 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FertilityCalendlyModal } from '@/components/fertility/FertilityCalendlyModal';
+import {
+  loadRazorpayCheckout,
+  type RazorpayFailureResponse,
+  type RazorpaySuccessResponse,
+} from '@/components/fertility/razorpay';
+
+const LOGO = 'https://res.cloudinary.com/du6mjguvb/image/upload/HNC-LOGO-1_vbvcmy';
+
+type Prefill = { name?: string; email?: string };
 
 export function FertilityWatchClient() {
   const [modalOpen, setModalOpen] = useState(false);
   const [playing, setPlaying] = useState(true);
+
+  // Payment flow: idle → starting (creating order) → verifying (post-payment)
+  const [stage, setStage] = useState<'idle' | 'starting' | 'verifying'>('idle');
+  const [error, setError] = useState<string | null>(null);
+  const [prefill, setPrefill] = useState<Prefill>({});
+  // Once paid, the client can reopen the calendar without paying again.
+  const [paid, setPaid] = useState(false);
+
+  const openCalendar = useCallback(() => {
+    setError(null);
+    setModalOpen(true);
+  }, []);
+
+  const handlePayment = useCallback(async () => {
+    if (paid) {
+      openCalendar();
+      return;
+    }
+
+    setError(null);
+    setStage('starting');
+
+    try {
+      await loadRazorpayCheckout();
+
+      const orderRes = await fetch('/api/razorpay/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageUrl: window.location.href }),
+      });
+      const order = await orderRes.json();
+      if (!orderRes.ok) throw new Error(order?.error || 'Could not start the payment.');
+
+      if (!window.Razorpay) throw new Error('Could not load the payment window.');
+
+      const checkout = new window.Razorpay({
+        key: order.keyId,
+        amount: order.amount,
+        currency: order.currency,
+        order_id: order.orderId,
+        name: 'Next Door Nutritionist',
+        description: 'Online Fertility Consultation',
+        image: LOGO,
+        theme: { color: '#0B4A35' },
+        handler: async (response: RazorpaySuccessResponse) => {
+          setStage('verifying');
+          try {
+            const verifyRes = await fetch('/api/razorpay/verify', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(response),
+            });
+            const result = await verifyRes.json();
+
+            if (!verifyRes.ok || !result.verified) {
+              throw new Error(result?.error || 'We could not verify your payment.');
+            }
+
+            setPrefill({ name: result.prefill?.name, email: result.prefill?.email });
+            setPaid(true);
+            setStage('idle');
+            setModalOpen(true);
+          } catch (err) {
+            setStage('idle');
+            setError(
+              err instanceof Error
+                ? `${err.message} If you were charged, please call us and we'll confirm your slot.`
+                : 'Something went wrong. Please call us and we will confirm your slot.'
+            );
+          }
+        },
+        modal: {
+          ondismiss: () => setStage('idle'),
+        },
+      });
+
+      checkout.on('payment.failed', (response: RazorpayFailureResponse) => {
+        setStage('idle');
+        setError(response?.error?.description || 'Payment failed. Please try again.');
+      });
+
+      checkout.open();
+      // Checkout is now on screen — release the button's loading state.
+      setStage('idle');
+    } catch (err) {
+      setStage('idle');
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    }
+  }, [paid, openCalendar]);
 
   return (
     <section className="relative overflow-hidden bg-[#FFF5F0] px-4 py-12 sm:px-6 md:px-[60px] md:py-16 lg:py-12">
@@ -70,16 +168,65 @@ export function FertilityWatchClient() {
         <div className="mt-10">
           <button
             type="button"
-            onClick={() => setModalOpen(true)}
-            className="btn-primary font-outfit inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4A35] px-9 py-4 text-[14px] font-semibold text-white shadow-lg sm:text-[15px] hover:bg-[#0A3D2D] transition-colors"
+            onClick={handlePayment}
+            disabled={stage !== 'idle'}
+            className="btn-primary font-outfit inline-flex items-center justify-center gap-2 rounded-full bg-[#0B4A35] px-9 py-4 text-[14px] font-semibold text-white shadow-lg transition-colors hover:bg-[#0A3D2D] disabled:cursor-not-allowed disabled:opacity-70 sm:text-[15px]"
           >
-            Book an Online Consultation
-            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            {stage === 'starting' ? (
+              <>
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                Opening secure payment…
+              </>
+            ) : paid ? (
+              <>
+                Choose Your Slot
+                <span className="material-symbols-outlined text-[18px]">calendar_month</span>
+              </>
+            ) : (
+              <>
+                Book an Online Consultation
+                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </>
+            )}
           </button>
+
+          {!paid && (
+            <p className="font-outfit mt-3 flex items-center justify-center gap-1.5 text-[12px] text-[#2B2B2B]/55">
+              <span className="material-symbols-outlined text-[15px] text-[#0B4A35]">lock</span>
+              Secure payment via Razorpay · Pick your slot right after
+            </p>
+          )}
+
+          {error && (
+            <p
+              role="alert"
+              className="font-outfit mx-auto mt-4 max-w-[440px] rounded-[10px] border border-[#FF92A5]/40 bg-[#FF92A5]/10 px-4 py-3 text-[13px] leading-[1.6] text-[#8A2B3E]"
+            >
+              {error}
+            </p>
+          )}
         </div>
       </div>
 
-      <FertilityCalendlyModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      {/* Post-payment verification — blocks interaction so the client doesn't
+          navigate away or pay twice while we confirm with Razorpay. */}
+      {stage === 'verifying' && (
+        <div className="fixed inset-0 z-[110] flex flex-col items-center justify-center gap-4 bg-[#FFF5F0]/95 px-6 text-center backdrop-blur-sm">
+          <span className="h-10 w-10 animate-spin rounded-full border-[3px] border-[#0B4A35]/25 border-t-[#0B4A35]" />
+          <p className="font-outfit text-[15px] font-semibold text-[#1A1A1A]">
+            Confirming your payment…
+          </p>
+          <p className="font-outfit text-[13px] text-[#2B2B2B]/60">
+            Please don&rsquo;t close this window.
+          </p>
+        </div>
+      )}
+
+      <FertilityCalendlyModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        prefill={prefill}
+      />
     </section>
   );
 }

@@ -6,12 +6,23 @@ import { createPortal } from 'react-dom';
 interface Props {
   open: boolean;
   onClose: () => void;
+  prefill?: { name?: string; email?: string };
 }
 
 const CALENDLY_EMBED_URL =
   'https://calendly.com/ayesha-s-nextdoornutritionist/call-discovery-fertility?primary_color=106d2d&hide_event_type_details=1&hide_gdpr_banner=1';
 
-export function FertilityCalendlyModal({ open, onClose }: Props) {
+// Calendly reads `name` / `email` off the query string and fills the invitee
+// form, so a paying client doesn't retype what they entered during checkout.
+function embedUrl(prefill?: Props['prefill']) {
+  if (!prefill?.name && !prefill?.email) return CALENDLY_EMBED_URL;
+  const url = new URL(CALENDLY_EMBED_URL);
+  if (prefill.name) url.searchParams.set('name', prefill.name);
+  if (prefill.email) url.searchParams.set('email', prefill.email);
+  return url.toString();
+}
+
+export function FertilityCalendlyModal({ open, onClose, prefill }: Props) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -41,7 +52,7 @@ export function FertilityCalendlyModal({ open, onClose }: Props) {
       </button>
 
       <iframe
-        src={CALENDLY_EMBED_URL}
+        src={embedUrl(prefill)}
         title="Schedule time with me"
         className="h-screen w-screen border-0"
       />
