@@ -163,9 +163,18 @@ export function Footer() {
           <p className="font-outfit text-[12px] text-[#B7D29B80]">
             © 2026 Next Door Nutritionist. All rights reserved.
           </p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            <a className="font-outfit text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B7D29B60] transition-colors hover:text-[#B7D29B]" href="/terms-and-conditions">
+              Terms &amp; Conditions
+            </a>
             <a className="font-outfit text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B7D29B60] transition-colors hover:text-[#B7D29B]" href="/privacy-policy">
               Privacy Policy
+            </a>
+            <a className="font-outfit text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B7D29B60] transition-colors hover:text-[#B7D29B]" href="/shipping-policy">
+              Shipping Policy
+            </a>
+            <a className="font-outfit text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B7D29B60] transition-colors hover:text-[#B7D29B]" href="/cancellations-and-refunds">
+              Cancellations &amp; Refunds
             </a>
           </div>
         </div>
