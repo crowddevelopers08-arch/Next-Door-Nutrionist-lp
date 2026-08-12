@@ -38,6 +38,14 @@ function payerName(payment: RazorpayPayment) {
   return payment.notes?.name?.trim() || 'Razorpay customer';
 }
 
+function payerPhone(payment: RazorpayPayment) {
+  return (payment.notes?.phone || payment.contact || '').replace(/^\+/, '');
+}
+
+function payerCountry(payment: RazorpayPayment) {
+  return payment.notes?.country?.trim() || 'India';
+}
+
 // ── Google Sheets ────────────────────────────────────────────────────────────
 async function appendToGoogleSheet(payment: RazorpayPayment, event: string) {
   const endpoint = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
@@ -48,9 +56,9 @@ async function appendToGoogleSheet(payment: RazorpayPayment, event: string) {
     form: 'fertility online consultation payment',
     stage: 'payment',
     name: payerName(payment),
-    phone: payment.contact || '',
+    phone: payerPhone(payment),
     email: payment.email || '',
-    country: 'India',
+    country: payerCountry(payment),
     concern: 'Fertility – paid online consultation',
     amount: `${payment.currency} ${rupees(payment.amount)}`,
     paymentId: payment.id,
@@ -91,7 +99,7 @@ async function sendToTeleCRM(payment: RazorpayPayment, event: string) {
       Id: '',
       name: payerName(payment),
       email: payment.email || '',
-      phone: (payment.contact || '').replace(/^\+/, ''),
+      phone: payerPhone(payment),
       city_1: '',
       preferredtime: '',
       preferreddate: '',
@@ -99,7 +107,7 @@ async function sendToTeleCRM(payment: RazorpayPayment, event: string) {
         ? `Paid online fertility consultation – ${amount} (Payment ${payment.id})`
         : `Failed payment for online fertility consultation – ${amount} (Payment ${payment.id})`,
       select_the_procedure: 'Fertility – Online Consultation',
-      Country: 'India',
+      Country: payerCountry(payment),
       LeadID: '',
       CreatedOn: createdOn,
       'Lead Stage': paid ? 'Stage 3 - Paid Consultation' : 'Stage 2 - Payment Failed',

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FertilityCalendlyModal } from '@/components/fertility/FertilityCalendlyModal';
 import {
   loadRazorpayCheckout,
@@ -11,6 +11,13 @@ import {
 const LOGO = 'https://res.cloudinary.com/du6mjguvb/image/upload/HNC-LOGO-1_vbvcmy';
 
 type Prefill = { name?: string; email?: string };
+type StoredLead = {
+  name?: string;
+  phone?: string;
+  dialCode?: string;
+  country?: string;
+  iso?: string;
+};
 
 export function FertilityWatchClient() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,8 +27,27 @@ export function FertilityWatchClient() {
   const [stage, setStage] = useState<'idle' | 'starting' | 'verifying'>('idle');
   const [error, setError] = useState<string | null>(null);
   const [prefill, setPrefill] = useState<Prefill>({});
+  const [storedLead, setStoredLead] = useState<StoredLead>({});
   // Once paid, the client can reopen the calendar without paying again.
   const [paid, setPaid] = useState(false);
+
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem('fertilityLead');
+      if (!raw) return;
+
+      const saved = JSON.parse(raw) as StoredLead;
+      setStoredLead({
+        name: typeof saved.name === 'string' ? saved.name : '',
+        phone: typeof saved.phone === 'string' ? saved.phone : '',
+        dialCode: typeof saved.dialCode === 'string' ? saved.dialCode : '',
+        country: typeof saved.country === 'string' ? saved.country : '',
+        iso: typeof saved.iso === 'string' ? saved.iso : '',
+      });
+    } catch {
+      // Ignore invalid session data and continue with a plain payment flow.
+    }
+  }, []);
 
   const openCalendar = useCallback(() => {
     setError(null);
@@ -43,7 +69,14 @@ export function FertilityWatchClient() {
       const orderRes = await fetch('/api/razorpay/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pageUrl: window.location.href }),
+        body: JSON.stringify({
+          pageUrl: window.location.href,
+          name: storedLead.name || '',
+          phone: storedLead.phone || '',
+          dialCode: storedLead.dialCode || '',
+          country: storedLead.country || '',
+          iso: storedLead.iso || '',
+        }),
       });
       const order = await orderRes.json();
       if (!orderRes.ok) throw new Error(order?.error || 'Could not start the payment.');
@@ -58,6 +91,12 @@ export function FertilityWatchClient() {
         name: 'Next Door Nutritionist',
         description: 'Online Fertility Consultation',
         image: LOGO,
+        prefill: {
+          ...(storedLead.name ? { name: storedLead.name } : {}),
+          ...(storedLead.phone
+            ? { contact: `${storedLead.dialCode || '91'}${storedLead.phone}` }
+            : {}),
+        },
         theme: { color: '#0B4A35' },
         handler: async (response: RazorpaySuccessResponse) => {
           setStage('verifying');
@@ -103,7 +142,7 @@ export function FertilityWatchClient() {
       setStage('idle');
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     }
-  }, [paid, openCalendar]);
+  }, [paid, openCalendar, storedLead]);
 
   return (
     <section className="relative overflow-hidden bg-[#FFF5F0] px-4 py-12 sm:px-6 md:px-[60px] md:py-16 lg:py-12">

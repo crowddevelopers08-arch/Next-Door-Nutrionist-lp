@@ -71,7 +71,13 @@ export function FertilityLeadModal({ open, onClose }: Props) {
       // Persist for Stage 2 prefill on the watch page
       sessionStorage.setItem(
         'fertilityLead',
-        JSON.stringify({ name: name.trim(), phone: digits, iso: country.iso })
+        JSON.stringify({
+          name: name.trim(),
+          phone: digits,
+          dialCode: country.dial,
+          country: country.name,
+          iso: country.iso,
+        })
       );
 
       // Full-page navigation (not client-side) so the watch page loads

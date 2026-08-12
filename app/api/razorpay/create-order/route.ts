@@ -40,12 +40,24 @@ export async function POST(req: NextRequest) {
 
   // Optional context from the page, stored on the order for reconciliation only.
   let pageUrl = '';
+  let leadName = '';
+  let leadPhone = '';
+  let dialCode = '';
+  let country = '';
+  let iso = '';
   try {
     const body = await req.json();
     if (typeof body?.pageUrl === 'string') pageUrl = body.pageUrl.slice(0, 200);
+    if (typeof body?.name === 'string') leadName = body.name.trim().slice(0, 80);
+    if (typeof body?.phone === 'string') leadPhone = body.phone.replace(/\D/g, '').slice(0, 15);
+    if (typeof body?.dialCode === 'string') dialCode = body.dialCode.replace(/\D/g, '').slice(0, 4);
+    if (typeof body?.country === 'string') country = body.country.trim().slice(0, 60);
+    if (typeof body?.iso === 'string') iso = body.iso.trim().toUpperCase().slice(0, 3);
   } catch {
     // No body is fine — nothing here is required.
   }
+
+  const fullPhone = leadPhone ? `${dialCode || '91'}${leadPhone}` : '';
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
@@ -65,6 +77,10 @@ export async function POST(req: NextRequest) {
         notes: {
           product: 'Online Fertility Consultation',
           source: pageUrl || 'fertility/watch',
+          ...(leadName ? { name: leadName } : {}),
+          ...(fullPhone ? { phone: fullPhone } : {}),
+          ...(country ? { country } : {}),
+          ...(iso ? { iso } : {}),
         },
       }),
       signal: controller.signal,
