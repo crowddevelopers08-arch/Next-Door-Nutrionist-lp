@@ -43,6 +43,10 @@ function fullNumber(data: FertilityLeadInput) {
   return `+${dial}${digits}`;
 }
 
+function phoneNote(data: FertilityLeadInput) {
+  return fullNumber(data);
+}
+
 function isValidName(raw: string) {
   return raw.trim().length >= 2 && /^[a-zA-Z\s'.-]+$/.test(raw.trim());
 }
@@ -120,6 +124,8 @@ async function sendToTeleCRM(data: FertilityLeadInput) {
       Age: '',
     },
     actions: [
+      { type: 'SYSTEM_NOTE', text: `Name: ${data.name.trim()}` },
+      { type: 'SYSTEM_NOTE', text: `Phone: ${phoneNote(data)}` },
       { type: 'SYSTEM_NOTE', text: `Form: ${data.formName}` },
       { type: 'SYSTEM_NOTE', text: `Concern: ${data.concern || 'Not specified'}` },
       ...(isConsultation
