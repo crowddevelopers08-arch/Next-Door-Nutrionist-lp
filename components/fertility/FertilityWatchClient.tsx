@@ -230,10 +230,18 @@ export function FertilityWatchClient() {
           </button>
 
           {!paid && (
-            <p className="font-outfit mt-3 flex items-center justify-center gap-1.5 text-[12px] text-[#2B2B2B]/55">
-              <span className="material-symbols-outlined text-[15px] text-[#0B4A35]">lock</span>
-              Secure payment via Razorpay · Pick your slot right after
-            </p>
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/payicons.png"
+                alt="Secure payment via Razorpay. Pick your slot right after."
+                className="mx-auto mt-3 h-auto w-full max-w-[520px]"
+              />
+              <p className="font-outfit mt-2 flex items-center justify-center gap-1.5 text-[12px] text-[#2B2B2B]/55">
+                <span className="material-symbols-outlined text-[15px] text-[#0B4A35]">lock</span>
+                Secure payment via Razorpay · Pick your slot right after
+              </p>
+            </>
           )}
 
           {error && (
