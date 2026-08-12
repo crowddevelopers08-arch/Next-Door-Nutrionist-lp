@@ -46,6 +46,11 @@ function payerCountry(payment: RazorpayPayment) {
   return payment.notes?.country?.trim() || 'India';
 }
 
+function payerPhoneNote(payment: RazorpayPayment) {
+  const phone = payerPhone(payment);
+  return phone ? `+${phone}` : 'Not specified';
+}
+
 // ── Google Sheets ────────────────────────────────────────────────────────────
 async function appendToGoogleSheet(payment: RazorpayPayment, event: string) {
   const endpoint = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
@@ -120,6 +125,8 @@ async function sendToTeleCRM(payment: RazorpayPayment, event: string) {
     actions: [
       { type: 'SYSTEM_NOTE', text: `Payment status: ${paid ? 'Captured' : 'Failed'}` },
       { type: 'SYSTEM_NOTE', text: `Amount: ${amount}` },
+      { type: 'SYSTEM_NOTE', text: `Name: ${payerName(payment)}` },
+      { type: 'SYSTEM_NOTE', text: `Phone: ${payerPhoneNote(payment)}` },
       { type: 'SYSTEM_NOTE', text: `Razorpay Payment ID: ${payment.id}` },
       { type: 'SYSTEM_NOTE', text: `Razorpay Order ID: ${payment.order_id}` },
       { type: 'SYSTEM_NOTE', text: `Method: ${payment.method || 'Not specified'}` },
