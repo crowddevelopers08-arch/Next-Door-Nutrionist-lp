@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { fertilityHealthGoals } from '@/components/fertility/fertilityContent';
 import { WhatsAppField } from '@/components/fertility/WhatsAppField';
+import { Spinner } from '@/components/fertility/Spinner';
 import {
   buildSlots,
   COUNTRIES,
@@ -91,8 +92,18 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
+    // Warm the thank-you document while the form is being filled in, so the
+    // post-submit navigation is near-instant.
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = '/fertility/thank-you';
+    document.head.appendChild(link);
+
     return () => {
       document.body.style.overflow = prev;
+      link.remove();
     };
   }, [open]);
 
@@ -302,8 +313,9 @@ export function FertilityConsultationModal({ open, onClose }: Props) {
           <button
             type="submit"
             disabled={submitting}
-            className="btn-primary font-outfit mt-5 flex w-full items-center justify-center rounded-full bg-[#0B4A35] px-6 py-3.5 text-[14px] font-semibold text-white shadow-lg disabled:opacity-70"
+            className="btn-primary font-outfit mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-[#0B4A35] px-6 py-3.5 text-[14px] font-semibold text-white shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
           >
+            {submitting && <Spinner />}
             {submitting ? 'Booking…' : 'Confirm My Consultation'}
           </button>
         </form>

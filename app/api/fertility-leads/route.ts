@@ -1,7 +1,7 @@
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import crypto from 'crypto';
 
 type Stage = 'stage1' | 'stage2';
@@ -72,17 +72,24 @@ async function appendToGoogleSheet(data: FertilityLeadInput) {
     source: data.pageUrl || data.formName,
   };
 
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-    cache: 'no-store',
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      cache: 'no-store',
+      signal: controller.signal,
+    });
 
-  const text = await res.text();
-  if (!res.ok) throw new Error(text || `Google Sheets responded with ${res.status}`);
-  try { return text ? JSON.parse(text) : { success: true }; }
-  catch { return { success: true }; }
+    const text = await res.text();
+    if (!res.ok) throw new Error(text || `Google Sheets responded with ${res.status}`);
+    try { return text ? JSON.parse(text) : { success: true }; }
+    catch { return { success: true }; }
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 // ── TeleCRM ──────────────────────────────────────────────────────────────────
@@ -330,37 +337,29 @@ export async function POST(req: NextRequest) {
     fbc: req.cookies.get('_fbc')?.value,
   };
 
-  const [sheetResult, crmResult, metaResult] = await Promise.allSettled([
-    appendToGoogleSheet(leadData),
-    sendToTeleCRM(leadData),
-    sendToMetaCAPI(leadData, metaCtx),
-  ]);
+  // The three integrations (Apps Script, TeleCRM, Meta CAPI) each take seconds
+  // and none of them affect what the user sees. Run them after the response is
+  // flushed so the form returns as soon as the lead is validated.
+  after(async () => {
+    const [sheetResult, crmResult, metaResult] = await Promise.allSettled([
+      appendToGoogleSheet(leadData),
+      sendToTeleCRM(leadData),
+      sendToMetaCAPI(leadData, metaCtx),
+    ]);
 
-  if (sheetResult.status === 'rejected') {
-    console.error('[Fertility Sheets] Error:', sheetResult.reason?.message);
-  }
-  if (crmResult.status === 'rejected') {
-    console.error('[Fertility TeleCRM] Error:', crmResult.reason?.message);
-  }
-  if (metaResult.status === 'rejected') {
-    console.error('[Fertility Meta CAPI] Error:', metaResult.reason?.message);
-  }
-
-  const metaStatus =
-    metaResult.status !== 'fulfilled'
-      ? 'failed'
-      : (metaResult.value as { skipped?: boolean })?.skipped
-      ? 'skipped'
-      : 'ok';
+    if (sheetResult.status === 'rejected') {
+      console.error('[Fertility Sheets] Error:', sheetResult.reason?.message);
+    }
+    if (crmResult.status === 'rejected') {
+      console.error('[Fertility TeleCRM] Error:', crmResult.reason?.message);
+    }
+    if (metaResult.status === 'rejected') {
+      console.error('[Fertility Meta CAPI] Error:', metaResult.reason?.message);
+    }
+  });
 
   return NextResponse.json(
-    {
-      success: true,
-      form: leadData.formName,
-      sheet: sheetResult.status === 'fulfilled' ? 'ok' : 'failed',
-      crm: crmResult.status === 'fulfilled' ? 'ok' : 'failed',
-      meta: metaStatus,
-    },
+    { success: true, form: leadData.formName, queued: true },
     { status: 201 }
   );
 }
