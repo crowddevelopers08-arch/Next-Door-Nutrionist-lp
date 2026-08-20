@@ -21,10 +21,11 @@ export default function FertilityPage() {
       <FertilityHeader />
       <main className="mt-[70px] md:mt-20">
         <FertilityHeroSection />
+         <FertilityTestimonialsSection />
         <FertilityWhoItsForSection />
         <FertilityProcessSection />
         <FertilityAboutSection />
-        <FertilityTestimonialsSection />
+       
         <FertilityFaqSection />
         <FertilityFinalCtaSection />
       </main>

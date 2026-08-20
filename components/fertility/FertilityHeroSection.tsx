@@ -1,8 +1,7 @@
 'use client';
 
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
-import { FertilityHeroVideo } from '@/components/fertility/FertilityHeroVideo';
-import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
+import { FertilityVideoOffer } from '@/components/fertility/FertilityVideoOffer';
 
 export function FertilityHeroSection() {
   return (
@@ -55,19 +54,9 @@ export function FertilityHeroSection() {
             healthier pregnancy journey through clinical nutrition and lifestyle guidance
           </p>
 
-          {/* Hero video with 3s teaser + play button that opens the lead form */}
-          <FertilityHeroVideo />
-
-          <div className="mt-9 flex w-full max-w-[720px] flex-col gap-3 sm:flex-row sm:justify-center">
-            {/* <a
-              href="#video"
-              className="btn-primary font-outfit inline-flex items-center justify-center rounded-full bg-[#0B4A35] px-6 py-4 text-[13px] font-semibold text-white shadow-lg sm:text-[14px]"
-            >
-              Watch the Video Below Before You Start Your Next Fertility Plan
-            </a> */}
-            <FertilityCtaButton className="btn-outline font-outfit inline-flex items-center justify-center rounded-full border border-[#0B4A35]/25 bg-white/80 px-6 py-4 text-[13px] font-semibold text-[#0B4A35] shadow-sm backdrop-blur-sm hover:bg-white sm:text-[14px]">
-              Book Your Initial Discovery Call
-            </FertilityCtaButton>
+          {/* Full video + ₹199 offer CTA that leads to the checkout page */}
+          <div className="mt-9 w-full">
+            <FertilityVideoOffer />
           </div>
         </AnimateOnScroll>
       </div>

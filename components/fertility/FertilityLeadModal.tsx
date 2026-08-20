@@ -128,10 +128,10 @@ export function FertilityLeadModal({ open, onClose }: Props) {
             <span className="material-symbols-outlined text-[18px]">close</span>
           </button>
           <h3 className="relative font-outfit text-[20px] font-extrabold text-white">
-            Watch the Full Video
+            Book Your Discovery Call
           </h3>
           <p className="relative mt-1 font-outfit text-[12.5px] text-[#B7D29B]">
-            Enter your details to unlock the complete guidance video.
+            Enter your details to continue to checkout.
           </p>
         </div>
 
@@ -166,7 +166,7 @@ export function FertilityLeadModal({ open, onClose }: Props) {
             className="btn-primary font-outfit mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-[#0B4A35] px-6 py-3.5 text-[14px] font-semibold text-white shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
           >
             {submitting && <Spinner />}
-            {submitting ? 'Submitting…' : 'Watch the Full Video'}
+            {submitting ? 'Submitting…' : 'Continue to Checkout'}
           </button>
 
           <p className="mt-3 text-center font-outfit text-[11px] text-[#2B2B2B]/50">

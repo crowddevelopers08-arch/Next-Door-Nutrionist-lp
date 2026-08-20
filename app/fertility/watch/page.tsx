@@ -4,9 +4,9 @@ import { FertilityFooter } from '@/components/fertility/FertilityFooter';
 import { FertilityWatchClient } from '@/components/fertility/FertilityWatchClient';
 
 export const metadata: Metadata = {
-  title: 'Watch the Full Video | Fertility Clinical Nutrition | Next Door Nutritionist',
+  title: 'Checkout | Fertility Clinical Nutrition | Next Door Nutritionist',
   description:
-    'Watch the complete fertility clinical nutrition guidance video and book your online consultation.',
+    'Confirm your details and book your 1:1 fertility discovery call with our clinical nutrition experts for ₹199.',
 };
 
 export default function FertilityWatchPage() {
