@@ -129,6 +129,27 @@ export const fertilityHealthGoals = [
   'Pregnancy Loss / Repeated Miscarriage Support',
 ];
 
+// ── Offer / value stack ──────────────────────────────────────────────────────
+// The price actually charged is decided server-side in
+// /api/razorpay/create-order — these figures are display copy only.
+export const fertilityOfferPrice = 199;
+
+export const fertilityValueItems: { label: string; price: number }[] = [
+  { label: '1:1 Fertility Nutrition Consultation', price: 1500 },
+  { label: 'Fertility Blood Report & Deficiency Checklist', price: 200 },
+  { label: 'PCOS/Irregular Period Nutrition Guide', price: 200 },
+  { label: 'International Grocery Shopping Guide', price: 200 },
+  { label: 'Supplement Questions Checklist for Your Doctor', price: 300 },
+  { label: 'Stress, Sleep & Lifestyle Fertility Checklist', price: 300 },
+  { label: 'Fertility-Friendly Indian Recipes for NRIs', price: 300 },
+  { label: 'Myo-Inositol Recommendation for US', price: 500 },
+];
+
+export const fertilityTotalValue = fertilityValueItems.reduce(
+  (sum, item) => sum + item.price,
+  0
+);
+
 export const fertilityTrustItems = [
   '4,500+ Clients Served',
   'Clients Across 45+ Countries',

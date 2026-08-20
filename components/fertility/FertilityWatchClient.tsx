@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FertilityCalendlyModal } from '@/components/fertility/FertilityCalendlyModal';
 import { WhatsAppField } from '@/components/fertility/WhatsAppField';
+import { FertilityValueStack } from '@/components/fertility/FertilityValueStack';
+import { fertilityOfferPrice } from '@/components/fertility/fertilityContent';
 import {
   COUNTRIES,
   Country,
@@ -16,23 +18,8 @@ import {
 } from '@/components/fertility/razorpay';
 
 const LOGO = 'https://res.cloudinary.com/du6mjguvb/image/upload/HNC-LOGO-1_vbvcmy';
-const PRICE = 199;
+const PRICE = fertilityOfferPrice;
 
-// Value stack shown on the left. Prices are indicative "value" figures only —
-// the amount actually charged is decided server-side in /api/razorpay/create-order.
-const VALUE_ITEMS: { label: string; price: number }[] = [
-  { label: '1:1 Fertility Nutrition Consultation', price: 1500 },
-  { label: 'Fertility Blood Report & Deficiency Checklist', price: 200 },
-  { label: 'PCOS/Irregular Period Nutrition Guide', price: 200 },
-  { label: 'International Grocery Shopping Guide', price: 200 },
-  { label: 'Supplement Questions Checklist for Your Doctor', price: 300 },
-  { label: 'Stress, Sleep & Lifestyle Fertility Checklist', price: 300 },
-  { label: 'Fertility-Friendly Indian Recipes for NRIs', price: 300 },
-  { label: 'Myo-Inositol Recommendation for US', price: 500 },
-];
-const TOTAL_VALUE = VALUE_ITEMS.reduce((sum, item) => sum + item.price, 0);
-
-const money = (value: number) => `₹${value.toLocaleString('en-IN')}`;
 const money2 = (value: number) =>
   `₹${value.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -248,40 +235,7 @@ export function FertilityWatchClient() {
 
       <div className="relative mx-auto mt-8 grid max-w-[1080px] gap-10 lg:grid-cols-2 lg:gap-12">
         {/* ── Left: value stack ─────────────────────────────────────────── */}
-        <div className="flex flex-col items-center text-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={LOGO}
-            alt="Hormone Nutrition Clinic"
-            className="h-[74px] w-auto object-contain sm:h-[86px]"
-          />
-
-          <ul className="mt-7 w-full">
-            {VALUE_ITEMS.map((item) => (
-              <li
-                key={item.label}
-                className="flex items-center justify-between gap-4 border-b border-[#0B4A35]/15 py-3.5 text-left"
-              >
-                <span className="font-outfit text-[14px] font-bold leading-[1.45] text-[#1A1A1A] sm:text-[15.5px]">
-                  {item.label}
-                </span>
-                <span className="font-outfit shrink-0 text-[15px] font-bold text-[#D6497E] sm:text-[16.5px]">
-                  {money(item.price)}
-                </span>
-              </li>
-            ))}
-          </ul>
-
-          <p className="mt-7 font-outfit text-[26px] font-extrabold uppercase tracking-[0.01em] text-[#D6497E] sm:text-[31px]">
-            Total Value {money(TOTAL_VALUE)}
-          </p>
-          <p className="mt-1.5 font-outfit text-[14px] text-[#2B2B2B]/70 sm:text-[15px]">
-            Sign up before early bird offer expires
-          </p>
-          <p className="mt-3 font-outfit text-[54px] font-extrabold leading-none text-[#0B4A35] sm:text-[64px]">
-            {money(PRICE)}
-          </p>
-        </div>
+        <FertilityValueStack />
 
         {/* ── Right: order form ─────────────────────────────────────────── */}
         <div className="h-fit rounded-[20px] border border-[#0B4A35]/20 bg-white p-5 shadow-[0_20px_60px_rgba(11,74,53,0.10)] sm:p-6 lg:self-center">

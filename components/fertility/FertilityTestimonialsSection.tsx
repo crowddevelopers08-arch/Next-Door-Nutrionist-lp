@@ -18,7 +18,12 @@ const testimonialImages = [
   'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678542/IMG_7179_l4h79b.jpg',
 ];
 
-export function FertilityTestimonialsSection() {
+interface Props {
+  /** Hidden on the checkout page, where the CTA would point back to itself. */
+  showCta?: boolean;
+}
+
+export function FertilityTestimonialsSection({ showCta = true }: Props = {}) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#0B4A35] via-[#0d5238] to-[#083b2a] px-4 py-14 sm:px-6 md:px-[60px] md:py-20 max-[470px]:py-10">
       {/* Decorative glows */}
@@ -63,11 +68,13 @@ export function FertilityTestimonialsSection() {
         </div>
       </div>
 
-      <div className="relative mt-12 text-center">
-        <FertilityCtaButton className="btn-primary font-outfit inline-flex rounded-full bg-[#FF92A5] px-8 py-4 text-[13px] font-semibold text-[#1A1A1A] shadow-lg sm:text-[14px]">
-          Book Your Initial Discovery Call
-        </FertilityCtaButton>
-      </div>
+      {showCta && (
+        <div className="relative mt-12 text-center">
+          <FertilityCtaButton className="btn-primary font-outfit inline-flex rounded-full bg-[#FF92A5] px-8 py-4 text-[13px] font-semibold text-[#1A1A1A] shadow-lg sm:text-[14px]">
+            Book Your Initial Discovery Call
+          </FertilityCtaButton>
+        </div>
+      )}
     </section>
   );
 }

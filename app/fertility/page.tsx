@@ -7,6 +7,7 @@ import { FertilityHeader } from '@/components/fertility/FertilityHeader';
 import { FertilityHeroSection } from '@/components/fertility/FertilityHeroSection';
 import { FertilityProcessSection } from '@/components/fertility/FertilityProcessSection';
 import { FertilityTestimonialsSection } from '@/components/fertility/FertilityTestimonialsSection';
+import { FertilityValueStackSection } from '@/components/fertility/FertilityValueStackSection';
 import { FertilityWhoItsForSection } from '@/components/fertility/FertilityWhoItsForSection';
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function FertilityPage() {
         <FertilityAboutSection />
        
         <FertilityFaqSection />
+        <FertilityValueStackSection />
         <FertilityFinalCtaSection />
       </main>
       <FertilityFooter />

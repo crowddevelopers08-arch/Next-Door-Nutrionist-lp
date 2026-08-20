@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { FertilityHeader } from '@/components/fertility/FertilityHeader';
 import { FertilityFooter } from '@/components/fertility/FertilityFooter';
 import { FertilityWatchClient } from '@/components/fertility/FertilityWatchClient';
+import { FertilityTestimonialsSection } from '@/components/fertility/FertilityTestimonialsSection';
 
 export const metadata: Metadata = {
   title: 'Checkout | Fertility Clinical Nutrition | Next Door Nutritionist',
@@ -15,6 +16,7 @@ export default function FertilityWatchPage() {
       <FertilityHeader />
       <main className="mt-[70px] md:mt-20">
         <FertilityWatchClient />
+        <FertilityTestimonialsSection showCta={false} />
       </main>
       <FertilityFooter />
     </>
