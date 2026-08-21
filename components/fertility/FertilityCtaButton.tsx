@@ -1,30 +1,15 @@
-'use client';
-
-import { useState } from 'react';
-import { FertilityLeadModal } from '@/components/fertility/FertilityLeadModal';
+import Link from 'next/link';
 
 interface Props {
   className?: string;
   children: React.ReactNode;
-  onClick?: () => void;
 }
 
-/** A CTA that opens the Stage-1 lead form modal instead of navigating. */
-export function FertilityCtaButton({ className, children, onClick }: Props) {
-  const [open, setOpen] = useState(false);
+/** A CTA that navigates to the ₹199 watch/checkout page. */
+export function FertilityCtaButton({ className, children }: Props) {
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => {
-          onClick?.();
-          setOpen(true);
-        }}
-        className={className}
-      >
-        {children}
-      </button>
-      <FertilityLeadModal open={open} onClose={() => setOpen(false)} />
-    </>
+    <Link href="/fertility/watch" className={className}>
+      {children}
+    </Link>
   );
 }
