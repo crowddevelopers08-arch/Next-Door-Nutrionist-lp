@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
 import { FertilityCtaButton } from '@/components/fertility/FertilityCtaButton';
+import { FertilityTestimonialWall } from '@/components/fertility/FertilityTestimonialWall';
 
 const testimonialImages = [
   'https://res.cloudinary.com/dvj4ktxgl/image/upload/v1783678539/IMG_4391_bstek3.jpg',
@@ -41,37 +41,13 @@ export function FertilityTestimonialsSection({ showCta = true }: Props = {}) {
         </AnimateOnScroll>
       </div>
 
-      {/* Auto-scrolling wall of client screenshots (hover to pause) */}
-      <div className="relative mt-12 max-[470px]:mt-8">
-        {/* Edge fades */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#0b4a35] to-transparent sm:w-24" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#083b2a] to-transparent sm:w-24" />
-
-        <div className="overflow-hidden">
-          <div className="marquee-track flex w-max gap-4" style={{ animationDuration: '60s' }}>
-            {[...testimonialImages, ...testimonialImages].map((src, i) => (
-              <div
-                key={`${src}-${i}`}
-                className="w-[210px] shrink-0 overflow-hidden rounded-2xl border border-white/15 bg-white shadow-[0_16px_40px_rgba(0,0,0,0.3)] sm:w-[240px]"
-              >
-                <Image
-                  src={src}
-                  alt="Client testimonial message"
-                  width={260}
-                  height={457}
-                  className="h-auto w-full"
-                  sizes="(max-width: 640px) 210px, 240px"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Auto-scrolling wall of client screenshots — hover to pause, click to zoom */}
+      <FertilityTestimonialWall images={testimonialImages} />
 
       {showCta && (
         <div className="relative mt-12 text-center">
           <FertilityCtaButton className="btn-primary font-outfit inline-flex rounded-full bg-[#FF92A5] px-8 py-4 text-[13px] font-semibold text-[#1A1A1A] shadow-lg sm:text-[14px]">
-            Book Your Initial Discovery Call
+            Start Your Journey with an Expert Call for ₹199
           </FertilityCtaButton>
         </div>
       )}

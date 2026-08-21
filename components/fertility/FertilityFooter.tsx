@@ -13,7 +13,7 @@ const quickLinks = [
   { label: 'Process', href: '#process' },
   { label: 'About Clinic', href: '#about-clinic' },
   { label: 'FAQ', href: '#faq' },
-  { label: 'Book Your Initial Discovery Call', href: '' },
+  { label: 'Talk to Our Experts for Just ₹199', href: '' },
 ];
 
 
@@ -57,7 +57,7 @@ export function FertilityFooter() {
             Personalized clinical nutrition and lifestyle guidance for fertility, conception, and healthier pregnancy preparation.
           </p>
           <FertilityCtaButton className="font-outfit inline-flex rounded-full bg-[#FF92A5] px-5 py-2.5 text-[13px] font-semibold text-[#0B4A35] shadow-sm transition-colors hover:bg-white">
-            Book Your Initial Discovery Call
+            Talk to Our Experts for Just ₹199
           </FertilityCtaButton>
         </div>
 

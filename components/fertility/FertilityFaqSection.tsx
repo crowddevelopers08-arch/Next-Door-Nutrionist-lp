@@ -17,7 +17,7 @@ export function FertilityFaqSection() {
         Talk to our team on a quick discovery call and get clarity on your fertility journey.
       </p>
       <FertilityCtaButton className="btn-primary font-outfit mt-4 inline-flex items-center gap-2 rounded-full bg-[#FF92A5] px-5 py-2.5 text-[12px] font-semibold text-[#1A1A1A] shadow-md sm:text-[13px]">
-        Book Your Initial Discovery Call
+        Get Expert Guidance for Just ₹199
         <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
       </FertilityCtaButton>
     </div>

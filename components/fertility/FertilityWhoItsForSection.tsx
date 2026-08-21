@@ -210,7 +210,7 @@ export function FertilityWhoItsForSection() {
 
         <AnimateOnScroll animation="fade-up" delay={240} className="mt-12 flex justify-center">
           <FertilityCtaButton className="btn-primary font-outfit inline-flex items-center rounded-full bg-[#0B4A35] px-10 py-4 text-[14px] font-semibold text-white shadow-lg sm:text-[15px]">
-            Book Your Initial Discovery Call
+            Get Expert Guidance for Just ₹199
           </FertilityCtaButton>
         </AnimateOnScroll>
       </div>

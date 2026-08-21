@@ -78,7 +78,7 @@ export function FertilityProcessSection() {
 
         <AnimateOnScroll animation="fade-up" className="mt-10 flex justify-center">
           <FertilityCtaButton className="btn-primary font-outfit inline-flex items-center rounded-full bg-[#0B4A35] px-9 py-4 text-[13px] font-semibold text-white shadow-lg sm:text-[14px]">
-            Book Your Initial Discovery Call
+            Book a 1:1 Expert Call for Just ₹199
           </FertilityCtaButton>
         </AnimateOnScroll>
       </div>
