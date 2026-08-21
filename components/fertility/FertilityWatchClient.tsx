@@ -199,8 +199,8 @@ export function FertilityWatchClient() {
             setStage('idle');
             setError(
               err instanceof Error
-                ? `${err.message} If you were charged, please call us and we'll confirm your slot.`
-                : 'Something went wrong. Please call us and we will confirm your slot.'
+                ? `${err.message} If you were charged, please contact us and we'll confirm your slot.`
+                : 'Something went wrong. Please contact us and we will confirm your slot.'
             );
           }
         },

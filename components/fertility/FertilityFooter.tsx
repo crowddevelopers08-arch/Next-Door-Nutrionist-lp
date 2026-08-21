@@ -94,12 +94,10 @@ export function FertilityFooter() {
             Contact Us
           </h4>
           <div className="space-y-4">
-            <a href="tel:+919867642689" className="group flex items-center gap-3">
-              <span className="material-symbols-outlined text-[18px] text-[#FF92A5]">call</span>
-              <span className="font-outfit text-[14px] font-semibold text-white transition-colors group-hover:text-[#B7D29B]">
-                +91 98676 42689
-              </span>
-            </a>
+            <p className="font-outfit max-w-[280px] text-[13.5px] leading-[1.6] text-[#B7D29B]">
+              Hormone Nutrition Clinic, 3rd Floor, Westend Mall, Road No. 36, Jubilee Hills,
+              Hyderabad, Telangana 500033
+            </p>
             <div className="overflow-hidden rounded-2xl border border-[#B7D29B40]">
               <iframe
                 src={CLINIC_MAP_EMBED}
