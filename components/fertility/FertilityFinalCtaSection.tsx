@@ -42,7 +42,7 @@ export function FertilityFinalCtaSection() {
             </h2>
 
             <FertilityCtaButton className="btn-primary font-outfit mt-8 inline-flex rounded-full bg-[#FF92A5] px-9 py-4 text-[13px] font-semibold text-[#1A1A1A] shadow-lg sm:text-[14px]">
-              Book a 1:1 Expert Call for Just ₹199
+              Book an Expert Call
             </FertilityCtaButton>
           </div>
         </AnimateOnScroll>

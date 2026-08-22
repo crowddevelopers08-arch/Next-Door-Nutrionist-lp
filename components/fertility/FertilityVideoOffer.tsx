@@ -93,7 +93,7 @@ export function FertilityVideoOffer() {
             </>
           ) : (
             <>
-              Book a 1:1 Discovery Call with Our Experts for Just ₹199
+              Book a 1:1 Discovery Call with Our Experts
               <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
             </>
           )}

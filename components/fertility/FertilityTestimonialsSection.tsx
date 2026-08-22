@@ -47,7 +47,7 @@ export function FertilityTestimonialsSection({ showCta = true }: Props = {}) {
       {showCta && (
         <div className="relative mt-12 text-center">
           <FertilityCtaButton className="btn-primary font-outfit inline-flex rounded-full bg-[#FF92A5] px-8 py-4 text-[13px] font-semibold text-[#1A1A1A] shadow-lg sm:text-[14px]">
-            Start Your Journey with an Expert Call for ₹199
+            Start Your Journey with an Expert Call
           </FertilityCtaButton>
         </div>
       )}

@@ -43,7 +43,7 @@ export function FertilityHeader() {
 
         <div className="flex items-center gap-3">
           <FertilityCtaButton className="btn-primary font-outfit hidden items-center gap-2 rounded-full bg-[#0B4A35] px-5 py-2.5 text-[13px] font-semibold text-white shadow-sm sm:inline-flex md:px-7 md:py-3 md:text-[14px]">
-            Schedule Your 1:1 Call for ₹199
+            Schedule Your Discovery Call
           </FertilityCtaButton>
 
           <button
@@ -75,7 +75,7 @@ export function FertilityHeader() {
               className="font-outfit mt-3 flex items-center justify-center gap-2 rounded-full bg-[#0B4A35] px-5 py-2.5 text-[14px] font-semibold text-white"
               onClick={() => setMenuOpen(false)}
             >
-              Schedule Your 1:1 Call for ₹199
+              Schedule Your Discovery Call
             </FertilityCtaButton>
           </div>
         </div>
