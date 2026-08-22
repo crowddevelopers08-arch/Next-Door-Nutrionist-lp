@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   title: "Next Door Nutritionist | Hormone Nutrition Clinic",
   description:
     "Personalized nutrition care for hormonal health, PCOS, fertility, and sustainable wellness with Next Door Nutritionist.",
+  verification: {
+    google: "google2acbb4640b54b7f2.html",
+  },
   icons: {
     icon: [
       { url: 'https://res.cloudinary.com/du6mjguvb/image/upload/favh_yq5qyc', type: 'image/png' },
