@@ -4,52 +4,105 @@ import {
   fertilityValueItems,
 } from '@/components/fertility/fertilityContent';
 
-const LOGO = 'https://res.cloudinary.com/du6mjguvb/image/upload/HNC-LOGO-1_vbvcmy';
-
 const money = (value: number) => `₹${value.toLocaleString('en-IN')}`;
+
+const savings = fertilityTotalValue - fertilityOfferPrice;
+const savingsPercent = Math.round((savings / fertilityTotalValue) * 100);
 
 interface Props {
   className?: string;
 }
 
 /**
- * The ₹199 offer stack — everything included, its total value, and the price.
+ * The ₹199 offer stack — one compact package card: what is included,
+ * what it is worth, and the price after the discount.
  * Shared by the fertility landing page and the checkout page.
  */
 export function FertilityValueStack({ className = '' }: Props) {
+  // h-fit/self-start keep the card hugging its content when a parent grid row
+  // would otherwise stretch it (the checkout page's taller order form).
   return (
-    <div className={`flex flex-col items-center text-center ${className}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={LOGO}
-        alt="Hormone Nutrition Clinic"
-        className="h-[74px] w-auto object-contain sm:h-[86px]"
-      />
+    <div
+      className={`h-fit self-start overflow-hidden rounded-[20px] bg-white shadow-[0_16px_44px_rgba(11,74,53,0.12)] ring-1 ring-[#0B4A35]/12 ${className}`}
+    >
+      {/* ── Header ────────────────────────────────────────────────────────── */}
+      <div className="flex items-center justify-between gap-3 border-b border-[#0B4A35]/10 bg-[#FFF5F0] px-5 py-4 sm:px-6 sm:py-5">
+        <div className="text-left">
+          <p className="font-outfit text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#D6497E]">
+            Complete Package
+          </p>
+          <h3 className="font-outfit mt-1 text-[19px] font-extrabold leading-tight text-[#0B4A35] sm:text-[22px]">
+            Everything Included in Your Plan
+          </h3>
+        </div>
+        <span className="font-outfit shrink-0 rounded-full bg-[#0B4A35] px-3 py-1.5 text-[11.5px] font-bold text-[#F0C97D]">
+          {fertilityValueItems.length} items
+        </span>
+      </div>
 
-      <ul className="mt-7 w-full">
+      {/* ── Inclusions ────────────────────────────────────────────────────── */}
+      <ul className="px-5 py-1 sm:px-6">
         {fertilityValueItems.map((item) => (
           <li
             key={item.label}
-            className="flex items-center justify-between gap-4 border-b border-[#0B4A35]/15 py-3.5 text-left"
+            className="flex items-center gap-3 border-b border-[#0B4A35]/8 py-3.5 last:border-0 sm:gap-3.5 sm:py-4"
           >
-            <span className="font-outfit text-[14px] font-bold leading-[1.45] text-[#1A1A1A] sm:text-[15.5px]">
+            <svg
+              viewBox="0 0 20 20"
+              className="h-[18px] w-[18px] shrink-0 text-[#0B4A35]"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M4.5 10.5L8 14L15.5 6"
+                stroke="currentColor"
+                strokeWidth="2.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+
+            <span className="font-outfit min-w-0 flex-1 text-left text-[14.5px] font-semibold leading-[1.4] text-[#1A1A1A] sm:text-[16px]">
               {item.label}
             </span>
-            <span className="font-outfit shrink-0 text-[15px] font-bold text-[#D6497E] sm:text-[16.5px]">
+
+            <span className="font-outfit shrink-0 text-[13.5px] font-bold tabular-nums text-[#2B2B2B]/45 line-through sm:text-[15px]">
               {money(item.price)}
             </span>
           </li>
         ))}
       </ul>
 
-      <p className="mt-7 font-outfit text-[26px] font-extrabold uppercase tracking-[0.01em] text-[#D6497E] sm:text-[31px]">
-        Total Value {money(fertilityTotalValue)}
-      </p>
-      <p className="mt-1.5 font-outfit text-[14px] text-[#2B2B2B]/70 sm:text-[15px]">
-        Sign up before early bird offer expires
-      </p>
-      <p className="mt-3 font-outfit text-[54px] font-extrabold leading-none text-[#0B4A35] sm:text-[64px]">
-        {money(fertilityOfferPrice)}
+      {/* ── Price bar ─────────────────────────────────────────────────────── */}
+      <div className="flex items-center justify-between gap-4 bg-[#0B4A35] px-5 py-5 sm:px-6 sm:py-6">
+        <div className="text-left">
+          <p className="font-outfit text-[11px] font-extrabold uppercase tracking-[0.16em] text-white/50">
+            Total value
+          </p>
+          <p className="font-outfit mt-0.5 text-[19px] font-bold tabular-nums text-white/50 line-through decoration-[#FF92A5] sm:text-[21px]">
+            {money(fertilityTotalValue)}
+          </p>
+          <span className="font-outfit mt-2 inline-block rounded-full bg-[#FF92A5] px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.06em] text-[#1A1A1A]">
+            Save {money(savings)} · {savingsPercent}% off
+          </span>
+        </div>
+
+        <div className="text-right">
+          <p className="font-outfit text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#F0C97D]">
+            You pay today
+          </p>
+          <p className="font-outfit mt-1 text-[46px] font-extrabold leading-none tabular-nums text-white sm:text-[54px]">
+            {money(fertilityOfferPrice)}
+          </p>
+          <p className="font-outfit mt-1.5 text-[12px] text-white/55 sm:text-[13px]">
+            One-time payment
+          </p>
+        </div>
+      </div>
+
+      {/* ── Urgency strip ─────────────────────────────────────────────────── */}
+      <p className="font-outfit bg-[#083A2A] py-3 text-center text-[12.5px] font-semibold tracking-[0.02em] text-[#F0C97D] sm:text-[13.5px]">
+        Sign up before the early bird offer expires
       </p>
     </div>
   );

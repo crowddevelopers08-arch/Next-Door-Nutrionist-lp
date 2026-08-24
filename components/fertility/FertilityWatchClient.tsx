@@ -230,7 +230,7 @@ export function FertilityWatchClient() {
       <div className="pointer-events-none absolute -right-20 bottom-0 h-[380px] w-[380px] rounded-full bg-[#0B4A35]/12 blur-[120px] blob-float-2" />
 
       <h1 className="relative text-center font-outfit text-[18px] font-extrabold leading-[1.35] text-[#0B4A35] sm:text-[21px] md:text-[24px]">
-        You&rsquo;re One Step Away from Transforming Your Life!
+       Your Transformation Starts Here
       </h1>
 
       <div className="relative mx-auto mt-8 grid max-w-[1080px] gap-10 lg:grid-cols-2 lg:gap-12">
@@ -278,7 +278,7 @@ export function FertilityWatchClient() {
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/payicons.png"
+              src="/newpaynxt.png"
               alt="RuPay, Visa, UPI, Maestro, PhonePe and Paytm accepted"
               className="mt-3 h-auto w-full max-w-[360px]"
             />

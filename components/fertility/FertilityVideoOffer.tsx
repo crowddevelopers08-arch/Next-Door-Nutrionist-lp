@@ -101,7 +101,7 @@ export function FertilityVideoOffer() {
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/payicons.png"
+          src="/newpaynxt.png"
           alt="Secure payment via Razorpay. Pick your slot right after."
           className="mx-auto mt-3 h-auto w-full max-w-[520px]"
         />
