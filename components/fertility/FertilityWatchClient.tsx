@@ -233,12 +233,16 @@ export function FertilityWatchClient() {
        Your Transformation Starts Here
       </h1>
 
-      <div className="relative mx-auto mt-8 grid max-w-[1080px] gap-10 lg:grid-cols-2 lg:gap-12">
+      <div className="relative mx-auto mt-8 grid max-w-[1320px] gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-12">
         {/* ── Left: value stack ─────────────────────────────────────────── */}
-        <FertilityValueStack />
+        {/* On this page the CTA scrolls down to the form instead of navigating. */}
+        <FertilityValueStack ctaHref="#order-form" />
 
         {/* ── Right: order form ─────────────────────────────────────────── */}
-        <div className="h-fit rounded-[20px] border border-[#0B4A35]/20 bg-white p-5 shadow-[0_20px_60px_rgba(11,74,53,0.10)] sm:p-6 lg:self-center">
+        <div
+          id="order-form"
+          className="h-fit scroll-mt-6 rounded-[20px] border border-[#0B4A35]/20 bg-white p-5 shadow-[0_20px_60px_rgba(11,74,53,0.10)] sm:p-6 lg:self-center"
+        >
           <h2 className="font-outfit text-[15px] font-bold text-[#0B4A35]">Customer information</h2>
 
           <div className="mt-4">

@@ -9,7 +9,7 @@ export function FertilityValueStackSection() {
       <div className="pointer-events-none absolute -left-24 -top-24 h-[360px] w-[360px] rounded-full bg-[#FF92A5]/18 blur-[120px] blob-float" />
       <div className="pointer-events-none absolute -right-20 bottom-0 h-[380px] w-[380px] rounded-full bg-[#0B4A35]/12 blur-[120px] blob-float-2" />
 
-      <div className="relative mx-auto max-w-[620px]">
+      <div className="relative mx-auto max-w-[780px]">
         <AnimateOnScroll animation="fade-up">
           <FertilityValueStack />
         </AnimateOnScroll>
