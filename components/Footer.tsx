@@ -170,6 +170,9 @@ export function Footer() {
             <a className="font-outfit text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B7D29B60] transition-colors hover:text-[#B7D29B]" href="/privacy-policy">
               Privacy Policy
             </a>
+            <a className="font-outfit text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B7D29B60] transition-colors hover:text-[#B7D29B]" href="/disclaimer">
+              Disclaimer
+            </a>
             <a className="font-outfit text-[11px] font-semibold uppercase tracking-[0.14em] text-[#B7D29B60] transition-colors hover:text-[#B7D29B]" href="/shipping-policy">
               Shipping Policy
             </a>

@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Terms & Conditions | Next Door Nutritionist',
-  description: 'The terms and conditions governing your use of the Next Door Nutritionist website, consultations, and nutrition programs.',
+  description: 'The terms and conditions governing your use of the Hormone Nutrition Clinic (ALPHI Health Private Limited) website, consultations, and nutrition programs.',
 };
 
 export default function TermsAndConditionsPage() {
@@ -39,175 +39,400 @@ export default function TermsAndConditionsPage() {
               Terms &amp; Conditions
             </h1>
             <p className="mt-4 text-[14px] leading-[1.7] text-[#2B2B2B]/50">
-              Last updated: 11 August 2026
+              Last updated: 19 June 2026
             </p>
           </div>
 
           {/* Intro */}
           <div className="mb-8 rounded-[0.75rem] border border-[#0B4A35]/10 bg-white p-6 md:p-8">
             <p className="text-[15px] leading-[1.8] text-[#2B2B2B]/70">
-              Welcome to <span className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</span>. These Terms &amp; Conditions govern your access to and use of our website, consultations, nutrition programs, and related services. By using our website or booking a consultation, you agree to be bound by these terms. If you do not agree, please do not use our services.
+              Welcome to <span className="font-semibold text-[#2B2B2B]">Hormone Nutrition Clinic (ALPHI Health Private Limited)</span>. These Terms &amp; Conditions govern your access to and use of our website, consultations, nutrition programs, coaching services, digital content, communications, and related services. By accessing our website, booking a consultation, enrolling in a program, making a payment, or using any of our services, you acknowledge that you have read, understood, and agreed to be bound by these Terms &amp; Conditions.
             </p>
           </div>
 
           {/* Sections */}
           <div className="space-y-8 md:space-y-10">
 
-            <PolicySection title="1. Definitions">
+            <PolicySection title="1. About Us">
+              <p>
+                Hormone Nutrition Clinic is a healthcare and wellness clinic operated by ALPHI Health Private Limited, providing nutrition counselling, hormone health support, lifestyle guidance, wellness coaching, educational resources, and related services to clients in India and internationally.
+              </p>
+            </PolicySection>
+
+            <PolicySection title="2. Acceptance of Terms">
+              <p>By using our website or services, you confirm that:</p>
               <ul>
-                <li><strong>&ldquo;We&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;</strong> refers to Next Door Nutritionist (Hormone Nutrition Clinic).</li>
-                <li><strong>&ldquo;You&rdquo;, &ldquo;client&rdquo;, &ldquo;user&rdquo;</strong> refers to any person accessing our website or availing our services.</li>
-                <li><strong>&ldquo;Services&rdquo;</strong> refers to nutrition consultations, personalised diet plans, hormonal health programs, follow-up support, and any digital or downloadable material we provide.</li>
+                <li>You are legally capable of entering into a binding agreement.</li>
+                <li>You have read and understood these Terms &amp; Conditions.</li>
+                <li>You agree to comply with all applicable laws and regulations.</li>
+                <li>All information provided by you is accurate, complete, and current.</li>
+              </ul>
+              <p>If you do not agree with these Terms &amp; Conditions, please do not use our services.</p>
+            </PolicySection>
+
+            <PolicySection title="3. Eligibility">
+              <p>Our services are intended for individuals aged 18 years and above.</p>
+              <p>
+                Where services are provided to a minor, participation must be initiated and supervised by a parent or legal guardian who agrees to these Terms on the minor&rsquo;s behalf.
+              </p>
+            </PolicySection>
+
+            <PolicySection title="4. Services">
+              <p>Hormone Nutrition Clinic may provide:</p>
+              <ul>
+                <li>Clinical nutrition consultations</li>
+                <li>Hormone health nutrition support</li>
+                <li>PCOS and fertility nutrition support</li>
+                <li>Weight management programs</li>
+                <li>Lifestyle and wellness coaching</li>
+                <li>Educational resources and digital content</li>
+                <li>Follow-up consultations and support</li>
+                <li>Online and in-person services</li>
+              </ul>
+              <p>We reserve the right to modify, suspend, discontinue, or update any service without prior notice.</p>
+            </PolicySection>
+
+            <PolicySection title="5. No Medical Advice">
+              <p>
+                The information, recommendations, meal plans, educational materials, coaching, and guidance provided by Hormone Nutrition Clinic are intended solely for nutrition, wellness, educational, and lifestyle purposes.
+              </p>
+              <p>Our services:</p>
+              <ul>
+                <li>Do not constitute medical advice.</li>
+                <li>Do not establish a doctor-patient relationship.</li>
+                <li>Do not replace medical diagnosis or treatment.</li>
+                <li>Are not intended for emergency medical situations.</li>
+              </ul>
+              <p>
+                Clients should consult their physician or qualified healthcare provider regarding any medical condition, diagnosis, medication, treatment, or healthcare decision.
+              </p>
+            </PolicySection>
+
+            <PolicySection title="6. Client Responsibilities">
+              <p>Clients agree to:</p>
+              <ul>
+                <li>Provide accurate and complete health information.</li>
+                <li>Disclose relevant medical conditions, allergies, medications, and treatments.</li>
+                <li>Inform us of any significant changes in health status.</li>
+                <li>Follow recommendations at their own discretion.</li>
+                <li>Seek appropriate medical advice when required.</li>
+              </ul>
+              <p>
+                Hormone Nutrition Clinic shall not be responsible for outcomes resulting from inaccurate, incomplete, misleading, or omitted information provided by clients.
+              </p>
+            </PolicySection>
+
+            <PolicySection title="7. Results Disclaimer">
+              <p>Nutrition and lifestyle outcomes vary significantly between individuals. Results depend on numerous factors including:</p>
+              <ul>
+                <li>Existing health conditions</li>
+                <li>Hormonal status</li>
+                <li>Medical history</li>
+                <li>Genetics</li>
+                <li>Lifestyle habits</li>
+                <li>Medication use</li>
+                <li>Adherence to recommendations</li>
+              </ul>
+              <p>Hormone Nutrition Clinic makes no guarantees regarding:</p>
+              <ul>
+                <li>Weight loss or weight gain</li>
+                <li>Hormonal balance</li>
+                <li>Fertility outcomes</li>
+                <li>Symptom improvement</li>
+                <li>Disease prevention</li>
+                <li>Disease management</li>
+                <li>Any specific health outcome</li>
+              </ul>
+              <p>Individual results will vary.</p>
+            </PolicySection>
+
+            <PolicySection title="8. Appointments and Consultations">
+              <p>Appointments may be conducted:</p>
+              <ul>
+                <li>Online</li>
+                <li>By telephone</li>
+                <li>Through video conferencing platforms</li>
+                <li>In person, where available</li>
+              </ul>
+              <p>
+                Clients are responsible for ensuring they have suitable internet access, devices, and communication facilities required for virtual consultations.
+              </p>
+              <p>Consultation durations are approximate and may vary based on individual requirements.</p>
+            </PolicySection>
+
+            <PolicySection title="9. Teleconsultation Disclaimer">
+              <p>Clients acknowledge that online consultations may be affected by:</p>
+              <ul>
+                <li>Internet connectivity issues</li>
+                <li>Technical failures</li>
+                <li>Platform outages</li>
+                <li>Device malfunctions</li>
+                <li>Software interruptions</li>
+                <li>Circumstances beyond the Clinic&rsquo;s reasonable control</li>
+              </ul>
+              <p>Hormone Nutrition Clinic shall not be liable for interruptions or delays caused by such technical issues.</p>
+            </PolicySection>
+
+            <PolicySection title="10. Fees and Payments">
+              <p>
+                All fees for consultations, programs, packages, memberships, subscriptions, and related services are communicated at the time of booking or enrolment.
+              </p>
+              <p>Full payment may be required prior to commencement of services.</p>
+              <p>
+                Hormone Nutrition Clinic reserves the right to modify pricing, fees, promotions, and service offerings at any time without prior notice.
+              </p>
+              <p>Applicable taxes shall be charged where required by law.</p>
+            </PolicySection>
+
+            <PolicySection title="11. No Refund & Non-Transfer Policy">
+              <SubHeading>Important Payment Terms</SubHeading>
+              <p>
+                Kindly note that payments made for any consultation, package, membership, subscription, program, coaching service, assessment, or related offering are <strong>strictly non-refundable and non-transferable</strong>.
+              </p>
+              <p>By making a payment, you expressly acknowledge and agree that:</p>
+
+              <SubHeading>No Refunds</SubHeading>
+              <p>All payments are final.</p>
+              <p>No refunds, full or partial, shall be provided for any reason, including but not limited to:</p>
+              <ul>
+                <li>Change of mind</li>
+                <li>Dissatisfaction with progress or results</li>
+                <li>Failure to follow recommendations</li>
+                <li>Scheduling conflicts</li>
+                <li>Relocation</li>
+                <li>Personal circumstances</li>
+                <li>Medical conditions</li>
+                <li>Failure to attend consultations</li>
+                <li>Partial utilisation of services</li>
+                <li>Non-utilisation of services</li>
+                <li>Travel commitments</li>
+                <li>Family emergencies</li>
+                <li>Work commitments</li>
+                <li>Change in financial circumstances</li>
+              </ul>
+
+              <SubHeading>No Transfers</SubHeading>
+              <p>Purchased services:</p>
+              <ul>
+                <li>Cannot be transferred to another individual.</li>
+                <li>Cannot be assigned to family members, friends, or third parties.</li>
+                <li>Cannot be exchanged for alternative programs or services.</li>
+                <li>Cannot be redeemed for cash, credit, or future value.</li>
+              </ul>
+
+              <SubHeading>No Credits</SubHeading>
+              <p>
+                Unused consultations, sessions, coaching calls, support periods, memberships, packages, or program benefits shall not be eligible for:
+              </p>
+              <ul>
+                <li>Refunds</li>
+                <li>Credits</li>
+                <li>Extensions</li>
+                <li>Transfers</li>
+                <li>Cash redemption</li>
+              </ul>
+
+              <SubHeading>Limited Exception</SubHeading>
+              <p>In exceptional circumstances involving:</p>
+              <ul>
+                <li>Duplicate payments;</li>
+                <li>Payment processing errors; or</li>
+                <li>Situations where Hormone Nutrition Clinic is unable to provide the purchased service;</li>
+              </ul>
+              <p>the Clinic may, at its sole discretion, determine an appropriate resolution.</p>
+            </PolicySection>
+
+            <PolicySection title="12. Program Validity and Expiry">
+              <p>
+                All consultations, sessions, coaching calls, support services, memberships, and program benefits must be utilised within the validity period communicated at enrolment.
+              </p>
+              <p>Any unused services remaining after the applicable program period shall automatically expire and shall not be eligible for:</p>
+              <ul>
+                <li>Refund</li>
+                <li>Transfer</li>
+                <li>Extension</li>
+                <li>Credit</li>
+                <li>Cash redemption</li>
+              </ul>
+              <p>unless expressly approved in writing by Hormone Nutrition Clinic.</p>
+            </PolicySection>
+
+            <PolicySection title="13. Cancellation and Rescheduling">
+              <p>Clients are encouraged to provide at least 24 hours&rsquo; notice for appointment rescheduling requests.</p>
+              <p>Missed appointments, no-shows, or late arrivals may result in forfeiture of the consultation session.</p>
+              <p>Hormone Nutrition Clinic reserves the right to reschedule appointments due to:</p>
+              <ul>
+                <li>Operational requirements</li>
+                <li>Emergencies</li>
+                <li>Technical issues</li>
+                <li>Staff availability</li>
+                <li>Circumstances beyond reasonable control</li>
               </ul>
             </PolicySection>
 
-            <PolicySection title="2. Eligibility">
+            <PolicySection title="14. Communication Consent">
+              <p>By submitting your contact information, you consent to receiving communications from Hormone Nutrition Clinic through:</p>
+              <ul>
+                <li>Email</li>
+                <li>Phone calls</li>
+                <li>SMS</li>
+                <li>WhatsApp</li>
+                <li>Other communication channels reasonably required for service delivery</li>
+              </ul>
+              <p>Such communications may include:</p>
+              <ul>
+                <li>Appointment reminders</li>
+                <li>Consultation follow-ups</li>
+                <li>Service updates</li>
+                <li>Administrative notices</li>
+                <li>Program-related communications</li>
+              </ul>
+              <p>You may opt out of marketing communications at any time.</p>
+            </PolicySection>
+
+            <PolicySection title="15. Client Conduct">
               <p>
-                Our services are intended for individuals aged 18 years and above. If services are availed for a minor, a parent or legal guardian must provide consent and remain responsible for all obligations under these terms.
+                Hormone Nutrition Clinic is committed to maintaining a professional, respectful, and safe environment for clients and staff.
+              </p>
+              <p>The Clinic reserves the right to suspend or terminate services immediately, without refund, where a client engages in:</p>
+              <ul>
+                <li>Abusive behaviour</li>
+                <li>Harassment</li>
+                <li>Threatening conduct</li>
+                <li>Discrimination</li>
+                <li>Offensive language</li>
+                <li>Inappropriate communications</li>
+                <li>Any conduct that negatively impacts staff, consultants, contractors, or other clients</li>
+              </ul>
+              <p>Termination under this clause shall not create any entitlement to refund, transfer, extension, or compensation.</p>
+            </PolicySection>
+
+            <PolicySection title="16. Chargeback and Payment Disputes">
+              <p>
+                Clients agree to contact Hormone Nutrition Clinic directly to resolve concerns before initiating a chargeback, payment dispute, reversal, or claim with a bank, payment processor, or credit card provider.
               </p>
               <p>
-                By using our services, you confirm that the information you provide is accurate, current, and complete, and that you will keep it updated.
+                Where services have been delivered in accordance with these Terms, initiating a chargeback may be considered a breach of these Terms &amp; Conditions.
+              </p>
+              <p>
+                The Clinic reserves the right to provide these Terms, payment records, attendance records, and service records to financial institutions in response to any payment dispute.
               </p>
             </PolicySection>
 
-            <PolicySection title="3. Nature of Our Services — Important Health Disclaimer">
+            <PolicySection title="17. Intellectual Property">
+              <p>All content provided through our website, programs, consultations, and communications, including but not limited to:</p>
+              <ul>
+                <li>Logos</li>
+                <li>Branding</li>
+                <li>Meal plans</li>
+                <li>Nutrition guides</li>
+                <li>Educational materials</li>
+                <li>Videos</li>
+                <li>Graphics</li>
+                <li>Articles</li>
+                <li>Downloads</li>
+                <li>Program content</li>
+              </ul>
+              <p>remains the exclusive property of Hormone Nutrition Clinic (ALPHI Health Private Limited).</p>
+              <p>No content may be copied, reproduced, distributed, published, modified, sold, shared, or exploited without prior written permission.</p>
+            </PolicySection>
+
+            <PolicySection title="18. Acceptable Use">
+              <p>Users agree not to:</p>
+              <ul>
+                <li>Use the website unlawfully.</li>
+                <li>Attempt unauthorised access to systems.</li>
+                <li>Upload malicious software.</li>
+                <li>Interfere with website functionality.</li>
+                <li>Misrepresent their identity.</li>
+                <li>Engage in fraudulent or abusive conduct.</li>
+              </ul>
+              <p>We reserve the right to suspend or terminate access for violations of these Terms.</p>
+            </PolicySection>
+
+            <PolicySection title="19. Third-Party Services">
               <p>
-                Next Door Nutritionist provides <strong>nutrition and lifestyle guidance only</strong>. Our services are educational and supportive in nature and are <strong>not a substitute for professional medical advice, diagnosis, or treatment</strong>.
+                Our website and services may utilise or link to third-party platforms including payment processors, scheduling systems, analytics providers, communication tools, and social media platforms.
+              </p>
+              <p>We are not responsible for the availability, security, content, or privacy practices of third-party services.</p>
+              <p>Use of third-party services is subject to their respective terms and policies.</p>
+            </PolicySection>
+
+            <PolicySection title="20. Limitation of Liability">
+              <p>
+                To the fullest extent permitted by applicable law, Hormone Nutrition Clinic (ALPHI Health Private Limited), its directors, officers, employees, consultants, nutritionists, contractors, affiliates, and representatives shall not be liable for:
               </p>
               <ul>
-                <li>We do not diagnose medical conditions, prescribe medication, or provide emergency medical care.</li>
-                <li>You should always consult your physician or a qualified healthcare provider before making changes to your diet, supplements, exercise, or medication.</li>
-                <li>Never disregard or delay seeking medical advice because of something you have read on our website or heard during a consultation.</li>
-                <li>If you are pregnant, nursing, managing a chronic condition, or taking prescription medication, you must disclose this to us and to your treating doctor.</li>
+                <li>Indirect damages</li>
+                <li>Consequential damages</li>
+                <li>Incidental damages</li>
+                <li>Loss of profits</li>
+                <li>Loss of revenue</li>
+                <li>Loss of data</li>
+                <li>Business interruption</li>
+                <li>Health outcomes</li>
+                <li>Decisions made based on information provided through our services</li>
               </ul>
-              <p>
-                Individual results vary. We make no guarantee of any specific health, weight, hormonal, or fertility outcome. Testimonials and case studies shown on our website reflect individual experiences and are not a promise of similar results.
-              </p>
+              <p>Your use of our services is entirely at your own risk.</p>
             </PolicySection>
 
-            <PolicySection title="4. Bookings & Appointments">
-              <ul>
-                <li>Consultations are confirmed only after successful payment and receipt of a confirmation via call, email, or WhatsApp.</li>
-                <li>Please join or arrive on time. Sessions begin and end at the scheduled time; late arrival may reduce your session duration.</li>
-                <li>Rescheduling requests must be made at least <strong>24 hours</strong> before the scheduled slot, subject to availability.</li>
-                <li>We reserve the right to reschedule a session due to unforeseen circumstances, illness, or emergencies, and will offer you the earliest alternative slot.</li>
-              </ul>
-            </PolicySection>
-
-            <PolicySection title="5. Client Responsibilities">
-              <p>To get the best outcome from our programs, you agree to:</p>
-              <ul>
-                <li>Disclose complete and accurate medical history, current medication, allergies, and existing health conditions.</li>
-                <li>Follow the plan as reasonably advised and communicate any difficulty, discomfort, or adverse reaction promptly.</li>
-                <li>Use the plans and materials for your personal use only.</li>
-                <li>Treat our team with respect and courtesy during all interactions.</li>
-              </ul>
+            <PolicySection title="21. Indemnification">
               <p>
-                You remain solely responsible for your own health decisions and for how you apply the guidance provided.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="6. Fees & Payments">
-              <ul>
-                <li>All fees are displayed in Indian Rupees (INR) and are payable in advance unless otherwise agreed in writing.</li>
-                <li>Payments are processed through secure third-party payment gateways. We do not store your card or banking details.</li>
-                <li>Program fees are for the duration and inclusions specified at the time of purchase. Additional sessions or services will be charged separately.</li>
-                <li>We reserve the right to revise our pricing at any time. Price changes will not affect programs already paid for.</li>
-              </ul>
-              <p>
-                Please refer to our <Link href="/cancellations-and-refunds">Cancellations &amp; Refunds Policy</Link> for details on refunds, and our <Link href="/shipping-policy">Shipping &amp; Delivery Policy</Link> for how plans and materials are delivered.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="7. Intellectual Property">
-              <p>
-                All content on this website and within our programs — including diet plans, recipes, guides, worksheets, videos, text, graphics, logos, and branding — is the intellectual property of Next Door Nutritionist and is protected under applicable copyright and trademark laws.
+                You agree to indemnify, defend, and hold harmless Hormone Nutrition Clinic (ALPHI Health Private Limited), its directors, employees, consultants, affiliates, and representatives from any claims, liabilities, damages, losses, costs, or expenses arising from:
               </p>
               <ul>
-                <li>Materials are licensed to you for personal, non-commercial use only.</li>
-                <li>You may not copy, reproduce, resell, distribute, publish, or share our plans or materials with any third party.</li>
-                <li>Unauthorised use may result in termination of services without refund and legal action.</li>
+                <li>Your use of our services</li>
+                <li>Your violation of these Terms</li>
+                <li>Information provided by you</li>
+                <li>Your breach of applicable laws or regulations</li>
               </ul>
             </PolicySection>
 
-            <PolicySection title="8. Confidentiality & Privacy">
+            <PolicySection title="22. Privacy">
+              <p>Your use of our services is also governed by our <Link href="/privacy-policy">Privacy Policy</Link>.</p>
               <p>
-                We treat your health and personal information as confidential. Our handling of your data is described in detail in our <Link href="/privacy-policy">Privacy Policy</Link>, which forms part of these Terms.
+                By using our website and services, you consent to the collection, use, and processing of information as described in our Privacy Policy.
               </p>
             </PolicySection>
 
-            <PolicySection title="9. Communication & Consent">
+            <PolicySection title="23. Force Majeure">
               <p>
-                By sharing your contact details, you consent to receive calls, SMS, WhatsApp messages, and emails from us relating to your consultation, plan, reminders, and follow-ups. Promotional communication is sent only where permitted, and you may opt out at any time by contacting us.
+                Hormone Nutrition Clinic shall not be liable for delays or failure to perform obligations due to events beyond its reasonable control, including but not limited to:
               </p>
-            </PolicySection>
-
-            <PolicySection title="10. Acceptable Use of the Website">
-              <p>You agree not to:</p>
               <ul>
-                <li>Use the website for any unlawful, fraudulent, or harmful purpose.</li>
-                <li>Attempt to gain unauthorised access to our systems, accounts, or data.</li>
-                <li>Introduce viruses, malicious code, or automated scraping tools.</li>
-                <li>Post or transmit content that is defamatory, obscene, or infringes the rights of others.</li>
+                <li>Natural disasters</li>
+                <li>Government actions</li>
+                <li>Internet outages</li>
+                <li>Power failures</li>
+                <li>Pandemics</li>
+                <li>Civil unrest</li>
+                <li>War</li>
+                <li>Technical failures</li>
+                <li>Cybersecurity incidents</li>
               </ul>
+            </PolicySection>
+
+            <PolicySection title="24. Changes to These Terms">
+              <p>We reserve the right to amend or update these Terms &amp; Conditions at any time.</p>
+              <p>Updated versions will be posted on this page with a revised effective date.</p>
+              <p>Continued use of our services following publication of updated Terms constitutes acceptance of those changes.</p>
+            </PolicySection>
+
+            <PolicySection title="25. Governing Law and Jurisdiction">
+              <p>These Terms &amp; Conditions shall be governed by and construed in accordance with the laws of India.</p>
               <p>
-                We may suspend or terminate your access to our website or services if we reasonably believe you have breached these terms.
+                Any dispute arising out of or relating to these Terms or the use of our services shall be subject to the exclusive jurisdiction of the courts located in Hyderabad, Telangana, India.
               </p>
             </PolicySection>
 
-            <PolicySection title="11. Third-Party Links & Services">
-              <p>
-                Our website may contain links to third-party websites, tools, or payment providers. We do not control and are not responsible for their content, policies, or practices. Your use of those services is at your own risk and subject to their terms.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="12. Limitation of Liability">
-              <p>
-                To the maximum extent permitted by law, Next Door Nutritionist, its team, and affiliates shall not be liable for any indirect, incidental, or consequential loss arising from your use of our website or services, including any health outcome resulting from your application of the guidance provided.
-              </p>
-              <p>
-                Our total liability in any circumstance shall not exceed the amount you have actually paid to us for the specific service giving rise to the claim.
-              </p>
-              <p>
-                Nothing in these terms limits liability that cannot be excluded under applicable law.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="13. Indemnity">
-              <p>
-                You agree to indemnify and hold harmless Next Door Nutritionist against any claims, damages, or expenses arising from your breach of these terms, misuse of our materials, or failure to disclose relevant medical information.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="14. Termination">
-              <p>
-                We reserve the right to decline or discontinue services at our discretion — for example, where a client&rsquo;s needs fall outside our scope of practice, where required medical information is withheld, or where our team is treated abusively. Where we discontinue services, any applicable refund will be handled as per our <Link href="/cancellations-and-refunds">Cancellations &amp; Refunds Policy</Link>.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="15. Changes to These Terms">
-              <p>
-                We may update these Terms &amp; Conditions from time to time. The revised version will be posted on this page with an updated date. Continued use of our website or services after changes are posted constitutes your acceptance of the updated terms.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="16. Governing Law & Jurisdiction">
-              <p>
-                These Terms are governed by the laws of India. Any dispute arising out of or relating to these Terms or our services shall be subject to the exclusive jurisdiction of the courts at Hyderabad, Telangana.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="17. Contact Us">
-              <p>For any questions regarding these Terms &amp; Conditions, please reach out to us:</p>
+            <PolicySection title="Contact Information">
               <div className="mt-4 space-y-2 rounded-[0.5rem] bg-[#0B4A35]/5 p-5 text-[14px]">
-                <p className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</p>
-                <p className="text-[#2B2B2B]/70">3rd Floor, Westend Mall, 301-A, Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033</p>
+                <p className="font-semibold text-[#2B2B2B]">Hormone Nutrition Clinic (ALPHI Health Private Limited)</p>
                 <p>
-                  <a href="tel:+919867642689" className="text-[#0B4A35] hover:underline">+91 98676 42689</a>
+                  Phone:{' '}
+                  <a href="https://wa.link/lsm4ln" className="text-[#0B4A35] hover:underline">+91 99590 27830</a>
                 </p>
-                <p>
-                  <a href="mailto:hormonenutritionclinic@gmail.com" className="text-[#0B4A35] hover:underline">hormonenutritionclinic@gmail.com</a>
-                </p>
+                <p className="text-[#2B2B2B]/70">Location: 3rd Floor, Westend Mall, 301-A, Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033</p>
               </div>
             </PolicySection>
 
@@ -246,5 +471,13 @@ function PolicySection({ title, children }: { title: string; children: React.Rea
         {children}
       </div>
     </div>
+  );
+}
+
+function SubHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="pt-2 font-outfit text-[16px] font-semibold text-[#2B2B2B] md:text-[17px]">
+      {children}
+    </h3>
   );
 }
