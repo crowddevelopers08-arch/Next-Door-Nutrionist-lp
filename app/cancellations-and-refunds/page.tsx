@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Cancellations & Refunds | Next Door Nutritionist',
-  description: 'Our policy on cancelling or rescheduling consultations and programs with Next Door Nutritionist, and how refunds are handled.',
+  title: 'Cancellations & Refunds | Hormone Nutrition Clinic',
+  description: 'Fees, payment terms, no-refund and non-transfer policy, program validity, and rescheduling rules for Hormone Nutrition Clinic (ALPHI Health Private Limited).',
 };
 
 export default function CancellationsAndRefundsPage() {
@@ -13,7 +13,7 @@ export default function CancellationsAndRefundsPage() {
         <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-4 sm:px-6 md:px-[80px] md:py-5">
           <Link href="/">
             <img
-              alt="Next Door Nutritionist Logo"
+              alt="Hormone Nutrition Clinic Logo"
               className="h-12 w-auto object-contain md:h-14"
               src="https://res.cloudinary.com/du6mjguvb/image/upload/HNC-LOGO-1_vbvcmy"
             />
@@ -39,110 +39,145 @@ export default function CancellationsAndRefundsPage() {
               Cancellations &amp; Refunds
             </h1>
             <p className="mt-4 text-[14px] leading-[1.7] text-[#2B2B2B]/50">
-              Last updated: 11 August 2026
+              Last updated: 17 October 2026
             </p>
           </div>
 
           {/* Intro */}
           <div className="mb-8 rounded-[0.75rem] border border-[#0B4A35]/10 bg-white p-6 md:p-8">
             <p className="text-[15px] leading-[1.8] text-[#2B2B2B]/70">
-              At <span className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</span>, every consultation slot is reserved exclusively for you and every plan is prepared individually. This policy explains when you can cancel or reschedule, and how refunds are handled. Please read it before making a payment.
+              At <span className="font-semibold text-[#2B2B2B]">Hormone Nutrition Clinic (ALPHI Health Private Limited)</span>, every consultation slot is reserved exclusively for you and every plan is prepared individually. This policy explains our fees, payment terms, no-refund and non-transfer policy, program validity, and rescheduling rules. Please read it carefully before making a payment.
             </p>
           </div>
 
           {/* Sections */}
           <div className="space-y-8 md:space-y-10">
 
-            <PolicySection title="1. Rescheduling a Consultation">
+            <PolicySection title="1. Fees and Payments">
+              <p>
+                All fees for consultations, programs, packages, memberships, subscriptions, and related services are communicated at the time of booking or enrolment.
+              </p>
+              <p>Full payment may be required prior to commencement of services.</p>
+              <p>
+                Hormone Nutrition Clinic reserves the right to modify pricing, fees, promotions, and service offerings at any time without prior notice.
+              </p>
+              <p>Applicable taxes shall be charged where required by law.</p>
+            </PolicySection>
+
+            <PolicySection title="2. No Refund & Non-Transfer Policy">
+              <SubHeading>Important Payment Terms</SubHeading>
+              <p>
+                Kindly note that payments made for any consultation, package, membership, subscription, program, coaching service, assessment, or related offering are <strong>strictly non-refundable and non-transferable</strong>.
+              </p>
+              <p>By making a payment, you expressly acknowledge and agree that:</p>
+
+              <SubHeading>No Refunds</SubHeading>
+              <p>All payments are final.</p>
+              <p>No refunds, full or partial, shall be provided for any reason, including but not limited to:</p>
               <ul>
-                <li>You may reschedule your consultation <strong>free of charge</strong> if you inform us at least <strong>24 hours</strong> before the scheduled slot.</li>
-                <li>Each booking may be rescheduled <strong>once</strong>. Further changes are subject to availability and may be treated as a fresh booking.</li>
-                <li>Rescheduling requests must be sent by phone, WhatsApp, or email to the contact details listed below.</li>
-                <li>Requests made less than 24 hours before the slot are accommodated at our discretion, subject to availability.</li>
+                <li>Change of mind</li>
+                <li>Dissatisfaction with progress or results</li>
+                <li>Failure to follow recommendations</li>
+                <li>Scheduling conflicts</li>
+                <li>Relocation</li>
+                <li>Personal circumstances</li>
+                <li>Medical conditions</li>
+                <li>Failure to attend consultations</li>
+                <li>Partial utilisation of services</li>
+                <li>Non-utilisation of services</li>
+                <li>Travel commitments</li>
+                <li>Family emergencies</li>
+                <li>Work commitments</li>
+                <li>Change in financial circumstances</li>
+              </ul>
+
+              <SubHeading>No Transfers</SubHeading>
+              <p>Purchased services:</p>
+              <ul>
+                <li>Cannot be transferred to another individual.</li>
+                <li>Cannot be assigned to family members, friends, or third parties.</li>
+                <li>Cannot be exchanged for alternative programs or services.</li>
+                <li>Cannot be redeemed for cash, credit, or future value.</li>
+              </ul>
+
+              <SubHeading>No Credits</SubHeading>
+              <p>
+                Unused consultations, sessions, coaching calls, support periods, memberships, packages, or program benefits shall not be eligible for:
+              </p>
+              <ul>
+                <li>Refunds</li>
+                <li>Credits</li>
+                <li>Extensions</li>
+                <li>Transfers</li>
+                <li>Cash redemption</li>
+              </ul>
+
+              <SubHeading>Limited Exception</SubHeading>
+              <p>In exceptional circumstances involving:</p>
+              <ul>
+                <li>Duplicate payments;</li>
+                <li>Payment processing errors; or</li>
+                <li>Situations where Hormone Nutrition Clinic is unable to provide the purchased service;</li>
+              </ul>
+              <p>the Clinic may, at its sole discretion, determine an appropriate resolution.</p>
+            </PolicySection>
+
+            <PolicySection title="3. Program Validity and Expiry">
+              <p>
+                All consultations, sessions, coaching calls, support services, memberships, and program benefits must be utilised within the validity period communicated at enrolment.
+              </p>
+              <p>
+                Any unused services remaining after the applicable program period shall automatically expire and shall not be eligible for:
+              </p>
+              <ul>
+                <li>Refund</li>
+                <li>Transfer</li>
+                <li>Extension</li>
+                <li>Credit</li>
+                <li>Cash redemption</li>
+              </ul>
+              <p>unless expressly approved in writing by Hormone Nutrition Clinic.</p>
+            </PolicySection>
+
+            <PolicySection title="4. Cancellation and Rescheduling">
+              <p>
+                Clients are encouraged to provide at least <strong>24 hours’ notice</strong> for appointment rescheduling requests.
+              </p>
+              <p>
+                Missed appointments, no-shows, or late arrivals may result in forfeiture of the consultation session.
+              </p>
+              <p>Hormone Nutrition Clinic reserves the right to reschedule appointments due to:</p>
+              <ul>
+                <li>Operational requirements</li>
+                <li>Emergencies</li>
+                <li>Technical issues</li>
+                <li>Staff availability</li>
+                <li>Circumstances beyond reasonable control</li>
               </ul>
             </PolicySection>
 
-            <PolicySection title="2. Cancelling a Consultation">
-              <ul>
-                <li><strong>More than 48 hours before the slot:</strong> Full refund of the consultation fee, less any payment gateway charges.</li>
-                <li><strong>Between 24 and 48 hours before the slot:</strong> 50% of the consultation fee is refundable, or the full amount may be adjusted against a future booking.</li>
-                <li><strong>Less than 24 hours before the slot:</strong> No refund, as the slot is held for you and cannot be reallocated.</li>
-                <li><strong>No-show without prior notice:</strong> No refund and the session is treated as completed.</li>
-              </ul>
-            </PolicySection>
-
-            <PolicySection title="3. Programs & Packages">
-              <ul>
-                <li>Multi-session programs and packages are <strong>non-refundable once the program has commenced</strong> — that is, once the first consultation has taken place or the personalised plan has been shared.</li>
-                <li>If you cancel <strong>before</strong> the first consultation and before any plan has been prepared, the amount paid is refundable less payment gateway charges and any administrative costs already incurred.</li>
-                <li>Package fees are for the complete program. Discontinuing midway, or not using all included sessions within the program duration, does not entitle you to a partial refund.</li>
-                <li>Unused sessions expire at the end of the program duration and cannot be carried forward, unless we agree otherwise in writing.</li>
-              </ul>
-            </PolicySection>
-
-            <PolicySection title="4. Digital Plans & Materials">
+            <PolicySection title="5. Chargeback and Payment Disputes">
               <p>
-                Personalised nutrition plans, guides, recipes, and other digital material are prepared specifically for you. Once a plan or digital material has been shared with you, <strong>it is non-refundable</strong>, as it cannot be returned or reused.
+                Clients agree to contact Hormone Nutrition Clinic directly to resolve concerns before initiating a chargeback, payment dispute, reversal, or claim with a bank, payment processor, or credit card provider.
+              </p>
+              <p>
+                Where services have been delivered in accordance with these Terms, initiating a chargeback may be considered a breach of these Terms &amp; Conditions.
+              </p>
+              <p>
+                The Clinic reserves the right to provide these Terms, payment records, attendance records, and service records to financial institutions in response to any payment dispute.
               </p>
             </PolicySection>
 
-            <PolicySection title="5. Cancellations by Us">
-              <p>
-                If we need to cancel a session due to illness, an emergency, or any other unforeseen circumstance, we will offer you:
-              </p>
-              <ul>
-                <li>The earliest alternative slot at no additional cost, or</li>
-                <li>A <strong>full refund</strong> of the amount paid for that session, if you prefer.</li>
-              </ul>
-              <p>
-                If we determine that your requirement falls outside our scope of practice and decline to proceed, the amount paid will be refunded in full.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="6. Duplicate & Failed Payments">
-              <p>
-                If you have been charged twice for the same booking, or an amount was debited without the booking being confirmed, please contact us with the transaction details. Verified duplicate or failed-transaction amounts are refunded in full.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="7. No Refund for Results">
-              <p>
-                Nutrition outcomes depend heavily on individual adherence, medical history, and biological factors. We do not offer refunds on the basis of results not being achieved, or because a client chose not to follow the plan. We are, however, always willing to review your plan and adjust it during your program.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="8. How to Request a Refund">
-              <p>To request a cancellation or refund, contact us with:</p>
-              <ul>
-                <li>Your full name and registered phone number</li>
-                <li>Date and time of the booking</li>
-                <li>Payment reference or transaction ID</li>
-                <li>Reason for the cancellation request</li>
-              </ul>
-              <p>
-                Send this to <a href="mailto:hormonenutritionclinic@gmail.com">hormonenutritionclinic@gmail.com</a> or call <a href="tel:+919867642689">+91 98676 42689</a>.
-              </p>
-            </PolicySection>
-
-            <PolicySection title="9. Refund Processing Time">
-              <ul>
-                <li>Refund requests are reviewed and confirmed within <strong>3–5 working days</strong> of receipt.</li>
-                <li>Approved refunds are processed to the <strong>original payment method</strong> and typically reflect within <strong>7–10 working days</strong>, depending on your bank or card issuer.</li>
-                <li>Payment gateway charges, where applicable, are non-refundable.</li>
-                <li>Refunds cannot be issued in cash or to a different account than the one used for payment.</li>
-              </ul>
-            </PolicySection>
-
-            <PolicySection title="10. Related Policies">
+            <PolicySection title="6. Related Policies">
               <p>
                 This policy should be read together with our <Link href="/terms-and-conditions">Terms &amp; Conditions</Link>, <Link href="/shipping-policy">Shipping &amp; Delivery Policy</Link>, and <Link href="/privacy-policy">Privacy Policy</Link>. We may update this policy from time to time; the version in effect at the time of your purchase applies to that purchase.
               </p>
             </PolicySection>
 
-            <PolicySection title="11. Contact Us">
+            <PolicySection title="7. Contact Us">
               <p>For any questions about cancellations or refunds, please reach out to us:</p>
               <div className="mt-4 space-y-2 rounded-[0.5rem] bg-[#0B4A35]/5 p-5 text-[14px]">
-                <p className="font-semibold text-[#2B2B2B]">Next Door Nutritionist</p>
+                <p className="font-semibold text-[#2B2B2B]">Hormone Nutrition Clinic (ALPHI Health Private Limited)</p>
                 <p className="text-[#2B2B2B]/70">3rd Floor, Westend Mall, 301-A, Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033</p>
                 <p>
                   <a href="tel:+919867642689" className="text-[#0B4A35] hover:underline">+91 98676 42689</a>
@@ -171,10 +206,18 @@ export default function CancellationsAndRefundsPage() {
       {/* Footer strip */}
       <footer className="border-t border-[#0B4A35]/10 px-4 py-6 text-center sm:px-6 md:px-[80px]">
         <p className="text-[12px] italic text-[#2B2B2B]/40">
-          © 2026 Next Door Nutritionist. All rights reserved.
+          © 2026 Hormone Nutrition Clinic (ALPHI Health Private Limited). All rights reserved.
         </p>
       </footer>
     </main>
+  );
+}
+
+function SubHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 className="!mt-6 font-outfit text-[16px] font-semibold text-[#2B2B2B] md:text-[17px]">
+      {children}
+    </h3>
   );
 }
 
