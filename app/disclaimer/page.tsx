@@ -177,7 +177,7 @@ export default function DisclaimerPage() {
       {/* Footer strip */}
       <footer className="border-t border-[#0B4A35]/10 px-4 py-6 text-center sm:px-6 md:px-[80px]">
         <p className="text-[12px] italic text-[#2B2B2B]/40">
-          © 2026 Next Door Nutritionist. All rights reserved.
+          © 2026 ALPHI Health Private Limited. All rights reserved.
         </p>
       </footer>
     </main>

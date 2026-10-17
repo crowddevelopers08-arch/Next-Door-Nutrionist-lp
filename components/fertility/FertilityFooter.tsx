@@ -126,7 +126,7 @@ export function FertilityFooter() {
       <div className="border-t border-[#ffffff15]">
         <div className="mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-3 px-4 py-4 sm:flex-row sm:px-6 md:px-[60px]">
           <p className="font-outfit text-[12px] text-[#B7D29B80]">
-            &copy; 2026 Next Door Nutritionist. All rights reserved.
+            &copy; 2026 ALPHI Health Private Limited. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             <a
