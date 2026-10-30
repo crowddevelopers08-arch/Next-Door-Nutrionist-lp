@@ -18,7 +18,7 @@ const ctaClassName =
 interface Props {
   className?: string;
   /**
-   * Where the price CTA goes. Defaults to the ₹199 checkout page; the checkout
+   * Where the price CTA goes. Defaults to the ₹999 checkout page; the checkout
    * page itself passes an in-page anchor to its order form.
    */
   ctaHref?: string;
@@ -51,13 +51,13 @@ function MarchingArrows() {
   );
 }
 
-/** The ₹199 chip plus its two lines of copy — shared by the CTA and the
+/** The "FREE" chip plus its two lines of copy — shared by the CTA and the
  *  static checkout-page version so both read as the same gold price block. */
 function PriceBadge({ title, sub }: { title: string; sub: string }) {
   return (
     <>
-      <span className="relative z-[2] flex shrink-0 items-center rounded-[10px] bg-[#0B4A35] px-2.5 py-1.5 text-[24px] font-extrabold leading-none tabular-nums text-[#F0C97D] sm:text-[26px]">
-        {money(fertilityOfferPrice)}
+      <span className="relative z-[2] flex shrink-0 items-center rounded-[10px] bg-[#0B4A35] px-2.5 py-1.5 text-[24px] font-extrabold uppercase leading-none tracking-[0.04em] text-[#F0C97D] sm:text-[26px]">
+        Free
       </span>
 
       <span className="relative z-[2] text-left">
@@ -73,12 +73,12 @@ function PriceBadge({ title, sub }: { title: string; sub: string }) {
 }
 
 /**
- * The ₹199 offer stack — one compact package card: what is included,
+ * The ₹999 offer stack — one compact package card: what is included,
  * what it is worth, and the price after the discount.
  * Shared by the fertility landing page and the checkout page.
  */
 export function FertilityValueStack({ className = '', ctaHref }: Props) {
-  const ctaLabel = `${ctaTitle} for ${money(fertilityOfferPrice)} — secure checkout`;
+  const ctaLabel = `${ctaTitle} — secure checkout`;
   const ctaBody = (
     <>
       <PriceBadge title={ctaTitle} sub={ctaSub} />
@@ -177,7 +177,7 @@ export function FertilityValueStack({ className = '', ctaHref }: Props) {
       </p>
       <p className="font-outfit flex items-center justify-center gap-1.5 bg-[#FFF5F0] px-4 py-2.5 text-center text-[12px] font-semibold text-[#0B4A35] sm:text-[13px]">
         <span className="material-symbols-outlined text-[16px]">info</span>
-        This {money(fertilityOfferPrice)} will be adjusted in the package you choose.
+        The {money(fertilityOfferPrice)} discovery call charge will be adjusted in the package you choose.
       </p>
     </div>
   );

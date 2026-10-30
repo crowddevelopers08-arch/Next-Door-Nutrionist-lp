@@ -55,7 +55,7 @@ export function FertilityHeroSection() {
             healthier pregnancy journey through clinical nutrition and lifestyle guidance
           </p>
 
-          {/* Full video + ₹199 offer CTA that leads to the checkout page */}
+          {/* Full video + ₹999 offer CTA that leads to the checkout page */}
           <div className="mt-9 w-full">
             <FertilityVideoOffer />
           </div>

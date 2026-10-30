@@ -1,7 +1,7 @@
 import { AnimateOnScroll } from '@/components/AnimateOnScroll';
 import { FertilityValueStack } from '@/components/fertility/FertilityValueStack';
 
-/** Landing-page section wrapper around the shared ₹199 offer stack. */
+/** Landing-page section wrapper around the shared ₹999 offer stack. */
 export function FertilityValueStackSection() {
   return (
     <section className="relative overflow-hidden bg-[#FFF5F0] px-4 py-12 sm:px-6 md:px-[60px] md:py-16">

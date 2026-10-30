@@ -7,7 +7,7 @@ interface Props {
   'aria-label'?: string;
 }
 
-/** A CTA that navigates to the ₹199 watch/checkout page. */
+/** A CTA that navigates to the ₹999 watch/checkout page. */
 export function FertilityCtaButton({
   className,
   children,

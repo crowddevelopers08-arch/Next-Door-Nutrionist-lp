@@ -132,7 +132,7 @@ export const fertilityHealthGoals = [
 // ── Offer / value stack ──────────────────────────────────────────────────────
 // The price actually charged is decided server-side in
 // /api/razorpay/create-order — these figures are display copy only.
-export const fertilityOfferPrice = 199;
+export const fertilityOfferPrice = 999;
 
 export const fertilityValueItems: { label: string; price: number }[] = [
   { label: '1:1 Fertility Nutrition Consultation', price: 1500 },

@@ -7,7 +7,7 @@ import { fertilityOfferPrice } from '@/components/fertility/fertilityContent';
 const VIDEO_ID = 'Ap2X2yaWhUY';
 
 /**
- * Hero offer block: the full guidance video followed by the ₹199 CTA that
+ * Hero offer block: the full guidance video followed by the ₹999 CTA that
  * carries the visitor to the checkout page (/fertility/watch).
  */
 export function FertilityVideoOffer() {
@@ -111,7 +111,7 @@ export function FertilityVideoOffer() {
           Secure payment via Razorpay · Pick your slot right after
         </p>
         <p className="font-outfit mt-1.5 text-[12.5px] font-semibold text-[#0B4A35]">
-          The ₹{fertilityOfferPrice} consultation fee will be adjusted in the package you choose.
+          The ₹{fertilityOfferPrice} discovery call charge will be adjusted in the package you choose.
         </p>
       </div>
     </div>

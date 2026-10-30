@@ -7,7 +7,7 @@ import { FertilityTestimonialsSection } from '@/components/fertility/FertilityTe
 export const metadata: Metadata = {
   title: 'Checkout | Fertility Clinical Nutrition | Next Door Nutritionist',
   description:
-    'Confirm your details and book your 1:1 fertility discovery call with our clinical nutrition experts for ₹199.',
+    'Confirm your details and book your 1:1 fertility discovery call with our clinical nutrition experts for ₹999.',
 };
 
 export default function FertilityWatchPage() {

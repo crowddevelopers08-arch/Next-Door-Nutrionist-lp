@@ -332,6 +332,10 @@ export function FertilityWatchClient() {
               </>
             )}
           </button>
+          <p className="font-outfit mt-3 flex items-center justify-center gap-1.5 text-center text-[12px] font-semibold text-[#0B4A35] sm:text-[12.5px]">
+            <span className="material-symbols-outlined text-[16px]">info</span>
+            The discovery call charge will be adjusted in the package you choose.
+          </p>
         </div>
       </div>
 
