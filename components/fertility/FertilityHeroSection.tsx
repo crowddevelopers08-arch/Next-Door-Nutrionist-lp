@@ -42,10 +42,11 @@ export function FertilityHeroSection() {
             </span>
           </div>
 
-          <h1 className="font-outfit text-[30px] font-extrabold leading-[1.12] text-[#1A1A1A] sm:text-[36px] md:text-[44px] lg:text-[52px] max-w-4xl">
-            Before You Spend Lakhs on Fertility Treatments,{' '}
+          <h1 className="font-outfit text-[30px] font-extrabold leading-[1.12] text-[#1A1A1A] sm:text-[36px] md:text-[44px] lg:text-[52px] max-w-6xl">
+            PCOS, Low AMH or Irregular Periods?{' '}
+            <br className="hidden md:block" />
             <span className="text-[#0B4A35] decoration-[6px] underline-offset-[6px]">
-              Watch This Video First
+              Explore Your Path to Natural Conception.
             </span>
           </h1>
 

@@ -175,6 +175,10 @@ export function FertilityValueStack({ className = '', ctaHref }: Props) {
       <p className="font-outfit bg-[#083A2A] py-2.5 text-center text-[12px] font-semibold tracking-[0.02em] text-[#F0C97D] sm:text-[13px]">
         Early bird price {money(fertilityOfferPrice)} — offer ends soon
       </p>
+      <p className="font-outfit flex items-center justify-center gap-1.5 bg-[#FFF5F0] px-4 py-2.5 text-center text-[12px] font-semibold text-[#0B4A35] sm:text-[13px]">
+        <span className="material-symbols-outlined text-[16px]">info</span>
+        This {money(fertilityOfferPrice)} will be adjusted in the package you choose.
+      </p>
     </div>
   );
 }

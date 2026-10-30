@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { fertilityOfferPrice } from '@/components/fertility/fertilityContent';
 
 const VIDEO_ID = 'Ap2X2yaWhUY';
 
@@ -108,6 +109,9 @@ export function FertilityVideoOffer() {
         <p className="font-outfit mt-2 flex items-center justify-center gap-1.5 text-[12px] text-[#2B2B2B]/55">
           <span className="material-symbols-outlined text-[15px] text-[#0B4A35]">lock</span>
           Secure payment via Razorpay · Pick your slot right after
+        </p>
+        <p className="font-outfit mt-1.5 text-[12.5px] font-semibold text-[#0B4A35]">
+          The ₹{fertilityOfferPrice} consultation fee will be adjusted in the package you choose.
         </p>
       </div>
     </div>
